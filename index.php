@@ -11,5 +11,10 @@ $app->get('/', function() use($app) {
     $app->render('home/index.php');
 })->name("home");
 
+
+$app->get('/gerar-banco', function() use($app){
+    
+})->name("gerar_banco");
+
 $app->run();
 
