@@ -1,10 +1,23 @@
 <?php
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\Tests\ORM\Functional\Ticket\Entity;
+use Symfony\Component\Console\Helper\Table;
+
 /**
  * @Entity
  * @Table(name="tb_usuario")
  */
 class Usuario {
+    
+    function __construct() {
+        $this->areas = new ArrayCollection();
+    }
+
     
     /**
      *
@@ -14,6 +27,26 @@ class Usuario {
      * @GeneratedValue
      */
     protected $id;
+    
+    /**
+     *
+     * @var Cargo
+     * @ManyToOne(targetEntity="Cargo", inversedBy="usuarios")
+     * @JoinColumn(name="cargo_id", referencedColumnName="cargo_id")
+     */
+    protected $cargo;
+    
+    /**
+     * Lista de áreas que o usuário pertence
+     * 
+     * @var ArrayCollection
+     * @ManyToMany(targetEntity="Area", inversedBy="usuarios")
+     * @JoinTable(name="tb_usuario_area",
+     *          joinColumns={@JoinColumn(name="tb_usuario_usuario_id", referencedColumnName="usuario_id")},
+     *          inversedJoinColumns={@JoinColumn(name="area_id", referebcedColumnName="area_id")}
+     *      )
+     */
+    protected $areas;
     
     /**
      *
