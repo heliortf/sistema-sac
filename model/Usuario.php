@@ -32,21 +32,18 @@ class Usuario {
      *
      * @var Cargo
      * @ManyToOne(targetEntity="Cargo", inversedBy="usuarios")
-     * @JoinColumn(name="cargo_id", referencedColumnName="cargo_id")
+     * @JoinColumn(name="tb_cargo_cargo_id", referencedColumnName="cargo_id")
      */
     protected $cargo;
     
     /**
-     * Lista de áreas que o usuário pertence
-     * 
-     * @var ArrayCollection
-     * @ManyToMany(targetEntity="Area", inversedBy="usuarios")
-     * @JoinTable(name="tb_usuario_area",
-     *          joinColumns={@JoinColumn(name="tb_usuario_usuario_id", referencedColumnName="usuario_id")},
-     *          inversedJoinColumns={@JoinColumn(name="area_id", referebcedColumnName="area_id")}
-     *      )
+     * Area que o usuário pertence
+     *      
+     * @var Area
+     * @ManyToOne(targetEntity="Area", inversedBy="usuarios")
+     * @JoinColumn(name="tb_area_area_id", referencedColumnName="area_id")
      */
-    protected $areas;
+    protected $area;
     
     /**
      *
@@ -54,6 +51,13 @@ class Usuario {
      * @Column(type="string")
      */
     protected $nome;
+    
+    /**
+     *
+     * @var string
+     * @Column(type="string")
+     */
+    protected $login;
     
     /**
      *

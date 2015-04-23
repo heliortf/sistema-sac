@@ -31,7 +31,7 @@ class Area {
     /**
      *
      * @var ArrayCollection
-     * @ManyToMany(targetEntity="Usuario", mappedBy="areas")
+     * @OneToMany(targetEntity="Usuario", mappedBy="area")
      */
     private $usuarios;
     
@@ -39,9 +39,17 @@ class Area {
      * Nome da area
      * 
      * @var string
-     * @Column(type="string", name="nome")
+     * @Column(type="string", name="area_nome")
      */
     private $nome;
     
     
+    /**
+     * Empresa a que pertence a área
+     * 
+     * @var Empresa
+     * @ManyToOne(targetEntity="Empresa", inversedBy="areas")
+     * @JoinColumn(name="tb_empresa_empresa_id", referencedColumnName="empresa_id")
+     */
+    private $empresa;
 }
