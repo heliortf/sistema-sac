@@ -2,10 +2,14 @@
 
 use Symfony\Component\ClassLoader\MapClassLoader;
 
-$classes = array();
-
 $ds = DIRECTORY_SEPARATOR;
 $root = dirname(__FILE__)."{$ds}..{$ds}";
+
+$classes = array(
+    'Config' => dirname(__FILE__)."{$ds}config.php"
+);
+
+
 
 $paths = array(
     'models' => $root."model{$ds}"

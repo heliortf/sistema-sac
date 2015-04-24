@@ -14,6 +14,15 @@ use Symfony\Component\Console\Helper\Table;
  */
 class Area {
     
+    /**
+     * Empresa que a area pertence
+     * 
+     * @var Empresa
+     * @ManyToOne(targetEntity="Empresa", inversedBy="areas")
+     * @JoinColumn(name="tb_empresa_empresa_id", referencedColumnName="empresa_id")
+     */
+    protected $empresa;
+    
     function __construct() {
         $this->usuarios = new ArrayCollection();
     }
@@ -41,15 +50,6 @@ class Area {
      * @var string
      * @Column(type="string", name="area_nome")
      */
-    private $nome;
+    private $nome;    
     
-    
-    /**
-     * Empresa a que pertence a área
-     * 
-     * @var Empresa
-     * @ManyToOne(targetEntity="Empresa", inversedBy="areas")
-     * @JoinColumn(name="tb_empresa_empresa_id", referencedColumnName="empresa_id")
-     */
-    private $empresa;
 }

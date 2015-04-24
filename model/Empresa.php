@@ -14,11 +14,23 @@ use Symfony\Component\Console\Helper\Table;
  * @Table(name="tb_empresa")
  */
 class Empresa {
-    
+    /**
+     *
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="Usuario", mappedBy="empresa")
+     */
     private $usuarios;
+    
+    /**
+     *
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="Area", mappedBy="empresa")
+     */
+    private $areas;
     
     public function __construct(){
         $this->usuarios = new ArrayCollection();
+        $this->areas    = new ArrayCollection();
     }
     
     /**

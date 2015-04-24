@@ -1,10 +1,9 @@
 <?php
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\Tests\ORM\Functional\Ticket\Entity;
 use Symfony\Component\Console\Helper\Table;
 
@@ -14,22 +13,9 @@ use Symfony\Component\Console\Helper\Table;
  */
 class Usuario {
     
-    function __construct() {
-        $this->areas = new ArrayCollection();
-    }
-
-    
     /**
-     *
-     * @var int
-     * @Id
-     * @Column(type="integer", name="usuario_id")
-     * @GeneratedValue
-     */
-    protected $id;
-    
-    /**
-     *
+     * Cargo do usuario
+     * 
      * @var Cargo
      * @ManyToOne(targetEntity="Cargo", inversedBy="usuarios")
      * @JoinColumn(name="tb_cargo_cargo_id", referencedColumnName="cargo_id")
@@ -44,6 +30,29 @@ class Usuario {
      * @JoinColumn(name="tb_area_area_id", referencedColumnName="area_id")
      */
     protected $area;
+    
+    /**
+     * Empresa que o usuario pertence
+     * 
+     * @var Empresa
+     * @ManyToOne(targetEntity="Empresa", inversedBy="usuarios")
+     * @JoinColumn(name="tb_empresa_empresa_id", referencedColumnName="empresa_id")
+     */
+    protected $empresa;
+    
+    function __construct() {
+        
+    }
+
+    
+    /**
+     *
+     * @var int
+     * @Id
+     * @Column(type="integer", name="usuario_id")
+     * @GeneratedValue
+     */
+    protected $id;
     
     /**
      *

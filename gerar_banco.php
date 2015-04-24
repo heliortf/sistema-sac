@@ -9,8 +9,10 @@ $em = Conexao::getEntityManager();
 
 $tool = new SchemaTool($em);
 $classes = array(
-  $em->getClassMetadata('Empresa'),
-  $em->getClassMetadata('Area')
+    $em->getClassMetadata('Empresa'),  
+    $em->getClassMetadata('Area'),
+    $em->getClassMetadata('Cargo'),
+    $em->getClassMetadata('Usuario')
 );
 $tool->createSchema($classes);
 
