@@ -18,8 +18,19 @@ class Perfil {
      * Cargo a quem pertence o perfil
      * 
      * @var Cargo
+	 * @OneToMany(targetEntity="Cargo", mappedBy="perfil")
      */
-    private $cargo;
+    private $cargos;
+	
+	/**
+	 * Empresa a quem pertence este perfil
+	 *
+	 * @var Empresa
+	 * @ManyToOne(targetEntity="empresa", inversedBy="perfis")
+	 * @JoinColumn(name="tb_empresa_empresa_id", referencedColumnName="empresa_id")
+	 */
+	private $empresa;
+	
     
     function __construct() {
         

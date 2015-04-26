@@ -27,6 +27,13 @@ class Empresa {
      * @OneToMany(targetEntity="Area", mappedBy="empresa")
      */
     private $areas;
+	
+	/**
+	 *
+	 * @var ArrayCollection
+	 * @OneToMany(targetEntity="Perfil", mappedBy="empresa")
+	 */
+	private $perfis;
     
     public function __construct(){
         $this->usuarios = new ArrayCollection();
@@ -62,4 +69,60 @@ class Empresa {
      * @Column(type="string", name="nome_fantasia")
      */
     private $nomeFantasia;
+	
+	/**
+	 *
+	 * @var string
+	 * @Column(type="string", name="endereco")
+	 */
+	private $endereco;
+	
+	/**
+	 *
+	 * @var string
+	 * @Column(type="string", name="bairro")
+	 */
+	private $bairro;
+	
+	/**
+	 *
+	 * @var string
+	 * @Column(type="string", name="cidade")
+	 */
+	private $cidade;
+	
+	/**
+	 *
+	 * @var string
+	 * @Column(type="string", name="estado", length=30)
+ 	 */
+	private $estado;
+	
+	/**
+	 *
+	 * @var integer
+	 * @Column(type="integer", name="telefone", length=9)
+	 */
+	private $telefone;
+	
+	/**
+	 *
+	 * @var integer
+	 * @Column(type="integer", name="telefone_ddd", length=2)
+	 */
+	private $dddTelefone;
+	
+	/**
+	 *
+	 * @var string
+	 * @Column(type="string", name="email")
+	 */
+	private $email;
+	
+	/**
+	 *
+	 * @var string
+	 * @Column(type="text", name="logo")
+	 */
+	private $logo;
 }
