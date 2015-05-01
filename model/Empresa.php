@@ -30,6 +30,13 @@ class Empresa {
      * @OneToMany(targetEntity="Area", mappedBy="empresa")
      */
     private $areas;
+	
+	/**
+	 *
+	 * @var ArrayCollection
+	 * @OneToMany(targetEntity="Perfil", mappedBy="empresa")
+	 */
+	private $perfis;
     
     /**
      * Perfis cadastrados para a empresa

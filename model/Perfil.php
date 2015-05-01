@@ -31,7 +31,14 @@ class Perfil {
      * @var ArrayCollection
      * @OneToMany(targetEntity="AcaoPerfil", mappedBy="perfil")
      */
-    protected $acoes;
+    protected $acoes;    
+    
+    /**
+     *
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="Usuario", mappedBy="cargo")
+     */
+    private $usuarios;
     
     /**
      * Construtor
@@ -56,13 +63,6 @@ class Perfil {
      * @var string
      * @Column(type="string", name="nome")
      */
-    private $nome;
-    
-    /**
-     *
-     * @var ArrayCollection
-     * @OneToMany(targetEntity="Usuario", mappedBy="cargo")
-     */
-    private $usuarios;
+    private $nome;    
 }
 
