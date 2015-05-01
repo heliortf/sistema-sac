@@ -14,6 +14,15 @@ use Symfony\Component\Console\Helper\Table;
  */
 class Cargo {
     
+    /**
+     * Empresa que o perfil pertence
+     * 
+     * @var Empresa
+     * @ManyToOne(targetEntity="Empresa", inversedBy="cargos")
+     * @JoinColumn(name="tb_empresa_empresa_id", referencedColumnName="empresa_id")
+     */
+    protected $empresa;
+    
     function __construct() {
         $this->usuarios = new ArrayCollection();
     }

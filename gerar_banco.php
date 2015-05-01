@@ -1,6 +1,7 @@
 <?php
 
 use Doctrine\ORM\Tools\SchemaTool;
+ini_set('max_execution_time', 90);
 
 require('vendor/autoload.php');
 require('config/autoload.php');
@@ -12,7 +13,10 @@ $classes = array(
     $em->getClassMetadata('Empresa'),  
     $em->getClassMetadata('Area'),
     $em->getClassMetadata('Cargo'),
-    $em->getClassMetadata('Usuario')
+    $em->getClassMetadata('Usuario'),
+    $em->getClassMetadata('Perfil'),
+    $em->getClassMetadata('AcaoPerfil'),
 );
-$tool->createSchema($classes);
+$tool->updateSchema($classes);
+//$tool->createSchema($classes);
 

@@ -3,6 +3,8 @@
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Tests\ORM\Functional\Ticket\Entity;
 use Symfony\Component\Console\Helper\Table;
@@ -15,14 +17,27 @@ use Symfony\Component\Console\Helper\Table;
 class Perfil {
     
     /**
-     * Cargo a quem pertence o perfil
+     * Empresa que o perfil pertence
      * 
-     * @var Cargo
+     * @var Empresa
+     * @ManyToOne(targetEntity="Empresa", inversedBy="perfis")
+     * @JoinColumn(name="tb_empresa_empresa_id", referencedColumnName="empresa_id")
      */
-    private $cargo;
+    protected $empresa;
     
-    function __construct() {
-        
+    /**
+     * Lista de acoes que este perfil pode ter
+     * 
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="AcaoPerfil", mappedBy="perfil")
+     */
+    protected $acoes;
+    
+    /**
+     * Construtor
+     */
+    function __construct() {        
+        $this->acoes = new ArrayCollection();
     }
 
     
@@ -30,7 +45,7 @@ class Perfil {
      *
      * @var int
      * @Id
-     * @Column(type="integer", name="cargo_id")
+     * @Column(type="integer", name="perfil_id")
      * @GeneratedValue
      */
     private $id;
