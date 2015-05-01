@@ -16,8 +16,6 @@ use Symfony\Component\Console\Helper\Table;
  * @Table(name="tb_acaoperfil")
  */
 class AcaoPerfil {
-   
-    
     
     /**
      *
