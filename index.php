@@ -3,6 +3,8 @@
 require_once("vendor/autoload.php");
 require_once("config/autoload.php");
 
+global $app;
+
 $app = new \Slim\Slim(array(
     'view' => new \Slim\Views\Twig()
 ));
@@ -16,16 +18,8 @@ $view->parserExtensions = array(
     new \Slim\Views\TwigExtension()
 );
 
+require_once('controllers/site.php');
 
-// Pagina inicial
-$app->get('/', function() use($app) {
-    $app->render('home/index.html.twig');
-})->name("home");
-
-
-$app->get('/gerar-banco', function() use($app){
-    
-})->name("gerar_banco");
 
 $app->run();
 

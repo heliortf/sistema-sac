@@ -69,6 +69,13 @@ class Empresa {
     /**
      *
      * @var string
+     * @Column(type="string", name="permalink", length=30);
+     */
+    private $permalink;
+    
+    /**
+     *
+     * @var string
      * @Column(type="string", name="cnpj", length=14)
      */
     private $cnpj;
@@ -139,7 +146,146 @@ class Empresa {
     /**
      *
      * @var string
-     * @Column(type="string", name="logo")
+     * @Column(type="string", name="logo", nullable=true)
      */
     protected $logo;
+    
+    
+    function getUsuarios() {
+        return $this->usuarios;
+    }
+
+    function getAreas() {
+        return $this->areas;
+    }
+
+    function getPerfis() {
+        return $this->perfis;
+    }
+
+    function getCargos() {
+        return $this->cargos;
+    }
+
+    function getId() {
+        return $this->id;
+    }
+
+    function getCnpj() {
+        return $this->cnpj;
+    }
+
+    function getRazaoSocial() {
+        return $this->razaoSocial;
+    }
+
+    function getNomeFantasia() {
+        return $this->nomeFantasia;
+    }
+
+    function getEndereco() {
+        return $this->endereco;
+    }
+
+    function getBairro() {
+        return $this->bairro;
+    }
+
+    function getCidade() {
+        return $this->cidade;
+    }
+
+    function getEstado() {
+        return $this->estado;
+    }
+
+    function getTelefone() {
+        return $this->telefone;
+    }
+
+    function getDddTelefone() {
+        return $this->dddTelefone;
+    }
+
+    function getEmail() {
+        return $this->email;
+    }
+
+    function getLogo() {
+        return $this->logo;
+    }
+
+    function setUsuarios(ArrayCollection $usuarios) {
+        $this->usuarios = $usuarios;
+    }
+
+    function setAreas(ArrayCollection $areas) {
+        $this->areas = $areas;
+    }
+
+    function setPerfis(ArrayCollection $perfis) {
+        $this->perfis = $perfis;
+    }
+
+    function setCargos(ArrayCollection $cargos) {
+        $this->cargos = $cargos;
+    }
+
+    function setId($id) {
+        $this->id = $id;
+    }
+
+    function setCnpj($cnpj) {
+        $this->cnpj = $cnpj;
+    }
+
+    function setRazaoSocial($razaoSocial) {
+        $this->razaoSocial = $razaoSocial;
+    }
+
+    function setNomeFantasia($nomeFantasia) {
+        $this->nomeFantasia = $nomeFantasia;
+    }
+
+    function setEndereco($endereco) {
+        $this->endereco = $endereco;
+    }
+
+    function setBairro($bairro) {
+        $this->bairro = $bairro;
+    }
+
+    function setCidade($cidade) {
+        $this->cidade = $cidade;
+    }
+
+    function setEstado($estado) {
+        $this->estado = $estado;
+    }
+
+    function setTelefone($telefone) {
+        $this->telefone = $telefone;
+    }
+
+    function setDddTelefone($dddTelefone) {
+        $this->dddTelefone = $dddTelefone;
+    }
+
+    function setEmail($email) {
+        $this->email = $email;
+    }
+
+    function setLogo($logo) {
+        $this->logo = $logo;
+    }
+
+    function getPermalink() {
+        return $this->permalink;
+    }
+
+    function setPermalink($permalink) {
+        $this->permalink = $permalink;
+    }
+
+
 }

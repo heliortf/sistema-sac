@@ -14,6 +14,9 @@ use Symfony\Component\Console\Helper\Table;
  */
 class Cargo {
     
+    const ATENDENTE = 'atendente';
+    
+    
     /**
      * Empresa que o perfil pertence
      * 
@@ -51,6 +54,38 @@ class Cargo {
      * @Column(type="string", name="nome")
      */
     private $nome;
+ 
     
+    function getEmpresa() {
+        return $this->empresa;
+    }
+
+    function getUsuarios() {
+        return $this->usuarios;
+    }
+
+    function getId() {
+        return $this->id;
+    }
+
+    function getNome() {
+        return $this->nome;
+    }
+
+    function setEmpresa(Empresa $empresa) {
+        $this->empresa = $empresa;
+    }
+
+    function setUsuarios(ArrayCollection $usuarios) {
+        $this->usuarios = $usuarios;
+    }
+
+    function setId($id) {
+        $this->id = $id;
+    }
+
+    function setNome($nome) {
+        $this->nome = $nome;
+    }
 }
 

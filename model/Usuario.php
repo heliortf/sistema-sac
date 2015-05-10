@@ -116,4 +116,111 @@ class Usuario {
      * @Column(type="integer", length=3, name="celular_ddd")
      */
     protected $dddCelular;
+    
+    
+    function getCargo() {
+        return $this->cargo;
+    }
+
+    function getArea() {
+        return $this->area;
+    }
+
+    function getEmpresa() {
+        return $this->empresa;
+    }
+
+    function getId() {
+        return $this->id;
+    }
+
+    function getNome() {
+        return $this->nome;
+    }
+
+    function getLogin() {
+        return $this->login;
+    }
+
+    function getEmail() {
+        return $this->email;
+    }
+
+    function getSenha() {
+        return $this->senha;
+    }
+
+    function getCpf() {
+        return $this->cpf;
+    }
+
+    function getTelefone() {
+        return $this->telefone;
+    }
+
+    function getDddTelefone() {
+        return $this->dddTelefone;
+    }
+
+    function getCelular() {
+        return $this->celular;
+    }
+
+    function getDddCelular() {
+        return $this->dddCelular;
+    }
+
+    function setCargo(Cargo $cargo) {
+        $this->cargo = $cargo;
+    }
+
+    function setArea(Area $area) {
+        $this->area = $area;
+    }
+
+    function setEmpresa(Empresa $empresa) {
+        $this->empresa = $empresa;
+    }
+
+    function setId($id) {
+        $this->id = $id;
+    }
+
+    function setNome($nome) {
+        $this->nome = $nome;
+    }
+
+    function setLogin($login) {
+        $this->login = $login;
+    }
+
+    function setEmail($email) {
+        $this->email = $email;
+    }
+
+    function setSenha($senha) {
+        $this->senha = $senha;
+    }
+
+    function setCpf($cpf) {
+        $this->cpf = $cpf;
+    }
+
+    function setTelefone($telefone) {
+        $this->telefone = $telefone;
+    }
+
+    function setDddTelefone($dddTelefone) {
+        $this->dddTelefone = $dddTelefone;
+    }
+
+    function setCelular($celular) {
+        $this->celular = $celular;
+    }
+
+    function setDddCelular($dddCelular) {
+        $this->dddCelular = $dddCelular;
+    }
+
+
 }

@@ -59,11 +59,52 @@ class Perfil {
     private $id;
     
     /**
-     * Nome do cargo
+     * Nome do perfil
      * 
      * @var string
      * @Column(type="string", name="nome")
      */
     private $nome;    
+    
+    
+    function getEmpresa() {
+        return $this->empresa;
+    }
+
+    function getAcoes() {
+        return $this->acoes;
+    }
+
+    function getUsuarios() {
+        return $this->usuarios;
+    }
+
+    function getId() {
+        return $this->id;
+    }
+
+    function getNome() {
+        return $this->nome;
+    }
+
+    function setEmpresa(Empresa $empresa) {
+        $this->empresa = $empresa;
+    }
+
+    function setAcoes(ArrayCollection $acoes) {
+        $this->acoes = $acoes;
+    }
+
+    function setUsuarios(ArrayCollection $usuarios) {
+        $this->usuarios = $usuarios;
+    }
+
+    function setId($id) {
+        $this->id = $id;
+    }
+
+    function setNome($nome) {
+        $this->nome = $nome;
+    }
 }
 

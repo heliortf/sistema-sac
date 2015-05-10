@@ -52,4 +52,37 @@ class Area {
      */
     private $nome;    
     
+    function getEmpresa() {
+        return $this->empresa;
+    }
+
+    function getId() {
+        return $this->id;
+    }
+
+    function getUsuarios() {
+        return $this->usuarios;
+    }
+
+    function getNome() {
+        return $this->nome;
+    }
+
+    function setEmpresa(Empresa $empresa) {
+        $this->empresa = $empresa;
+    }
+
+    function setId($id) {
+        $this->id = $id;
+    }
+
+    function setUsuarios(ArrayCollection $usuarios) {
+        $this->usuarios = $usuarios;
+    }
+
+    function setNome($nome) {
+        $this->nome = $nome;
+    }
+
+
 }
