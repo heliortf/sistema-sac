@@ -19,6 +19,7 @@ $view->parserExtensions = array(
 );
 
 require_once('controllers/site.php');
+require_once('controllers/autenticacao.php');
 
 
 $app->run();

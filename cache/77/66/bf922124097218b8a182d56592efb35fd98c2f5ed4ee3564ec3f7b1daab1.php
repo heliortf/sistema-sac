@@ -37,7 +37,10 @@ class __TwigTemplate_7766bf922124097218b8a182d56592efb35fd98c2f5ed4ee3564ec3f7b1
         // line 5
         echo "    <div class=\"row\">
         <div class=\"col-md-4 col-md-offset-4\">
-            <form class=\"form form-horizontal form-login\">        
+            <form class=\"form form-horizontal form-login\" method=\"post\" action=\"";
+        // line 7
+        echo twig_escape_filter($this->env, (isset($context["urlAutenticar"]) ? $context["urlAutenticar"] : null), "html", null, true);
+        echo "\">        
                 <div class=\"form-group\">
                     <label class=\"col-sm-2 control-label\">Login:</label>
                     <div class=\"col-sm-10\">
@@ -73,6 +76,6 @@ class __TwigTemplate_7766bf922124097218b8a182d56592efb35fd98c2f5ed4ee3564ec3f7b1
 
     public function getDebugInfo()
     {
-        return array (  38 => 5,  35 => 4,  29 => 2,  11 => 1,);
+        return array (  42 => 7,  38 => 5,  35 => 4,  29 => 2,  11 => 1,);
     }
 }
