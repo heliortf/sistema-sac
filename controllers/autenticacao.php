@@ -1,7 +1,9 @@
 <?php
 
+use Slim\Slim;
+
 /**
- * 
+ * @var Slim
  */
 global $app;
 
@@ -9,8 +11,8 @@ global $app;
  * Realiza o processo de autenticação do usuario no sistema
  */
 $app->post('/autenticar', function() use($app){    
-    $login = $_POST['login'];
-    $senha = $_POST['senha'];
+    $login = $app->request->post('login');
+    $senha = $app->request->post('senha');
     
     $a = new Autenticacao();
     $usuario = $a->autenticar(array(
@@ -18,9 +20,15 @@ $app->post('/autenticar', function() use($app){
         'senha' => $senha
     ));
     
-    var_dump($usuario);
-    if($usuario instanceof Usuario){
-        
+    if($usuario !== false){
+        $em = Conexao::getEntityManager();
+        $usuario = $em->find('Usuario', 1);
+        var_dump($usuario); die();
+        $_SESSION['usuario'] = $usuario;
+    }
+    else {
+        $app->flash('error', 'Usuário e/ou senha inválidos');
+        $app->redirectTo('home');
     }
 })
 ->name('autenticar');

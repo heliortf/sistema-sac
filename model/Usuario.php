@@ -17,7 +17,7 @@ class Usuario {
      * Cargo do usuario
      * 
      * @var Cargo
-     * @ManyToOne(targetEntity="Cargo", inversedBy="usuarios")
+     * @ManyToOne(targetEntity="Cargo", inversedBy="usuarios", fetch="LAZY")
      * @JoinColumn(name="tb_cargo_cargo_id", referencedColumnName="cargo_id")
      */
     protected $cargo;
@@ -26,7 +26,7 @@ class Usuario {
      * Area que o usuário pertence
      *      
      * @var Area
-     * @ManyToOne(targetEntity="Area", inversedBy="usuarios")
+     * @ManyToOne(targetEntity="Area", inversedBy="usuarios", fetch="LAZY")
      * @JoinColumn(name="tb_area_area_id", referencedColumnName="area_id")
      */
     protected $area;
@@ -35,7 +35,7 @@ class Usuario {
      * Empresa que o usuario pertence
      * 
      * @var Empresa
-     * @ManyToOne(targetEntity="Empresa", inversedBy="usuarios")
+     * @ManyToOne(targetEntity="Empresa", inversedBy="usuarios", fetch="LAZY")
      * @JoinColumn(name="tb_empresa_empresa_id", referencedColumnName="empresa_id")
      */
     protected $empresa;
@@ -170,15 +170,15 @@ class Usuario {
         return $this->dddCelular;
     }
 
-    function setCargo(Cargo $cargo) {
+    function setCargo( $cargo) {
         $this->cargo = $cargo;
     }
 
-    function setArea(Area $area) {
+    function setArea( $area) {
         $this->area = $area;
     }
 
-    function setEmpresa(Empresa $empresa) {
+    function setEmpresa( $empresa) {
         $this->empresa = $empresa;
     }
 
