@@ -9,6 +9,23 @@
     </head>
     <body>
         <div class="container-fluid effort site">
+            {% if user.isLogado() %}
+                <div class="row barra-status">                    
+                    <div class="col-md-12">
+                        <ul class="nav navbar-nav navbar-right">                    
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i> {{ user.getUsuario().getNome() }} <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#"><i class="fa fa-cogs"></i> Configura&ccedil;&otilde;es</a></li>
+                                    <li><a href="{{ urlFor('logout') }}"><i class="fa fa-sign-out"></i> Sair</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                
+            {% endif %}
             <div class="row topo">
                 <div class="col-md-3 logotipo">                    
                     <div class="row">      
@@ -23,6 +40,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6 col-md-offset-1">
+                    {% if flash.sucesso %}
+                        <div class="alert alert-success" role="alert">{{ flash.sucesso }}</div>
+                    {% endif %}
+                    {% if flash.warning %}
+                        <div class="alert alert-warning" role="alert">{{ flash.warning }}</div>
+                    {% endif %}
+                    {% if flash.erro %}
+                        <div class="alert alert-danger" role="alert">{{ flash.erro }}</div>
+                    {% endif %}
+                </div>
             </div>
             <div class="row menu">
                 {% block menu_principal %}{% endblock %}
@@ -36,6 +64,13 @@
         <script type="text/javascript" src="js/lib/jquery/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="css/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/lib/less/lesscss.js"></script>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                setTimeout(function(){
+                    jQuery(".alert").fadeOut();
+                }, 2500);
+            });
+        </script>
         {% block scripts %}{% endblock %}
     </body>
 </html>

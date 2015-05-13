@@ -22,12 +22,12 @@ $app->post('/autenticar', function() use($app){
     
     if($usuario instanceof Usuario){
         $_SESSION['usuario'] = $usuario->getId();
-		$app->flash('sucesso', 'Bem vindo, '.$usuario->getNome());
-		$app->redirectTo('home');
+        $app->flash('sucesso', 'Bem vindo, '.$usuario->getNome());
+        $app->redirectTo('home');
     }
-	else {
-		$app->flash('erro', "Usuário e/ou senha inválidos");
-	}
+    else {
+            $app->flash('erro', "Usuário e/ou senha inválidos");
+    }
 })
 ->name('autenticar');
 
@@ -36,6 +36,7 @@ $app->post('/autenticar', function() use($app){
  * Realiza o processo de saída do sistema
  */
 $app->get('/logout', function() use($app){
-    
+    session_destroy();    
+    $app->redirectTo('home');
 })
 ->name('logout');
