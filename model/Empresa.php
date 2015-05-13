@@ -19,7 +19,7 @@ class Empresa {
      * Usuários da empresa
      * 
      * @var ArrayCollection
-     * @OneToMany(targetEntity="Usuario", mappedBy="empresa")
+     * @OneToMany(targetEntity="Usuario", mappedBy="empresa", fetch="LAZY")
      */
     private $usuarios;
     
@@ -27,7 +27,7 @@ class Empresa {
      * Areas cadastradas para a empresa
      * 
      * @var ArrayCollection
-     * @OneToMany(targetEntity="Area", mappedBy="empresa")
+     * @OneToMany(targetEntity="Area", mappedBy="empresa", fetch="LAZY")
      */
     private $areas;
 	
@@ -35,7 +35,7 @@ class Empresa {
      * Perfis cadastrados para a empresa
      * 
      * @var ArrayCollection
-     * @OneToMany(targetEntity="Perfil", mappedBy="empresa")
+     * @OneToMany(targetEntity="Perfil", mappedBy="empresa", fetch="LAZY")
      */
     private $perfis;
     
@@ -43,7 +43,7 @@ class Empresa {
      * Lista de cargos da empresa
      * 
      * @var ArrayCollection
-     * @OneToMany(targetEntity="Cargo", mappedBy="empresa")
+     * @OneToMany(targetEntity="Cargo", mappedBy="empresa", fetch="LAZY")
      */
     private $cargos;
     

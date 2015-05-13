@@ -20,6 +20,10 @@ $view->parserExtensions = array(
     new \Slim\Views\TwigExtension()
 );
 
+ini_set('max_execution_time', 60);
+
+ini_set('memory_limit ', '128M');
+
 require_once('controllers/site.php');
 require_once('controllers/autenticacao.php');
 
