@@ -16,12 +16,16 @@ $app->post('/autenticar', function() use($app){
     $usuario = $a->autenticar(array(
         'login' => $login,
         'senha' => $senha
-    ));
+    ));    
     
-    var_dump($usuario);
     if($usuario instanceof Usuario){
-        
+        $_SESSION['usuario'] = $usuario->getId();
+		$app->flash('sucesso', 'Bem vindo, '.$usuario->getNome());
+		$app->redirectTo('home');
     }
+	else {
+		$app->flash('erro', "Usuário e/ou senha inválidos");
+	}
 })
 ->name('autenticar');
 

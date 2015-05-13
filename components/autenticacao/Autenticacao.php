@@ -20,7 +20,7 @@ class Autenticacao {
         ));
         
         $usuarios = $query->getResult();
-        var_dump($usuarios); die("morreu");
+        
         if(count($usuarios) == 1){
             return $usuarios[0];
         }
