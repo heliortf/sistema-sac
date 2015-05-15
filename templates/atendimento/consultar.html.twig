@@ -1,4 +1,4 @@
-{% extends "layout/site.html.twig" %}
+{% extends "layout/sistema.html.twig" %}
 {% block titulo %}Consultar Atendimento{% endblock %}
 {% block conteudo %}
     <div class="row consultar-atendimento">
@@ -54,8 +54,20 @@
                                     <td></td>
                                     <td>{{ a.getTitulo() }}</td>
                                     <td>{{ a.getDataCriacao().format("d/m/Y") }}</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ a.getStatus().getNome() }}</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-bolt"></i> A&ccedil;&atilde;o
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                <li><a href=""><i class="fa fa-newspaper-o"></i> Visualizar</a></li>
+                                                <li><a href=""><i class="fa fa-check"></i> Resolver</a></li>
+                                                <li><a href=""><i class="fa fa-share"></i> Encaminhar</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
                             {% else %}
                                 <tr>

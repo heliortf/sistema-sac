@@ -107,12 +107,43 @@ $em->flush();
 /**
  * Cria os atendimentos
  */
+$TipoA1 = new TipoAtendimento();
+$TipoA1->setNome("Solicitação");
+
+$TipoA2 = new TipoAtendimento();
+$TipoA2->setNome("Sugestão");
+
+$TipoA3 = new TipoAtendimento();
+$TipoA3->setNome("Elogio");
+
+$em->persist($TipoA1);
+$em->persist($TipoA2);
+$em->persist($TipoA3);
+$em->flush();
+
+$Status1 = new StatusAtendimento();
+$Status1->setNome("Aberto");
+
+$Status2 = new StatusAtendimento();
+$Status2->setNome("Resolvido");
+
+$Status3 = new StatusAtendimento();
+$Status3->setNome("Em andamento");
+
+$em->persist($Status1);
+$em->persist($Status2);
+$em->persist($Status3);
+$em->flush();
+
+
 $AT = new Atendimento();
 $AT->setEmpresa($E);
 $AT->setCliente($C);
 $AT->setArea($A);
 $AT->setAtendente($U);
 $AT->setCriadoPor($U->getNome());
+$AT->setStatus($Status1);
+$AT->setTipo($TipoA1);
 $AT->setDataCriacao(new DateTime());
 $AT->setTitulo("Cliente gostaria de receber 2ª via do boleto");
 $AT->setDescricao("O cliente gostaria de receber a 2ª via por e-mail");

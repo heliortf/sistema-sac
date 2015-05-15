@@ -55,10 +55,18 @@ class Atendimento {
     /**
      *
      * @var StatusAtendimento
-     * @ManyToOne(targetEntity="Atendimento", inversedBy="atendimentos")
+     * @ManyToOne(targetEntity="StatusAtendimento", inversedBy="atendimentos")
      * @JoinColumn(name="tb_status_tipo_status_tipo_id", referencedColumnName="status_tipo_id")
      */
     private $status;
+    
+    /**
+     *
+     * @var TipoAtendimento
+     * @ManyToOne(targetEntity="TipoAtendimento", inversedBy="atendimentos")
+     * @JoinColumn(name="tb_ticket_tipo_ticket_tipo_id", referencedColumnName="ticket_tipo_id")
+     */
+    private $tipo;
     
     /**
      * Construtor
@@ -228,5 +236,13 @@ class Atendimento {
 
     function setStatus(StatusAtendimento $status) {
         $this->status = $status;
+    }
+    
+    function getTipo() {
+        return $this->tipo;
+    }
+
+    function setTipo(TipoAtendimento $tipo) {
+        $this->tipo = $tipo;
     }
 }

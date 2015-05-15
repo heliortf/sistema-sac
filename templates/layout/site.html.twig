@@ -1,90 +1,247 @@
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>
-            {% if user.isLogado() %}
-                :: {{ user.getUsuario().getEmpresa().getNomeFantasia() }} :: 
-            {% else %}
-                :: Effort :: 
-            {% endif %}
-            {% block titulo %}{% endblock %}
-        </title>
-        <base href="{{ urlFor('home') }}" />
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.4-dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.4-dist/css/bootstrap-theme.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">        
-        <link rel="stylesheet/less" type="text/css" href="css/estilo.less" />
-        {% block css %}{% endblock %}
-    </head>
-    <body>
-        <div class="container-fluid effort site">
-            {% if user.isLogado() %}
-                <div class="row barra-status">                    
-                    <div class="col-md-12">
-                        <ul class="nav navbar-nav navbar-right">                    
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i> {{ user.getUsuario().getNome() }} <span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#"><i class="fa fa-cogs"></i> Configura&ccedil;&otilde;es</a></li>
-                                    <li><a href="{{ urlFor('logout') }}"><i class="fa fa-sign-out"></i> Sair</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
+<!-- Tema obtido em: http://ironsummitmedia.github.io/startbootstrap-stylish-portfolio/ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="{{ urlFor('home') }}" />
+    <title>Effort Sistemas :: Priorizando o atendimento</title>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.4-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.4-dist/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css" />        
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />    
+    <link rel="stylesheet" type="text/css" href="css/site.css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <!-- Navigation -->
+    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <nav id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+            <li class="sidebar-brand">
+                <a href="#top"  onclick = $("#menu-close").click(); >Start Bootstrap</a>
+            </li>
+            <li>
+                <a href="#top" onclick = $("#menu-close").click(); >Home</a>
+            </li>
+            <li>
+                <a href="#about" onclick = $("#menu-close").click(); >About</a>
+            </li>
+            <li>
+                <a href="#services" onclick = $("#menu-close").click(); >Services</a>
+            </li>
+            <li>
+                <a href="#portfolio" onclick = $("#menu-close").click(); >Portfolio</a>
+            </li>
+            <li>
+                <a href="#contact" onclick = $("#menu-close").click(); >Contact</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Header -->
+    <header id="top" class="header">
+        <div class="text-vertical-center">
+            <h1>Effort Sistemas</h1>
+            <h3>Priorizando o atendimento</h3>
+            <br>
+            <a href="#about" class="btn btn-dark btn-lg">Saiba mais</a>
+        </div>
+    </header>
+
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>O sistema Effort &eacute; o que sua empresa precisa!</h2>
+                    <p class="lead">Refer&ecirc;ncia em atendimento ao cliente.</p>
                 </div>
-            {% else %}
-                
-            {% endif %}
-            <div class="row topo">
-                <div class="col-md-3 logotipo">                    
-                    <div class="row">      
-                        <div class="col-md-11 col-md-offset-1">
-                            <i class="fa fa-chevron-right claro"></i>
-                            <i class="fa fa-chevron-right escuro"></i>
-                        </div>
-                    </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+
+    <!-- Services -->
+    <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
+    <section id="services" class="services bg-primary">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-10 col-lg-offset-1">
+                    <h2>Nossas Funcionalidades</h2>
+                    <hr class="small">
                     <div class="row">
-                        <div class="col-md-11 col-md-offset-1">
-                            <h1>Effort</h1>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-cloud fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Cloud Computing</strong>
+                                </h4>
+                                <p>Nosso ambiente funciona nas nuvens.</p>
+                                <a href="#" class="btn btn-light">Saiba mais</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-compass fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Fluxo do Atendimento</strong>
+                                </h4>
+                                <p>Saiba em que setor est&aacute; o atendimento e para onde ele vai.</p>
+                                <a href="#" class="btn btn-light">Saiba mais</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-table fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Atendimento detalhado</strong>
+                                </h4>
+                                <p>N&atilde;o perca informa&ccedil;&otilde;es. Armazene os dados em coment&aacute;rios.</p>
+                                <a href="#" class="btn btn-light">Saiba mais</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-shield fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Segurança Total</strong>
+                                </h4>
+                                <p>Seu cliente acessa as informa&ccedil;&otilde;es usando email e senha.</p>
+                                <a href="#" class="btn btn-light">Saiba mais</a>
+                            </div>
                         </div>
                     </div>
+                    <!-- /.row (nested) -->
                 </div>
-                <div class="col-md-6 col-md-offset-1">
-                    {% if flash.sucesso %}
-                        <div class="alert alert-success" role="alert">{{ flash.sucesso }}</div>
-                    {% endif %}
-                    {% if flash.warning %}
-                        <div class="alert alert-warning" role="alert">{{ flash.warning }}</div>
-                    {% endif %}
-                    {% if flash.erro %}
-                        <div class="alert alert-danger" role="alert">{{ flash.erro }}</div>
-                    {% endif %}
+                <!-- /.col-lg-10 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+
+    <!-- Callout -->
+    <aside class="callout">
+        <div class="text-vertical-center">
+            <h1>Relat&oacute;rios de atendimento</h1>
+        </div>
+    </aside>
+
+    
+
+    <!-- Call to Action -->
+    <aside class="call-to-action bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h3>Como contratar nosso sistema?</h3>
+                    <a href="#" class="btn btn-lg btn-light">Fa&ccedil;a uma proposta</a>
+                    <a href="#" class="btn btn-lg btn-dark">Liga pra gente!</a>
                 </div>
             </div>
-            <div class="row menu">
-                {% block menu_principal %}
-                    {% if user.isLogado() %}
-                        {% set menu = "menu/" ~ user.getUsuario().getCargo().getNome() ~ ".html.twig" %}
-                        {% include menu %}
-                    {% endif %}
-                {% endblock %}
-            </div>
-            <div class="row conteudo">
-                <div class="col-md-12">
-                    {% block conteudo %}{% endblock %}
+        </div>
+    </aside>
+
+    <!-- Map -->
+    <section id="contact" class="map">
+        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
+        <br />
+        <small>
+            <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A"></a>
+        </small>
+        </iframe>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h4><strong>Effort sistemas</strong>
+                    </h4>
+                    <p>R. Granfino, Est&aacute;cio de S&aacute;<br>Nova Igua&ccedil;&uacute;, Rio de Janeiro</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-phone fa-fw"></i> (21) 2256-7890</li>
+                        <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="faleconosco@effort.com.br">faleconosco@effort.com.br</a>
+                        </li>
+                    </ul>
+                    <br>
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>
+                        </li>
+                    </ul>
+                    <hr class="small">
+                    <p class="text-muted">Copyright &copy; Your Website 2014</p>
                 </div>
             </div>
-        </div>        
-        <script type="text/javascript" src="js/lib/jquery/jquery-1.11.3.min.js"></script>
-        <script type="text/javascript" src="css/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/lib/less/lesscss.js"></script>
-        <script type="text/javascript">
-            jQuery(document).ready(function(){
-                setTimeout(function(){
-                    jQuery(".alert").fadeOut();
-                }, 2500);
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="js/lib/jquery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="css/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>        
+    <script type="text/javascript">        
+        $("#menu-close").click(function(e) {
+            e.preventDefault();
+            $("#sidebar-wrapper").toggleClass("active");
+        });
+
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#sidebar-wrapper").toggleClass("active");
+        });
+
+        $(function() {
+            $('a[href*=#]:not([href=#])').click(function() {
+                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        $('html,body').animate({
+                            scrollTop: target.offset().top
+                        }, 1000);
+                        return false;
+                    }
+                }
             });
-        </script>
-        {% block scripts %}{% endblock %}
-    </body>
+        });
+    </script>
+
+</body>
+
 </html>
