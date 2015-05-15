@@ -96,7 +96,7 @@ $C->setTelefone(26598856);
 $C->setDddTelefone(21);
 $C->setEmail("jose.silva.souza@gmail.com");
 $C->setSenha("12345");
-$C->setDataCriacao(date("Y-m-d H:i:s"));
+$C->setDataCriacao(new DateTime());
 
 $em->persist($C);
 $em->flush();
@@ -111,7 +111,7 @@ $AT->setCliente($C);
 $AT->setArea($A);
 $AT->setAtendente($U);
 $AT->setCriadoPor($U->getNome());
-$AT->setDataCriacao(date("Y-m-d H:i:s"));
+$AT->setDataCriacao(new DateTime());
 $AT->setTitulo("Cliente gostaria de receber 2ª via do boleto");
 $AT->setDescricao("O cliente gostaria de receber a 2ª via por e-mail");
 

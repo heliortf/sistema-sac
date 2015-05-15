@@ -70,21 +70,21 @@ class Cliente {
     /**
      *
      * @var integer
-     * @Column(type="integer", length=14)
+     * @Column(type="integer", length=14, nullable=true)
      */
     private $cnpj;
     
     /**
      *
      * @var integer
-     * @Column(type="integer", length=11)
+     * @Column(type="integer", length=11, nullable=true)
      */
     private $cpf;
     
     /**
      *
      * @var string
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
      */
     private $email;
     
@@ -92,7 +92,7 @@ class Cliente {
      * Telefone do cliente
      * 
      * @var integer
-     * @Column(type="integer", length=9)
+     * @Column(type="integer", length=9, nullable=true)
      */
     private $telefone;
     
@@ -100,21 +100,21 @@ class Cliente {
      * DDD do telefone
      * 
      * @var integer
-     * @Column(type="integer", name="telefone_ddd", length=3)
+     * @Column(type="integer", name="telefone_ddd", length=3, nullable=true)
      */
     private $dddTelefone;
     
     /**
      *
      * @var integer
-     * @Column(type="integer", name="celular", length=9)
+     * @Column(type="integer", name="celular", length=9, nullable=true)
      */
     private $celular;
     
     /**
      *
      * @var integer
-     * @Column(type="integer", name="celular_ddd", length=3)
+     * @Column(type="integer", name="celular_ddd", length=3, nullable=true)
      */
     private $dddCelular;
     

@@ -108,56 +108,56 @@ class Empresa {
     /**
      *
      * @var string
-     * @Column(type="string", name="nome_fantasia")
+     * @Column(type="string", name="nome_fantasia", nullable=true)
      */
     private $nomeFantasia;
     
     /**
      *
      * @var string
-     * @Column(type="string", name="endereco", length=255)
+     * @Column(type="string", name="endereco", length=255, nullable=true)
      */
     private $endereco;
     
     /**
      *
      * @var string
-     * @Column(type="string", name="bairro", length=120)
+     * @Column(type="string", name="bairro", length=120, nullable=true)
      */
     private $bairro;
     
     /**
      *
      * @var string
-     * @Column(type="string", name="cidade", length=120)
+     * @Column(type="string", name="cidade", length=120, nullable=true)
      */
     private $cidade;
     
     /**
      *
      * @var string
-     * @Column(type="string", name="estado", length=25)
+     * @Column(type="string", name="estado", length=25, nullable=true)
      */
     private $estado;
     
     /**
      *
      * @var string
-     * @Column(type="integer", length=8)
+     * @Column(type="integer", length=8, nullable=true)
      */
     protected $telefone;
     
     /**
      *
      * @var string
-     * @Column(type="integer", length=3, name="telefone_ddd")
+     * @Column(type="integer", length=3, name="telefone_ddd", nullable=true)
      */
     protected $dddTelefone;
     
     /**
      *
      * @var string
-     * @Column(type="string", length=255, name="email")
+     * @Column(type="string", length=255, name="email", nullable=true)
      */
     protected $email;
     

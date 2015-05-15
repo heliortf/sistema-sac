@@ -48,7 +48,7 @@ class Atendimento {
      * 
      * @var Usuario
      * @ManyToOne(targetEntity="Usuario", inversedBy="meusAtendimentos")
-     * @JoinColumn(name="tb_usuario_usuario_id", referencedColumnName="usuario_id")
+     * @JoinColumn(name="tb_usuario_usuario_id", referencedColumnName="usuario_id", nullable=true)
      */
     private $atendente;
     

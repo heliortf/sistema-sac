@@ -84,7 +84,7 @@ class Usuario {
     /**
      *
      * @var string
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
      */
     protected $email;
     
@@ -98,35 +98,35 @@ class Usuario {
     /**
      *
      * @var string
-     * @Column(type="string", length=11)
+     * @Column(type="string", length=11, nullable=true)
      */
     protected $cpf;
     
     /**
      *
      * @var string
-     * @Column(type="integer", length=8)
+     * @Column(type="integer", length=8, nullable=true)
      */
     protected $telefone;
     
     /**
      *
      * @var string
-     * @Column(type="integer", length=3, name="telefone_ddd")
+     * @Column(type="integer", length=3, name="telefone_ddd", nullable=true)
      */
     protected $dddTelefone;
     
     /**
      *
      * @var string
-     * @Column(type="integer", length=9)
+     * @Column(type="integer", length=9, nullable=true)
      */
     protected $celular;
     
     /**
      *
      * @var string
-     * @Column(type="integer", length=3, name="celular_ddd")
+     * @Column(type="integer", length=3, name="celular_ddd", nullable=true)
      */
     protected $dddCelular;
     
