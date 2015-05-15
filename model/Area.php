@@ -3,7 +3,9 @@
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Tests\ORM\Functional\Ticket\Entity;
 use Symfony\Component\Console\Helper\Table;
 
@@ -23,8 +25,25 @@ class Area {
      */
     protected $empresa;
     
+    
+    /**
+     *
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="Usuario", mappedBy="area")
+     */
+    private $usuarios;
+    
+    /**
+     * Lista de atendimentos da area
+     * 
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="Atendimento", mappedBy="area")
+     */
+    protected $atendimentos;
+    
     function __construct() {
         $this->usuarios = new ArrayCollection();
+        $this->atendimentos = new ArrayCollection();
     }
 
     
@@ -35,14 +54,7 @@ class Area {
      * @Column(type="integer", name="area_id")
      * @GeneratedValue
      */
-    private $id;
-    
-    /**
-     *
-     * @var ArrayCollection
-     * @OneToMany(targetEntity="Usuario", mappedBy="area")
-     */
-    private $usuarios;
+    private $id;    
     
     /**
      * Nome da area
@@ -82,6 +94,14 @@ class Area {
 
     function setNome($nome) {
         $this->nome = $nome;
+    }
+
+    function getAtendimentos() {
+        return $this->atendimentos;
+    }
+
+    function setAtendimentos(ArrayCollection $atendimentos) {
+        $this->atendimentos = $atendimentos;
     }
 
 

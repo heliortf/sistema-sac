@@ -1,0 +1,58 @@
+{% extends "layout/site.html.twig" %}
+{% block titulo %}Consultar Atendimento{% endblock %}
+{% block conteudo %}
+    <div class="row consultar-atendimento">
+        <div class="col-md-10 col-md-offset-1 bloco-principal">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 filtro-consultar-atendimento">
+                    <form method="get" action="" class="form form-horizontal">
+                        <div class="form-group">
+                            <label for="numero" class="col-sm-2 control-label">N&uacute;mero</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="numero" placeholder="N&uacute;mero do atendimento">
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" name="btn_consultar" class="btn btn-primary">Pesquisar</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cliente" class="col-sm-2 control-label">Cliente</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="cliente" placeholder="Nome do cliente">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cliente" class="col-sm-2 control-label">Documento</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="documento" placeholder="Nome do documento">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row lista-atendimentos">
+                <div class="col-md-10 col-md-offset-1">
+                    <table class="table tabela-atendimentos table-bordered">
+                        <thead>
+                            <tr>
+                                <th>N&uacute;mero</th>
+                                <th>Cliente</th>                                
+                                <th>Respons&aacute;vel</th>
+                                <th>Doc.</th>
+                                <th>T&iacute;tulo</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="8">Nenhum atendimento</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -48,13 +48,31 @@ class Empresa {
     private $cargos;
     
     /**
+     * Lista de clientes da empresa
+     * 
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="Cliente", mappedBy="empresa", fetch="LAZY")
+     */
+    private $clientes;
+    
+    /**
+     * Lista de atendimentos da empresa
+     * 
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="Atendimento", mappedBy="empresa", fetch="LAZY")
+     */
+    private $atendimentos;
+    
+    /**
      * Construtor
      */
     public function __construct(){
-        $this->usuarios = new ArrayCollection();
-        $this->areas    = new ArrayCollection();
-        $this->perfis   = new ArrayCollection();
-        $this->cargos   = new ArrayCollection();
+        $this->usuarios     = new ArrayCollection();
+        $this->areas        = new ArrayCollection();
+        $this->perfis       = new ArrayCollection();
+        $this->cargos       = new ArrayCollection();
+        $this->clientes     = new ArrayCollection();
+        $this->atendimentos = new ArrayCollection();
     }
     
     /**

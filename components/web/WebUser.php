@@ -61,5 +61,5 @@ class WebUser {
      */
     function getUsuario() {
         return $this->usuario;
-    }
+    }    
 }

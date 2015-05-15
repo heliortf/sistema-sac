@@ -1,9 +1,17 @@
 <html>
     <head>
-        <title>{% block titulo %}Titulo{% endblock %}</title>
+        <title>
+            {% if user.isLogado() %}
+                :: {{ user.getUsuario().getEmpresa().getNomeFantasia() }} :: 
+            {% else %}
+                :: Effort :: 
+            {% endif %}
+            {% block titulo %}{% endblock %}
+        </title>
+        <base href="{{ urlFor('home') }}" />
         <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.4-dist/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.4-dist/css/bootstrap-theme.min.css" />
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">        
+        <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">        
         <link rel="stylesheet/less" type="text/css" href="css/estilo.less" />
         {% block css %}{% endblock %}
     </head>
@@ -53,7 +61,12 @@
                 </div>
             </div>
             <div class="row menu">
-                {% block menu_principal %}{% endblock %}
+                {% block menu_principal %}
+                    {% if user.isLogado() %}
+                        {% set menu = "menu/" ~ user.getUsuario().getCargo().getNome() ~ ".html.twig" %}
+                        {% include menu %}
+                    {% endif %}
+                {% endblock %}
             </div>
             <div class="row conteudo">
                 <div class="col-md-12">

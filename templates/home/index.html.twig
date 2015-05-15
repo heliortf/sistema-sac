@@ -1,11 +1,12 @@
 {% extends "layout/site.html.twig" %}
-{% block titulo %}Titulo do home/index{% endblock %}
-
+{% block titulo %}
+    
+{% endblock %}
 {% block conteudo %}
     <div class="row">
         {% if not user.isLogado() %}
         <div class="col-md-4 col-md-offset-4">
-            <form class="form form-horizontal form-login" method="post" action="{{ urlAutenticar }}">        
+            <form class="form form-horizontal form-login" method="post" action="{{ urlFor('autenticar') }}">        
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Login:</label>
                     <div class="col-sm-10">
@@ -26,11 +27,7 @@
             </form>
         </div>
         {% else %}
-            <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="#">Consultar Atendimento</a></li>
-                <li role="presentation"><a href="#">Criar Atendimento</a></li>
-                <li role="presentation"><a href="#">Outra Op&ccedil;&atilde;o</a></li>
-            </ul>
+            
         {% endif %}
     </div>
 {% endblock %}

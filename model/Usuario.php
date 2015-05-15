@@ -1,9 +1,11 @@
 <?php
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Tests\ORM\Functional\Ticket\Entity;
 use Symfony\Component\Console\Helper\Table;
 
@@ -40,8 +42,19 @@ class Usuario {
      */
     protected $empresa;
     
+    /**
+     * Lista de atendimentos do usuario
+     * 
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="Atendimento", mappedBy="atendente")
+     */
+    protected $meusAtendimentos;
+    
+    /**
+     * Construtor
+     */
     function __construct() {
-        
+        $this->meusAtendimentos = new ArrayCollection();
     }
 
     

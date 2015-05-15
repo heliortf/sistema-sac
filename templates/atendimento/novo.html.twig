@@ -1,0 +1,56 @@
+{% extends "layout/site.html.twig" %}
+{% block titulo %}
+    
+{% endblock %}
+{% block conteudo %}
+    <div class="row registrar-atendimento">
+        <div class="col-md-10 col-md-offset-1  bloco-principal">
+            <form method="post" action="" class="form form-horizontal">
+                <div class="form-group">
+                    <label for="numero" class="col-sm-2 control-label">Tipo:</label>
+                    <div class="col-sm-2">
+                        <input type="radio" name="tipo" id="tipo_reclamacao" value="reclamacao" /> <label for="tipo_reclamacao">Reclama&ccedil;&atilde;o</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="radio" name="tipo" id="tipo_sugestao" value="sugestao" /> <label for="tipo_sugestao">Sugest&atilde;o</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="radio" name="tipo" id="tipo_elogio" value="elogio" /> <label for="tipo_elogio">Elogio</label>
+                    </div>                    
+                </div>
+                <div class="form-group">
+                    <label for="cliente" class="col-sm-2 control-label">Cliente</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="cliente" placeholder="Nome do cliente">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cliente" class="col-sm-2 control-label">Documento</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="documento" placeholder="Nome do documento">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cliente" class="col-sm-2 control-label">T&iacute;tulo</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="titulo" placeholder="T&iacute;tulo do atendimento">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="descricao" class="col-sm-2 control-label">Descri&ccedil;&atilde;o</label>
+                    <div class="col-sm-5">
+                        <textarea class="form-control" id="descricao"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-5 col-sm-offset-2">
+                        <button type="button" name="btn_salvar" class="btn btn-primary">Salvar</button>
+                        <a href="{{ urlFor('consultar_atendimento') }}">
+                            <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

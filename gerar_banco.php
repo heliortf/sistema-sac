@@ -16,6 +16,8 @@ $classes = array(
     $em->getClassMetadata('Usuario'),
     $em->getClassMetadata('Perfil'),
     $em->getClassMetadata('AcaoPerfil'),
+    $em->getClassMetadata('Cliente'),
+    $em->getClassMetadata('Atendimento'),
 );
 $tool->dropSchema($classes);
 $tool->createSchema($classes);
@@ -71,11 +73,47 @@ $U->setCpf(13447868716);
 $U->setNome("Helio Ricardo");
 $U->setEmail("heliortf@gmail.com");
 $U->setLogin("heliortf");
-$U->setSenha('h3xw9c');
+$U->setSenha('12345');
 $U->setDddCelular(21);
 $U->setCelular(992098791);
 $U->setDddTelefone(21);
 $U->setTelefone(27687236);
 
 $em->persist($U);
+$em->flush();
+
+
+/**
+ * Cria os clientes da effort
+ */
+$C = new Cliente();
+$C->setEmpresa($E);
+$C->setNome("José da Silva Souza");
+$C->setCpf(11156598716);
+$C->setCelular(998778956);
+$C->setDddCelular(21);
+$C->setTelefone(26598856);
+$C->setDddTelefone(21);
+$C->setEmail("jose.silva.souza@gmail.com");
+$C->setSenha("12345");
+$C->setDataCriacao(date("Y-m-d H:i:s"));
+
+$em->persist($C);
+$em->flush();
+
+
+/**
+ * Cria os atendimentos
+ */
+$AT = new Atendimento();
+$AT->setEmpresa($E);
+$AT->setCliente($C);
+$AT->setArea($A);
+$AT->setAtendente($U);
+$AT->setCriadoPor($U->getNome());
+$AT->setDataCriacao(date("Y-m-d H:i:s"));
+$AT->setTitulo("Cliente gostaria de receber 2ª via do boleto");
+$AT->setDescricao("O cliente gostaria de receber a 2ª via por e-mail");
+
+$em->persist($AT);
 $em->flush();
