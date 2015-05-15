@@ -46,9 +46,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="8">Nenhum atendimento</td>
-                            </tr>
+                            {% for a in atendimentos %}
+                                <tr>
+                                    <td>{{ a.getId() }}</td>
+                                    <td>{{ a.getCliente().getNome() }}</td>
+                                    <td>{{ a.getAtendente().getNome() }}</td>
+                                    <td></td>
+                                    <td>{{ a.getTitulo() }}</td>
+                                    <td>{{ a.getDataCriacao().format("d/m/Y") }}</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="8">Nenhum atendimento</td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

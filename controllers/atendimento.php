@@ -21,10 +21,11 @@ $app->get('/atendimentos', function() use($app){
         'qtdPorPagina'  => 20
     ));
     
-    echo "<pre>"; print_r($atendimentos); echo "</pre>";
+//    echo "<pre>"; print_r($atendimentos); echo "</pre>";
     
     $app->render('atendimento/consultar.html.twig', array(
         'menuPrincipal' => 'consultar_atendimento',
+        'atendimentos'  => $atendimentos['registros'],
         'user' => $user
     ));
 })

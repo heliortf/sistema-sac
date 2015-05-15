@@ -52,6 +52,17 @@ class Atendimento {
      */
     private $atendente;
     
+    /**
+     *
+     * @var StatusAtendimento
+     * @ManyToOne(targetEntity="Atendimento", inversedBy="atendimentos")
+     * @JoinColumn(name="tb_status_tipo_status_tipo_id", referencedColumnName="status_tipo_id")
+     */
+    private $status;
+    
+    /**
+     * Construtor
+     */
     function __construct() {
         
     }
@@ -209,5 +220,13 @@ class Atendimento {
 
     function setArea(Area $area) {
         $this->area = $area;
+    }
+    
+    function getStatus() {
+        return $this->status;
+    }
+
+    function setStatus(StatusAtendimento $status) {
+        $this->status = $status;
     }
 }

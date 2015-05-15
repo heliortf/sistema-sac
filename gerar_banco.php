@@ -17,6 +17,8 @@ $classes = array(
     $em->getClassMetadata('Perfil'),
     $em->getClassMetadata('AcaoPerfil'),
     $em->getClassMetadata('Cliente'),
+    $em->getClassMetadata('StatusAtendimento'),
+    $em->getClassMetadata('TipoAtendimento'),
     $em->getClassMetadata('Atendimento'),
 );
 $tool->dropSchema($classes);
