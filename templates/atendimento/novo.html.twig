@@ -1,7 +1,5 @@
 {% extends "layout/sistema.html.twig" %}
-{% block titulo %}
-    
-{% endblock %}
+{% block titulo %}Registrar Atendimento{% endblock %}
 {% block conteudo %}
     <div class="row registrar-atendimento">
         <div class="col-md-10 col-md-offset-1  bloco-principal">
@@ -9,7 +7,7 @@
                 <div class="form-group">
                     <label for="numero" class="col-sm-2 control-label">Tipo:</label>
                     <div class="col-sm-2">
-                        <input type="radio" name="tipo" id="tipo_solicitacao" value="solicitacao" /> <label for="tipo_solicitacao">Solicita&ccedil;&atilde;o</label>
+                        <input type="radio" name="tipo" id="tipo_solicitacao" value="solicitacao" checked /> <label for="tipo_solicitacao">Solicita&ccedil;&atilde;o</label>
                     </div>
                     <div class="col-sm-2">
                         <input type="radio" name="tipo" id="tipo_sugestao" value="sugestao" /> <label for="tipo_sugestao">Sugest&atilde;o</label>
@@ -21,7 +19,7 @@
                 <div class="form-group">
                     <label for="cliente" class="col-sm-2 control-label">Cliente</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" id="cliente" placeholder="Nome do cliente">
+                        <input type="text" class="form-control typeahead" id="cliente" placeholder="Nome do cliente">
                     </div>
                 </div>
                 <div class="form-group">
@@ -53,4 +51,8 @@
             </form>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    
 {% endblock %}
