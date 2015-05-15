@@ -26,20 +26,22 @@ class Atendimentos {
         );
         
         $query = $em->createQuery("select a $dql");
-        $query->setParameters($pDql);
-        $query->setMaxResults($params['qtdPorPagina'])->setFirstResult($params['pagina']);
-        $atendimentos = $query->getResult();
+        $atendimentos = $query->setParameters($pDql)
+                                ->setMaxResults($params['qtdPorPagina'])
+                                ->setFirstResult($params['pagina'])
+                                ->getResult();
           
-        $queryTotal = $em->createQuery("select count(*) as qtd $dql");
-        $qtdArray = $queryTotal->getArrayResult();
-        var_dump($qtdArray);
+        $queryTotal = $em->createQuery("select count(a.id) as qtd $dql");
+        $qtd = $queryTotal->setParameters($pDql)
+                    ->getSingleScalarResult();        
+        
         return array(
             'registros' => $atendimentos,
             'paginacao' => array(
-                'qtdRegistros'  => $qtdArray,
+                'qtdRegistros'  => $qtd,
                 'qtdPorPagina'  => $params['qtdPorPagina'],
                 'pagina'        => $params['pagina'],
-//                'qtdPaginas'    => ceil()
+                'qtdPaginas'    => ceil($qtd / $params['qtdPorPagina'])
             )
         );
     }

@@ -70,14 +70,14 @@ class Cliente {
     /**
      *
      * @var integer
-     * @Column(type="integer", length=14, nullable=true)
+     * @Column(type="string", length=14, nullable=true)
      */
     private $cnpj;
     
     /**
      *
      * @var integer
-     * @Column(type="integer", length=11, nullable=true)
+     * @Column(type="string", length=11, nullable=true)
      */
     private $cpf;
     

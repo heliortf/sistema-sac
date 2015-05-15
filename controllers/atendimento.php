@@ -17,7 +17,7 @@ $app->get('/atendimentos', function() use($app){
     $A = new Atendimentos();
     $atendimentos = $A->getListaAtendimentos(array(
         'usuario'       => $user->getUsuario(),
-        'pagina'        => 1,
+        'pagina'        => 0,
         'qtdPorPagina'  => 20
     ));
     
