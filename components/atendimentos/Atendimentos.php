@@ -6,6 +6,35 @@
  */
 class Atendimentos {
     
+	/**
+	 * Consulta um atendimento pela id
+	 *
+	 * Parametros:
+	 *	- Usuario $usuario
+	 *  - int $id
+	 *
+	 * @param array $params
+	 */
+	public function getAtendimento($params=array()){
+		$em = Conexao::getEntityManager();
+		
+		$u = $params['usuario'];
+		
+		$dql = "select a from Atendimento a WHERE a.empresa = :empresa AND a.id = :id ";
+		$query = $em->createQuery($dql);
+		$atendimentos = $query->setParameters(array(
+			'empresa' 	=> $u->getEmpresa()->getId(),
+			'id'		=> $params['id']
+		))->getResult();
+		
+		if(count($atendimentos) == 1){
+			return $atendimentos[0];
+		}
+		else {
+			return false;
+		}
+	}
+	
     /**
      * Retorna a lista de atendimentos para o usuario logado
      * 

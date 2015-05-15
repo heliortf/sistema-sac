@@ -27,6 +27,7 @@ ini_set('memory_limit ', '128M');
 require_once('controllers/site.php');
 require_once('controllers/autenticacao.php');
 require_once('controllers/atendimento.php');
+require_once('controllers/cliente.php');
 
 
 $app->run();
