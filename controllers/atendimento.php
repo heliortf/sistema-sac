@@ -72,9 +72,36 @@ $app->get('/atendimentos/:id', function($id) use($app){
 ->name('ver_atendimento');
 
 
+$app->get('/atendimentos/:id/realizar', function($id) use($app){
+	$u = WebUser::getInstance();
+	
+	$A = new Atendimentos();
+	$atendimento = $A->getAtendimento(array(
+		'usuario' 	=> $u->getUsuario(),
+		'id'		=> $id
+	));
+	
+	$app->render('atendimento/resolucao.html.twig', array(
+		'menuPrincipal' => 'consultar_atendimento',
+		'user'			=> $u,
+		'atendimento'	=> $atendimento
+	));
+})
+->name('resolucao_atendimento');
+
+
+
 
 $app->get('/atendimentos/cadastrar-comentario', function() use($app){
 	$u = WebUser::getInstance();
 		
 })
 ->name('cadastrar_comentario_atendimento');
+
+
+
+$app->get('/atendimentos/cadastrar-comentario', function() use($app){
+	$u = WebUser::getInstance();
+		
+})
+->name('cadastrar_resolucao_atendimento');
