@@ -15,6 +15,8 @@ use Symfony\Component\Console\Helper\Table;
 class Cargo {
     
     const ATENDENTE = 'atendente';
+	
+	const ADMINISTRADOR = 'administrador';
     
     
     /**

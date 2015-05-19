@@ -47,7 +47,13 @@ $C = new Cargo();
 $C->setNome(Cargo::ATENDENTE);
 $C->setEmpresa($E);
 
+$C2 = new Cargo();
+$C2->setNome(Cargo::ADMINISTRADOR);
+$C2->setEmpresa($E);
+
+
 $em->persist($C);
+$em->persist($C2);
 $em->flush();
 
 // Cadastra a área
@@ -55,7 +61,12 @@ $A = new Area();
 $A->setEmpresa($E);
 $A->setNome("Suporte");
 
+$A2 = new Area();
+$A2->setEmpresa($E);
+$A2->setNome("Diretoria");
+
 $em->persist($A);
+$em->persist($A2);
 $em->flush();
 
 // Cadastra o perfil
@@ -63,7 +74,12 @@ $P = new Perfil();
 $P->setNome("Atendente");
 $P->setEmpresa($E);
 
+$P2 = new Perfil();
+$P2->setNome("Administrador");
+$P2->setEmpresa($E);
+
 $em->persist($P);
+$em->persist($P2);
 $em->flush();
 
 
@@ -82,6 +98,24 @@ $U->setDddTelefone(21);
 $U->setTelefone(27687236);
 
 $em->persist($U);
+
+
+$U2 = new Usuario();
+$U2->setEmpresa($E);
+$U2->setCargo($C);
+$U2->setArea($A);
+$U2->setCpf(13643828711);
+$U2->setNome("João Lopes");
+$U2->setEmail("joao.lopes@gmail.com");
+$U2->setLogin("jlopes");
+$U2->setSenha('12345');
+$U2->setDddCelular(21);
+$U2->setCelular(992491622);
+$U2->setDddTelefone(21);
+$U2->setTelefone(27685432);
+
+$em->persist($U2);
+
 $em->flush();
 
 
