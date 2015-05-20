@@ -27,6 +27,7 @@ $app->post('/autenticar', function() use($app){
     }
     else {
             $app->flash('erro', "Usuário e/ou senha inválidos");
+            $app->redirectTo('home');
     }
 })
 ->name('autenticar');

@@ -240,9 +240,28 @@
                 </div>
             </div>
         </footer>
-
+        {% if flash.sucesso %}
+            <div class="alert alert-success" role="alert">{{ flash.sucesso }}</div>
+        {% endif %}
+        {% if flash.warning %}
+            <div class="alert alert-warning" role="alert">{{ flash.warning }}</div>
+        {% endif %}
+        {% if flash.erro %}
+            <div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="modalError">
+                <div class="modal-dialog">                    
+                    <div class="alert alert-danger" role="alert">{{ flash.erro }}</div>                                            
+                </div>
+            </div>            
+        {% endif %}
         <script type="text/javascript" src="js/lib/jquery/jquery-1.11.3.min.js"></script>
-        <script type="text/javascript" src="css/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>        
+        <script type="text/javascript" src="css/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>  
+        {% if flash.erro %}
+            <script type="text/javascript">
+                $(document).ready(function(){                    
+                    $("#modalError").modal('show');
+                });
+            </script>
+        {% endif %}
         <script type="text/javascript">
             $("#menu-close").click(function (e) {
                 e.preventDefault();

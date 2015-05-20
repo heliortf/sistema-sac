@@ -51,7 +51,7 @@ $app->get('/admin/areas', function($id) use($app){
 ->name('lista_areas');
 
 
-$app->get('/admin/dashboard', function(d) use($app){
+$app->get('/admin/dashboard', function() use($app){
 	$u = WebUser::getInstance();
 	
 	$A = new Atendimentos();
