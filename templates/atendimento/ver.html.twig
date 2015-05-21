@@ -4,106 +4,137 @@
     <div class="row ver-atendimento">
         <div class="col-md-10 col-md-offset-1  bloco-principal">
             <form method="post" action="" class="form form-horizontal">
-                <div class="form-group">
-                    <label for="numero" class="col-sm-2 control-label">Tipo:</label>
-                    <div class="col-sm-2">
-						<p class="form-control-static">{{ atendimento.getTipo().getNome() }}</p>
+                <fieldset>
+                    <legend><i class="fa fa-ticket"></i> Atendimento:  {{ atendimento.getId() }} </legend>
+                    <div class="form-group">
+                        <label for="numero" class="col-sm-2 control-label">Tipo:</label>
+                        <div class="col-sm-2">
+                            <p class="form-control-static">{{ atendimento.getTipo().getNome() }}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="cliente" class="col-sm-2 control-label">Cliente:</label>
-                    <div class="col-sm-5">
-						<p class="form-control-static">{{ atendimento.getCliente().getNome() }}</p>
+                    <div class="form-group">
+                        <label for="cliente" class="col-sm-2 control-label">Cliente:</label>
+                        <div class="col-sm-5">
+                            <p class="form-control-static">{{ atendimento.getCliente().getNome() }}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="cliente" class="col-sm-2 control-label">Documento:</label>
-                    <div class="col-sm-5">
-                        <p class="form-control-static">Sem documento</p>
+                    <div class="form-group">
+                        <label for="cliente" class="col-sm-2 control-label">Documento:</label>
+                        <div class="col-sm-5">
+                            <p class="form-control-static">Sem documento</p>
+                        </div>
                     </div>
-                </div>
-				<div class="form-group">
-                    <label for="cliente" class="col-sm-2 control-label">Status:</label>
-                    <div class="col-sm-5">
-                        <p class="form-control-static">{{ atendimento.getStatus().getNome() }}</p>
+                    <div class="form-group">
+                        <label for="cliente" class="col-sm-2 control-label">Status:</label>
+                        <div class="col-sm-5">
+                            <p class="form-control-static">{{ atendimento.getStatus().getNome() }}</p>
+                        </div>
                     </div>
-                </div>
-				<div class="form-group">
-                    <label for="cliente" class="col-sm-2 control-label">&Aacute;rea:</label>
-                    <div class="col-sm-5">
-                        <p class="form-control-static">{{ atendimento.getArea().getNome() }}</p>
+                    <div class="form-group">
+                        <label for="cliente" class="col-sm-2 control-label">&Aacute;rea:</label>
+                        <div class="col-sm-2">
+                            <p class="form-control-static">{{ atendimento.getArea().getNome() }} <button type="button" name="btn_encaminhar" title="Encaminhar"><i class="fa fa-mail-forward"></i></button></p>
+                        </div>
                     </div>
-                </div>
-				<div class="form-group">
-                    <label for="cliente" class="col-sm-2 control-label">Data:</label>
-                    <div class="col-sm-5">
-                        <p class="form-control-static">{{ atendimento.getDataCriacao().format("d/m/Y") }}</p>
+                    <div class="form-group">
+                        <label for="cliente" class="col-sm-2 control-label">Data:</label>
+                        <div class="col-sm-5">
+                            <p class="form-control-static">{{ atendimento.getDataCriacao().format("d/m/Y") }}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="cliente" class="col-sm-2 control-label">T&iacute;tulo:</label>
-                    <div class="col-sm-5">
-                        <p class="form-control-static">{{ atendimento.getTitulo() }}</p>
+                    <div class="form-group">
+                        <label for="cliente" class="col-sm-2 control-label">T&iacute;tulo:</label>
+                        <div class="col-sm-5">
+                            <p class="form-control-static">{{ atendimento.getTitulo() }}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="descricao" class="col-sm-2 control-label">Descri&ccedil;&atilde;o:</label>
-                    <div class="col-sm-5">
-                        <p class="form-control-static">{{ atendimento.getDescricao() }}</p>
-                    </div>
-                </div>
-				<div class="form-group">
-					<label for="descricao" class="col-sm-2 control-label">Coment&aacute;rios:</label>
-					<div class="col-sm-10">
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th>Coment&aacute;rio</th>
-									<th>Usu&aacute;rio</th>
-									<th>Data</th>
-									<th>Hora</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for c in a.getComentarios() %}
-									<tr>
-										<td>{{ c.getDescricao() }}</td>
-										<td></td>
-										<td></td>
-										<td></td>
-									</tr>					
-								{% else %}
-									<tr>
-										<td colspan="4">Nenhum coment&aacute;rio cadastrado</td>
-									</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-					</div>
-				</div>				
+                    <div class="form-group">
+                        <label for="descricao" class="col-sm-2 control-label">Descri&ccedil;&atilde;o:</label>
+                        <div class="col-sm-5">
+                            <p class="form-control-static">{{ atendimento.getDescricao() }}</p>
+                        </div>
+                    </div>            
+                </fieldset>
             </form>
-			<hr />
-			
-			<form class="form form-horizontal" action="{{ urlFor('cadastrar_comentario_atendimento') }}">
-                <div class="form-group">
-                    <label for="comentario" class="col-sm-2 control-label">Coment&aacute;rio:</label>
-                    <div class="col-sm-10">
-                        <textarea name="comentario" class="form-control" rows="8"></textarea>
-                    </div>
-                </div>				
-				<div class="form-group">
-					<div class="col-sm-2 col-sm-offset-10">
-						<a href="">
-							<button type="button" name="voltar" class="btn btn-default">Voltar</button>
-						</a>
-						<button type="submit" class="btn btn-primary">Adicionar</button>
-					</div>
-				</div>
-			</form>
+
+            <div class="col-md-10 col-md-offset-1 bloco-secundario bg-info" id="comentarios">
+                <form class="form form-horizontal form-comentarios" action="{{ urlFor('cadastrar_comentario_atendimento') }}">
+                    <fieldset>
+                        <legend><i class="fa fa-comments-o"></i> Coment&aacute;rios</legend>
+                        <div class="form-group">                            
+                            <div class="col-sm-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Coment&aacute;rio</th>
+                                            <th>P&uacute;blico</th>
+                                            <th>Usu&aacute;rio</th>
+                                            <th>Data</th>
+                                            <th>Hora</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for c in a.getComentarios() %}
+                                            <tr>
+                                                <td>{{ c.getDescricao() }}</td>
+                                                <td>Sim</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>					
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="5">Nenhum coment&aacute;rio cadastrado</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>				
+                        <div class="form-group">
+                            <label for="comentario" class="col-sm-3 control-label">Adicionar Coment&aacute;rio:</label>
+                            <div class="col-sm-9">
+                                <textarea name="comentario" class="form-control" rows="8"></textarea>
+                                <p class="form-control-static"><input type="checkbox" name="comentario_publico" value="1" checked /> Tornar coment&aacute;rio p&uacute;blico</p>
+                            </div>
+                        </div>				
+                        <div class="form-group">
+                            <div class="col-sm-3 col-sm-offset-9 text-right">
+                                <a href="">
+                                    <button type="button" name="voltar" class="btn btn-default"><i class="fa fa-arrow-left"></i> Voltar</button>
+                                </a>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Adicionar</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="col-md-10 col-md-offset-1 bloco-secundario bloco-solucao bg-success" id="conclusao">
+                <form class="form form-horizontal form-solucao" action="{{ urlFor('cadastrar_comentario_atendimento') }}">
+                    <fieldset>
+                        <legend><i class="fa fa-check-circle-o"></i> Conclus&atilde;o</legend>
+                        <div class="form-group">
+                            <label for="resolucao" class="col-sm-3 control-label">Descreva a conclus&atilde;o:</label>
+                            <div class="col-sm-9">
+                                <textarea name="resolucao" class="form-control" rows="8"></textarea>
+                            </div>
+                        </div>				
+                        <div class="form-group">
+                            <div class="col-sm-3 col-sm-offset-9 text-right">
+                                <a href="{{ urlFor('consultar_atendimento') }}">
+                                    <button type="button" name="voltar" class="btn btn-default"><i class="fa fa-arrow-left"></i> Voltar</button>
+                                </a>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-check-circle-o"></i> Concluir</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}
 
 {% block scripts %}
-    
+
 {% endblock %}

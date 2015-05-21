@@ -63,7 +63,7 @@
                                             </button>
                                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                                 <li><a href="{{ urlFor('ver_atendimento', { 'id' : a.getId() }) }}"><i class="fa fa-newspaper-o"></i> Visualizar</a></li>
-                                                <li><a href="{{ urlFor('resolucao_atendimento', { 'id' : a.getId() }) }}"><i class="fa fa-check"></i> Resolver</a></li>
+                                                <li><a href="{{ urlFor('ver_atendimento', { 'id' : a.getId() }) }}#conclusao"><i class="fa fa-check-circle-o"></i> Concluir</a></li>
                                                 <li><a href="{{ urlFor('encaminhar_atendimento', { 'id' : a.getId() }) }}"><i class="fa fa-share"></i> Encaminhar</a></li>
                                             </ul>
                                         </div>
