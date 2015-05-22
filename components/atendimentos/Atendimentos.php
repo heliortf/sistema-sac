@@ -74,4 +74,17 @@ class Atendimentos {
             )
         );
     }
+    
+    /**
+     * Cadastra um atendimento no sistema
+     * 
+     * @param Atendimento $atendimento
+     * @return Atendimento
+     */
+    public function salvar(Atendimento $atendimento){
+        $em = Conexao::getEntityManager();
+        $em->persist($atendimento);
+        $em->flush();
+        return $atendimento;
+    }
 }

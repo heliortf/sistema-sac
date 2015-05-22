@@ -3,7 +3,7 @@
 {% block conteudo %}
     <div class="row registrar-atendimento">
         <div class="col-md-10 col-md-offset-1  bloco-principal">
-            <form method="post" action="" class="form form-horizontal">
+            <form method="post" action="{{ urlFor('salvar_atendimento') }}" class="form form-horizontal">
                 <div class="form-group">
                     <label for="numero" class="col-sm-2 control-label">Tipo:</label>
                     <div class="col-sm-2">
@@ -17,13 +17,23 @@
                     </div>                    
                 </div>
                 <div class="form-group">
+                    <label for="area" class="col-sm-2 control-label">&Aacute;rea</label>
+                    <div class="col-sm-5">
+                        <select name="area" class="form-control">
+                            {% for a in areas %}
+                                <option value="{{ a.getId() }}">{{ a.getNome() }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="cliente" class="col-sm-2 control-label">Cliente</label>
                     <div class="col-sm-5">
-						<select name="cliente" class="form-control">
-							{% for c in clientes %}
-								<option value="{{ c.getId() }}">{{ c.getNome() }}</option>
-							{% endfor %}
-						</select>
+                        <select name="cliente" class="form-control">
+                            {% for c in clientes %}
+                                <option value="{{ c.getId() }}">{{ c.getNome() }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -35,18 +45,18 @@
                 <div class="form-group">
                     <label for="cliente" class="col-sm-2 control-label">T&iacute;tulo</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" id="titulo" placeholder="T&iacute;tulo do atendimento">
+                        <input type="text" class="form-control" name="titulo" id="titulo" placeholder="T&iacute;tulo do atendimento">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="descricao" class="col-sm-2 control-label">Descri&ccedil;&atilde;o</label>
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="descricao"></textarea>
+                        <textarea class="form-control" name="descricao" id="descricao"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-5 col-sm-offset-2">
-                        <button type="button" name="btn_salvar" class="btn btn-primary">Salvar</button>
+                        <button type="submit" name="btn_salvar" class="btn btn-primary">Salvar</button>
                         <a href="{{ urlFor('consultar_atendimento') }}">
                             <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
                         </a>
@@ -58,5 +68,5 @@
 {% endblock %}
 
 {% block scripts %}
-    
+
 {% endblock %}
