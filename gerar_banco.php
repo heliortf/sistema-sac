@@ -132,6 +132,23 @@ $U2->setTelefone(27685432);
 
 $em->persist($U2);
 
+
+$U3 = new Usuario();
+$U3->setEmpresa($E);
+$U3->setCargo($C2);
+$U3->setArea($A2);
+$U3->setPerfil($P2);
+$U3->setCpf(13643828711);
+$U3->setNome("Gideão");
+$U3->setEmail("gideao@gmail.com");
+$U3->setLogin("gideao");
+$U3->setSenha('12345');
+$U3->setDddCelular(21);
+$U3->setCelular(992491622);
+$U3->setDddTelefone(21);
+$U3->setTelefone(27685432);
+
+$em->persist($U3);
 $em->flush();
 
 
@@ -151,6 +168,20 @@ $C->setSenha("12345");
 $C->setDataCriacao(new DateTime());
 
 $em->persist($C);
+
+$C2 = new Cliente();
+$C2->setEmpresa($E);
+$C2->setNome("Josias Ferreira");
+$C2->setCpf(12342123451);
+$C2->setCelular(998778956);
+$C2->setDddCelular(21);
+$C2->setTelefone(26598856);
+$C2->setDddTelefone(21);
+$C2->setEmail("josiasf@gmail.com");
+$C2->setSenha("12345");
+$C2->setDataCriacao(new DateTime());
+
+$em->persist($C2);
 $em->flush();
 
 
