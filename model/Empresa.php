@@ -56,6 +56,22 @@ class Empresa {
     private $clientes;
     
     /**
+     * Lista de status de atendimentos da empresa
+     * 
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="StatusAtendimento", mappedBy="empresa", fetch="LAZY")
+     */
+    private $listaStatusAtendimento;
+    
+    /**
+     * Lista de tipos de atendimentos da empresa
+     * 
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="TipoAtendimento", mappedBy="empresa", fetch="LAZY")
+     */
+    private $listaTipoAtendimento;
+    
+    /**
      * Lista de atendimentos da empresa
      * 
      * @var ArrayCollection
@@ -72,7 +88,9 @@ class Empresa {
         $this->perfis       = new ArrayCollection();
         $this->cargos       = new ArrayCollection();
         $this->clientes     = new ArrayCollection();
-        $this->atendimentos = new ArrayCollection();
+        $this->listaStatusAtendimento   = new ArrayCollection();
+        $this->listaTipoAtendimento     = new ArrayCollection();
+        $this->atendimentos             = new ArrayCollection();
     }
     
     /**
@@ -303,6 +321,38 @@ class Empresa {
 
     function setPermalink($permalink) {
         $this->permalink = $permalink;
+    }
+
+    function getClientes() {
+        return $this->clientes;
+    }
+
+    function getListaStatusAtendimento() {
+        return $this->listaStatusAtendimento;
+    }
+
+    function getListaTipoAtendimento() {
+        return $this->listaTipoAtendimento;
+    }
+
+    function getAtendimentos() {
+        return $this->atendimentos;
+    }
+
+    function setClientes(ArrayCollection $clientes) {
+        $this->clientes = $clientes;
+    }
+
+    function setListaStatusAtendimento(ArrayCollection $listaStatusAtendimento) {
+        $this->listaStatusAtendimento = $listaStatusAtendimento;
+    }
+
+    function setListaTipoAtendimento(ArrayCollection $listaTipoAtendimento) {
+        $this->listaTipoAtendimento = $listaTipoAtendimento;
+    }
+
+    function setAtendimentos(ArrayCollection $atendimentos) {
+        $this->atendimentos = $atendimentos;
     }
 
 

@@ -16,7 +16,9 @@ class Cargo {
     
     const ATENDENTE = 'atendente';
 	
-	const ADMINISTRADOR = 'administrador';
+    const RESPONSAVEL_AREA = 'responsavel_area';
+    
+    const ADMINISTRADOR = 'administrador';
     
     
     /**

@@ -14,6 +14,15 @@ use Symfony\Component\Console\Helper\Table;
  * @Table(name="tb_ticket_tipo")
  */
 class TipoAtendimento {
+        
+    /**
+     * Empresa que o tipo pertence
+     * 
+     * @var Empresa
+     * @ManyToOne(targetEntity="Empresa", inversedBy="listaTipoAtendimento")
+     * @JoinColumn(name="tb_empresa_empresa_id", referencedColumnName="empresa_id")
+     */
+    protected $empresa;
     
     /**
      * Lista de atendimentos com este tipo
@@ -84,6 +93,14 @@ class TipoAtendimento {
 
     function setDescricao($descricao) {
         $this->descricao = $descricao;
+    }
+
+    function getEmpresa() {
+        return $this->empresa;
+    }
+
+    function setEmpresa(Empresa $empresa) {
+        $this->empresa = $empresa;
     }
 
 

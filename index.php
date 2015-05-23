@@ -28,6 +28,7 @@ require_once('controllers/site.php');
 require_once('controllers/autenticacao.php');
 require_once('controllers/atendimento.php');
 require_once('controllers/cliente.php');
+require_once('controllers/usuario.php');
 
 
 $app->run();

@@ -25,6 +25,14 @@ class Usuario {
     protected $cargo;
     
     /**
+     *
+     * @var Perfil
+     * @ManyToOne(targetEntity="Perfil", inversedBy="usuarios", fetch="LAZY")
+     * @JoinColumn(name="tb_perfil_perfil_id", referencedColumnName="perfil_id")
+     */
+    protected $perfil;
+    
+    /**
      * Area que o usuário pertence
      *      
      * @var Area
@@ -130,7 +138,23 @@ class Usuario {
      */
     protected $dddCelular;
     
-    
+ 
+    function getPerfil() {
+        return $this->perfil;
+    }
+
+    function getMeusAtendimentos() {
+        return $this->meusAtendimentos;
+    }
+
+    function setPerfil(Perfil $perfil) {
+        $this->perfil = $perfil;
+    }
+
+    function setMeusAtendimentos(ArrayCollection $meusAtendimentos) {
+        $this->meusAtendimentos = $meusAtendimentos;
+    }
+        
     function getCargo() {
         return $this->cargo;
     }
