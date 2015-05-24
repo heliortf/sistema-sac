@@ -36,7 +36,7 @@ class Perfil {
     /**
      *
      * @var ArrayCollection
-     * @OneToMany(targetEntity="Usuario", mappedBy="cargo")
+     * @OneToMany(targetEntity="Usuario", mappedBy="perfil")
      */
     protected $usuarios;
     

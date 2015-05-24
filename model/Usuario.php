@@ -25,6 +25,14 @@ class Usuario {
     protected $cargo;
     
     /**
+     *
+     * @var Perfil
+     * @ManyToOne(targetEntity="Perfil", inversedBy="usuarios", fetch="LAZY")
+     * @JoinColumn(name="tb_perfil_perfil_id", referencedColumnName="perfil_id")
+     */
+    protected $perfil;
+    
+    /**
      * Area que o usuário pertence
      *      
      * @var Area
@@ -130,7 +138,23 @@ class Usuario {
      */
     protected $dddCelular;
     
-    
+ 
+    function getPerfil() {
+        return $this->perfil;
+    }
+
+    function getMeusAtendimentos() {
+        return $this->meusAtendimentos;
+    }
+
+    function setPerfil(Perfil $perfil) {
+        $this->perfil = $perfil;
+    }
+
+    function setMeusAtendimentos(ArrayCollection $meusAtendimentos) {
+        $this->meusAtendimentos = $meusAtendimentos;
+    }
+        
     function getCargo() {
         return $this->cargo;
     }
@@ -235,5 +259,30 @@ class Usuario {
         $this->dddCelular = $dddCelular;
     }
 
-
+    /**
+     * Verifica se o usuario é um atendente
+     * 
+     * @return bool
+     */
+    public function isAtendente(){
+        return ($this->getCargo()->getNome() == Cargo::ATENDENTE) ? true : false;
+    }
+    
+    /**
+     * Verifica se o usuário é um administrador
+     * 
+     * @return bool
+     */
+    public function isAdministrador(){
+        return ($this->getCargo()->getNome() == Cargo::ADMINISTRADOR) ? true : false;
+    }
+    
+    /**
+     * Verifica se o usuário é responsável pela área
+     * 
+     * @return bool
+     */
+    public function isResponsavelArea(){
+        return ($this->getCargo()->getNome() == Cargo::RESPONSAVEL_AREA) ? true : false;
+    }
 }

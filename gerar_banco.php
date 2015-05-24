@@ -51,9 +51,13 @@ $C2 = new Cargo();
 $C2->setNome(Cargo::ADMINISTRADOR);
 $C2->setEmpresa($E);
 
+$C3 = new Cargo();
+$C3->setNome(Cargo::RESPONSAVEL_AREA);
+$C3->setEmpresa($E);
 
 $em->persist($C);
 $em->persist($C2);
+$em->persist($C3);
 $em->flush();
 
 // Cadastra a área
@@ -65,8 +69,13 @@ $A2 = new Area();
 $A2->setEmpresa($E);
 $A2->setNome("Diretoria");
 
+$A3 = new Area();
+$A3->setEmpresa($E);
+$A3->setNome("Financeiro");
+
 $em->persist($A);
 $em->persist($A2);
+$em->persist($A3);
 $em->flush();
 
 // Cadastra o perfil
@@ -78,8 +87,13 @@ $P2 = new Perfil();
 $P2->setNome("Administrador");
 $P2->setEmpresa($E);
 
+$P3 = new Perfil();
+$P3->setNome("Responsavel por Área");
+$P3->setEmpresa($E);
+
 $em->persist($P);
 $em->persist($P2);
+$em->persist($P3);
 $em->flush();
 
 
@@ -87,6 +101,7 @@ $U = new Usuario();
 $U->setEmpresa($E);
 $U->setCargo($C);
 $U->setArea($A);
+$U->setPerfil($P);
 $U->setCpf(13447868716);
 $U->setNome("Helio Ricardo");
 $U->setEmail("heliortf@gmail.com");
@@ -102,8 +117,9 @@ $em->persist($U);
 
 $U2 = new Usuario();
 $U2->setEmpresa($E);
-$U2->setCargo($C);
+$U2->setCargo($C3);
 $U2->setArea($A);
+$U2->setPerfil($P3);
 $U2->setCpf(13643828711);
 $U2->setNome("João Lopes");
 $U2->setEmail("joao.lopes@gmail.com");
@@ -116,6 +132,23 @@ $U2->setTelefone(27685432);
 
 $em->persist($U2);
 
+
+$U3 = new Usuario();
+$U3->setEmpresa($E);
+$U3->setCargo($C2);
+$U3->setArea($A2);
+$U3->setPerfil($P2);
+$U3->setCpf(13643828711);
+$U3->setNome("Gideão");
+$U3->setEmail("gideao@gmail.com");
+$U3->setLogin("gideao");
+$U3->setSenha('12345');
+$U3->setDddCelular(21);
+$U3->setCelular(992491622);
+$U3->setDddTelefone(21);
+$U3->setTelefone(27685432);
+
+$em->persist($U3);
 $em->flush();
 
 
@@ -135,6 +168,20 @@ $C->setSenha("12345");
 $C->setDataCriacao(new DateTime());
 
 $em->persist($C);
+
+$C2 = new Cliente();
+$C2->setEmpresa($E);
+$C2->setNome("Josias Ferreira");
+$C2->setCpf(12342123451);
+$C2->setCelular(998778956);
+$C2->setDddCelular(21);
+$C2->setTelefone(26598856);
+$C2->setDddTelefone(21);
+$C2->setEmail("josiasf@gmail.com");
+$C2->setSenha("12345");
+$C2->setDataCriacao(new DateTime());
+
+$em->persist($C2);
 $em->flush();
 
 

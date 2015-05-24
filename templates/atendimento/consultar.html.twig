@@ -6,27 +6,30 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1 filtro-consultar-atendimento">
                     <form method="get" action="" class="form form-horizontal">
-                        <div class="form-group">
-                            <label for="numero" class="col-sm-2 control-label">N&uacute;mero</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="numero" placeholder="N&uacute;mero do atendimento">
+                        <fieldset>
+                            <legend>Filtro de Atendimentos</legend>
+                            <div class="form-group">
+                                <label for="numero" class="col-sm-2 control-label">N&uacute;mero</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="numero" placeholder="N&uacute;mero do atendimento">
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" name="btn_consultar" class="btn btn-primary">Pesquisar</button>
+                                </div>
                             </div>
-                            <div class="col-sm-3">
-                                <button type="button" name="btn_consultar" class="btn btn-primary">Pesquisar</button>
+                            <div class="form-group">
+                                <label for="cliente" class="col-sm-2 control-label">Cliente</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="cliente" placeholder="Nome do cliente">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="cliente" class="col-sm-2 control-label">Cliente</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="cliente" placeholder="Nome do cliente">
+                            <div class="form-group">
+                                <label for="cliente" class="col-sm-2 control-label">Documento</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="documento" placeholder="Nome do documento">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="cliente" class="col-sm-2 control-label">Documento</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="documento" placeholder="Nome do documento">
-                            </div>
-                        </div>
+                        </fieldset>
                     </form>
                 </div>
             </div>
