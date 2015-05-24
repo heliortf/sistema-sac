@@ -8,7 +8,15 @@ $app->get('/', function() use($app) {
     $user = WebUser::getInstance();
     
     if($user->isLogado()){
-        $app->redirectTo('consultar_atendimento');
+        if($user->getUsuario()->isAtendente()){
+            $app->redirectTo('consultar_atendimento');
+        }
+        else if($user->getUsuario()->isResponsavelArea()){
+            $app->redirectTo('dashboard_responsavel_area');
+        }
+        else if($user->getUsuario()->isAdministrador()){
+            $app->redirectTo('dashboard_admin');
+        }
     }
     else {    
         $app->render('home/index.html.twig', array(
