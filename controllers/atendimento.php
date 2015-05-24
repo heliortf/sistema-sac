@@ -50,12 +50,16 @@ $app->get('/atendimentos/novo', function() use($app) {
     $areas = $A->getListaAreas(array(
         'usuario' => $u->getUsuario(),        
     ));
+	
+	$T = new TiposAtendimento();
+	$tipos = $T->getListaTipoAtendimentos();
 
     $app->render('atendimento/novo.html.twig', array(
         'menuPrincipal' => 'registrar_atendimento',
         'user'          => $u,
         'areas'         => $areas['registros'],
-        'clientes'      => $clientes['registros']
+        'clientes'      => $clientes['registros'],
+		'tipos'			=> $tipos['registros']
     ));
 })
 ->name('novo_atendimento');
@@ -80,15 +84,22 @@ $app->post('/atendimentos/salvar', function() use($app) {
         'usuario'   => $u->getUsuario(),
         'id'        => $app->request->post('area')
     ));
-
+	
+	$T = new TiposAtendimento();
+	$tipo = $T->getTipoAtendimento(array(		
+		'id' => $app->request->post('tipo')
+	));	
+	
     # Cria o atendimento
     $a = new Atendimento();
+	$a->setTipo($tipo);
     $a->setEmpresa($u->getUsuario()->getEmpresa());    
     $a->setCliente($cliente);
     $a->setArea($area);
     $a->setTitulo($app->request->post('titulo'));
     $a->setDescricao($app->request->post('descricao'));
     $a->setDataCriacao(new DateTime());
+	$a->setCriadoPor($u->getUsuario()->getNome());
 
     $Atendimentos = new Atendimentos();
     $a = $Atendimentos->salvar($a);

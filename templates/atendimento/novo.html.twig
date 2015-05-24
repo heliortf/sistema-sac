@@ -6,15 +6,11 @@
             <form method="post" action="{{ urlFor('salvar_atendimento') }}" class="form form-horizontal">
                 <div class="form-group">
                     <label for="numero" class="col-sm-2 control-label">Tipo:</label>
-                    <div class="col-sm-2">
-                        <input type="radio" name="tipo" id="tipo_solicitacao" value="solicitacao" checked /> <label for="tipo_solicitacao">Solicita&ccedil;&atilde;o</label>
-                    </div>
-                    <div class="col-sm-2">
-                        <input type="radio" name="tipo" id="tipo_sugestao" value="sugestao" /> <label for="tipo_sugestao">Sugest&atilde;o</label>
-                    </div>
-                    <div class="col-sm-2">
-                        <input type="radio" name="tipo" id="tipo_elogio" value="elogio" /> <label for="tipo_elogio">Elogio</label>
-                    </div>                    
+					{% for t in tipos %}
+						<div class="col-sm-2">
+							<input type="radio" name="tipo" id="tipo_solicitacao" value="{{ t.getId() }}" /> <label for="tipo_solicitacao">{{ t.getNome() }}</label>
+						</div>
+					{% endfor %}
                 </div>
                 <div class="form-group">
                     <label for="area" class="col-sm-2 control-label">&Aacute;rea</label>
