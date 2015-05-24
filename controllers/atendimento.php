@@ -176,8 +176,26 @@ $app->get('/atendimentos/:id/encaminhar', function($id) use($app) {
         ->name('encaminhar_atendimento');
 
 
-$app->get('/atendimentos/cadastrar-comentario', function() use($app) {
+$app->post('/atendimentos/:atendimentoId/cadastrar-comentario', function($atendimentoId) use($app) {
             $u = WebUser::getInstance();
+			
+			$A = new Atendimentos();
+			$atendimento = $A->getAtendimento(array(
+				'usuario' => $u->getUsuario(),
+				'id' => $atendimentoId
+			));
+			
+			$C = new ComentarioAtendimento();
+			$C->setEmpresa($u->getUsuario()->getEmpresa());
+			$C->setAtendimento($atendimento);
+			$C->setUsuario($u->getUsuario());
+			$C->setDataCriacao(new DateTime());
+			$C->setDescricao($app->request->post('comentario'));
+			$C->setPublico($app->request->post('comentario_publico') == 1 ? true : false);
+			
+			$A->salvarComentario($C);
+			
+			$app->redirectTo('ver_atendimento', array('id' => $atendimentoId));
         })
         ->name('cadastrar_comentario_atendimento');
 

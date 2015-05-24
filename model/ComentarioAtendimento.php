@@ -152,4 +152,8 @@ class ComentarioAtendimento {
     function setDataCriacao($dataCriacao) {
         $this->dataCriacao = $dataCriacao;
     }
+	
+	function setAtendimento(Atendimento $atendimento){
+		$this->atendimento = $atendimento;
+	}
 }

@@ -67,12 +67,18 @@ class Atendimento {
      * @JoinColumn(name="tb_ticket_tipo_ticket_tipo_id", referencedColumnName="ticket_tipo_id")
      */
     private $tipo;
+	
+	/**
+	 * @var ArrayCollection
+	 * @OneToMany(targetEntity="ComentarioAtendimento", mappedBy="atendimento")
+	 */
+	private $comentarios;
     
     /**
      * Construtor
      */
     function __construct() {
-        
+        $this->comentarios = new ArrayColection();	
     }
 
     
@@ -153,6 +159,10 @@ class Atendimento {
     function getAtendente() {
         return $this->atendente;
     }
+	
+	function getComentarios() {
+		return $this->comentarios;
+	}
 
     function getId() {
         return $this->id;
@@ -193,6 +203,10 @@ class Atendimento {
     function setAtendente(Usuario $atendente) {
         $this->atendente = $atendente;
     }
+	
+	function setComentarios($comentarios) {
+		$this->comentarios = $comentarios;
+	}
 
     function setId($id) {
         $this->id = $id;

@@ -58,7 +58,7 @@
             </form>
 
             <div class="col-md-10 col-md-offset-1 bloco-secundario bg-info" id="comentarios">
-                <form class="form form-horizontal form-comentarios" action="{{ urlFor('cadastrar_comentario_atendimento') }}">
+                <form class="form form-horizontal form-comentarios" method="post" action="{{ urlFor('cadastrar_comentario_atendimento', { atendimentoId : atendimento.getId() } ) }}">
                     <fieldset>
                         <legend><i class="fa fa-comments-o"></i> Coment&aacute;rios</legend>
                         <div class="form-group">                            
@@ -66,7 +66,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Coment&aacute;rio</th>
+                                            <th width="60%">Coment&aacute;rio</th>
                                             <th>P&uacute;blico</th>
                                             <th>Usu&aacute;rio</th>
                                             <th>Data</th>
@@ -74,13 +74,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for c in a.getComentarios() %}
+                                        {% for c in atendimento.getComentarios() %}
                                             <tr>
                                                 <td>{{ c.getDescricao() }}</td>
-                                                <td>Sim</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td class="text-center">
+													{% if c.isPublico() %}
+														<i class="fa fa-check-circle"></i>
+													{% else %}
+														<i class="fa fa-times-circle"></i>
+													{% endif %}
+												</td>
+                                                <td>{{ c.getUsuario().getNome() }}</td>
+                                                <td>{{ c.getDataCriacao().format("d/m/Y") }}</td>
+                                                <td>{{ c.getDataCriacao().format("H:i") }}</td>
                                             </tr>					
                                         {% else %}
                                             <tr>
