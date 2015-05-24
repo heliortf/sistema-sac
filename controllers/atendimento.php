@@ -15,11 +15,16 @@ $app->get('/atendimentos', function() use($app) {
             $user = WebUser::getInstance();
 
             $A = new Atendimentos();
-            $atendimentos = $A->getListaAtendimentos(array(
-                'usuario' => $user->getUsuario(),
-                'pagina' => 0,
-                'qtdPorPagina' => 20
-            ));
+            
+            $pListaAtendimentos = array(
+                'usuario'       => $user->getUsuario(),
+                'pagina'        => 0,
+                'qtdPorPagina'  => 20
+            );
+            
+            
+            
+            $atendimentos = $A->getListaAtendimentos($pListaAtendimentos);
 
 //    echo "<pre>"; print_r($atendimentos); echo "</pre>";
 

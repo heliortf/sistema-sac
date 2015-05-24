@@ -40,19 +40,71 @@ class Atendimentos {
      * 
      * Parametros:
      * - Usuario $usuario
-     * - string $statusAtendimento
      * - int $pagina
-     * - in $qtdPorPagina
+     * - int $qtdPorPagina
+     * 
+     * [ Filtro por Atendimento ]
+     * - int $statusAtendimento
+     * - int $numeroAtendimento
+     * - int $responsavelAtendimento
+     *           
+     * 
+     * [ Filtro por Cliente ]
+     * - string $nomeCliente
+     * - string $cpfCnpjCliente
+     * - string $emailCliente
+     * 
+     * [ Filtro por Período ]
+     * - string $dataInicio
+     * - sstring $dataFim
      * 
      * @param array $params
      */
     public function getListaAtendimentos($params=array()){
         $em = Conexao::getEntityManager();
         
-        $dql = "from Atendimento a WHERE a.area = :area ";
+        $dql = "from Atendimento a WHERE a.empresa = :empresa AND a.area = :area ";
         $pDql = array(
-            'area' => $params['usuario']->getArea()->getId()
+            'empresa'   => $params['usuario']->getEmpresa()->getId(),
+            'area'      => $params['usuario']->getArea()->getId()
         );
+        
+        if(isset($params['numeroAtendimento']) && !empty($params['numeroAtendimento'])){
+            $dql .= " AND a.id = :id ";
+            $pDql['id'] = $params['numeroAtendimento'];
+        }
+        
+        if(isset($params['statusAtendimento']) && !empty($params['statusAtendimento'])){
+            $dql .= " AND a.status = :statusAtendimento ";
+            $pDql['statusAtendimento'] = $params['statusAtendimento'];
+        }
+        
+        if(isset($params['responsavelAtendimento']) && !empty($params['responsavelAtendimento'])){
+            $dql .= " AND a.atendente = :responsavelAtendimento ";
+            $pDql['responsavelAtendimento'] = $params['responsavelAtendimento'];
+        }
+        
+        if(isset($params['nomeCliente']) && !empty($params['nomeCliente'])){
+            // Verificar como faz o join com cliente
+        }
+        
+        if(isset($params['cpfCnpjCliente']) && !empty($params['cpfCnpjCliente'])){
+            // Verificar como faz o join com cliente
+        }
+        
+        if(isset($params['emailCliente']) && !empty($params['emailCliente'])){
+            // Verificar como faz o join com cliente
+        }
+        
+        if(isset($params['dataInicio']) && !empty($params['dataInicio'])){
+            $dql .= " AND a.dataCriacao >= :dataInicio ";
+            $pDql['dataInicio'] = $params['dataInicio'];
+        }
+        
+        if(isset($params['dataFim']) && !empty($params['dataFim'])){
+            $dql .= " AND a.dataCriacao <= :dataFim ";
+            $pDql['dataFim'] = $params['dataFim'];
+        }
         
         $query = $em->createQuery("select a $dql");
         $atendimentos = $query->setParameters($pDql)
