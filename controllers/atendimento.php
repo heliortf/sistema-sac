@@ -122,11 +122,19 @@ $app->get('/atendimentos/:id', function($id) use($app) {
         'usuario' => $u->getUsuario(),
         'id' => $id
     ));
+	
+	$Areas = new Areas();
+	$listaAreas = $Areas->getListaAreas(array(
+		'usuario' => $u->getUsuario(),
+		'pagina' => 0,
+		'qtdPorPagina' => 100
+	));
 
     $app->render('atendimento/ver.html.twig', array(
         'menuPrincipal' => 'consultar_atendimento',
-        'user' => $u,
-        'atendimento' => $atendimento
+        'user' 			=> $u,
+        'atendimento' 	=> $atendimento,
+		'areas'			=> $listaAreas['registros']
     ));
 })
 ->name('ver_atendimento');

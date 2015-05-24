@@ -12,7 +12,7 @@
                             <p class="form-control-static">{{ atendimento.getTipo().getNome() }}</p>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group">	
                         <label for="cliente" class="col-sm-2 control-label">Cliente:</label>
                         <div class="col-sm-5">
                             <p class="form-control-static">{{ atendimento.getCliente().getNome() }}</p>
@@ -35,6 +35,23 @@
                         <div class="col-sm-2">
                             <p class="form-control-static">{{ atendimento.getArea().getNome() }} <button type="button" name="btn_encaminhar" title="Encaminhar"><i class="fa fa-mail-forward"></i></button></p>
                         </div>
+						<div class="col-sm-3">
+							<div class="dropdown">
+							  <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Encaminhar para
+								<span class="caret"></span>
+							  </button>
+							  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+								{% for a in areas %}
+									<li>
+										<form method="post" action="">
+											<a href="#">{{ a.getNome() }}</a>
+										</form>
+									</li>	
+								{% endfor %}
+							  </ul>
+							</div>
+						</div>
                     </div>
                     <div class="form-group">
                         <label for="cliente" class="col-sm-2 control-label">Data:</label>
