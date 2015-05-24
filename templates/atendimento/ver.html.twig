@@ -142,5 +142,11 @@
 {% endblock %}
 
 {% block scripts %}
-
+	<script type="text/javascript" src="js/atendimento/ver_atendimento.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function(){
+			var VA = new VerAtendimento({{ atendimento.getId() }});
+			VA.render();
+		});
+	</script>
 {% endblock %}
