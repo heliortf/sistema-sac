@@ -106,11 +106,19 @@ class Atendimentos {
             $pDql['dataFim'] = $params['dataFim'];
         }
         
+        $inicio = ($params['pagina'] - 1) * $params['qtdPorPagina'];
+        
         $query = $em->createQuery("select a $dql");
         $atendimentos = $query->setParameters($pDql)
                                 ->setMaxResults($params['qtdPorPagina'])
-                                ->setFirstResult($params['pagina'])
+                                ->setFirstResult($inicio)
                                 ->getResult();
+        
+        $fim = $inicio + $params['qtdPorPagina'];
+        
+        if(count($atendimentos) < $params['qtdPorPagina']){
+            $fim = $inicio + count($atendimentos);
+        }
           
         $queryTotal = $em->createQuery("select count(a.id) as qtd $dql");
         $qtd = $queryTotal->setParameters($pDql)
@@ -121,6 +129,8 @@ class Atendimentos {
             'paginacao' => array(
                 'qtdRegistros'  => $qtd,
                 'qtdPorPagina'  => $params['qtdPorPagina'],
+                'inicio'        => $inicio,
+                'fim'           => $fim,
                 'pagina'        => $params['pagina'],
                 'qtdPaginas'    => ceil($qtd / $params['qtdPorPagina'])
             )

@@ -16,22 +16,24 @@ $app->get('/atendimentos', function() use($app) {
 
             $A = new Atendimentos();
             
+            $paginaAtual = 1;
+            $qtdPorPagina = 20;
+            
             $pListaAtendimentos = array(
                 'usuario'       => $user->getUsuario(),
-                'pagina'        => 0,
-                'qtdPorPagina'  => 20
+                'pagina'        => $paginaAtual,
+                'qtdPorPagina'  => $qtdPorPagina
             );
-            
-            
             
             $atendimentos = $A->getListaAtendimentos($pListaAtendimentos);
 
-//    echo "<pre>"; print_r($atendimentos); echo "</pre>";
+    echo "<pre>"; print_r($atendimentos['paginacao']); echo "</pre>";
 
             $app->render('atendimento/consultar.html.twig', array(
                 'menuPrincipal' => 'consultar_atendimento',
-                'atendimentos' => $atendimentos['registros'],
-                'user' => $user
+                'atendimentos'  => $atendimentos['registros'],
+                'user'          => $user,
+                'paginacao'     => $atendimentos['paginacao']
             ));
         })
         ->name('consultar_atendimento');
