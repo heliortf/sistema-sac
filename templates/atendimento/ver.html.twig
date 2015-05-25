@@ -12,7 +12,7 @@
                             <p class="form-control-static">{{ atendimento.getTipo().getNome() }}</p>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group">	
                         <label for="cliente" class="col-sm-2 control-label">Cliente:</label>
                         <div class="col-sm-5">
                             <p class="form-control-static">{{ atendimento.getCliente().getNome() }}</p>
@@ -35,6 +35,23 @@
                         <div class="col-sm-2">
                             <p class="form-control-static">{{ atendimento.getArea().getNome() }} <button type="button" name="btn_encaminhar" title="Encaminhar"><i class="fa fa-mail-forward"></i></button></p>
                         </div>
+						<div class="col-sm-3">
+							<div class="dropdown">
+							  <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Encaminhar para
+								<span class="caret"></span>
+							  </button>
+							  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+								{% for a in areas %}
+									<li>
+										<form method="post" action="">
+											<a href="#">{{ a.getNome() }}</a>
+										</form>
+									</li>	
+								{% endfor %}
+							  </ul>
+							</div>
+						</div>
                     </div>
                     <div class="form-group">
                         <label for="cliente" class="col-sm-2 control-label">Data:</label>
@@ -58,7 +75,7 @@
             </form>
 
             <div class="col-md-10 col-md-offset-1 bloco-secundario bg-info" id="comentarios">
-                <form class="form form-horizontal form-comentarios" action="{{ urlFor('cadastrar_comentario_atendimento') }}">
+                <form class="form form-horizontal form-comentarios" method="post" action="{{ urlFor('cadastrar_comentario_atendimento', { atendimentoId : atendimento.getId() } ) }}">
                     <fieldset>
                         <legend><i class="fa fa-comments-o"></i> Coment&aacute;rios</legend>
                         <div class="form-group">                            
@@ -66,7 +83,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Coment&aacute;rio</th>
+                                            <th width="60%">Coment&aacute;rio</th>
                                             <th>P&uacute;blico</th>
                                             <th>Usu&aacute;rio</th>
                                             <th>Data</th>
@@ -74,13 +91,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for c in a.getComentarios() %}
+                                        {% for c in atendimento.getComentarios() %}
                                             <tr>
                                                 <td>{{ c.getDescricao() }}</td>
-                                                <td>Sim</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td class="text-center">
+													{% if c.isPublico() %}
+														<i class="fa fa-check-circle"></i>
+													{% else %}
+														<i class="fa fa-times-circle"></i>
+													{% endif %}
+												</td>
+                                                <td>{{ c.getUsuario().getNome() }}</td>
+                                                <td>{{ c.getDataCriacao().format("d/m/Y") }}</td>
+                                                <td>{{ c.getDataCriacao().format("H:i") }}</td>
                                             </tr>					
                                         {% else %}
                                             <tr>
@@ -136,5 +159,11 @@
 {% endblock %}
 
 {% block scripts %}
-
+	<script type="text/javascript" src="js/atendimento/ver_atendimento.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function(){
+			var VA = new VerAtendimento({{ atendimento.getId() }});
+			VA.render();
+		});
+	</script>
 {% endblock %}

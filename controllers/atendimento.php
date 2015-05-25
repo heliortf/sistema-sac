@@ -57,12 +57,16 @@ $app->get('/atendimentos/novo', function() use($app) {
     $areas = $A->getListaAreas(array(
         'usuario' => $u->getUsuario(),        
     ));
+	
+	$T = new TiposAtendimento();
+	$tipos = $T->getListaTipoAtendimentos();
 
     $app->render('atendimento/novo.html.twig', array(
         'menuPrincipal' => 'registrar_atendimento',
         'user'          => $u,
         'areas'         => $areas['registros'],
-        'clientes'      => $clientes['registros']
+        'clientes'      => $clientes['registros'],
+		'tipos'			=> $tipos['registros']
     ));
 })
 ->name('novo_atendimento');
@@ -87,15 +91,22 @@ $app->post('/atendimentos/salvar', function() use($app) {
         'usuario'   => $u->getUsuario(),
         'id'        => $app->request->post('area')
     ));
-
+	
+	$T = new TiposAtendimento();
+	$tipo = $T->getTipoAtendimento(array(		
+		'id' => $app->request->post('tipo')
+	));	
+	
     # Cria o atendimento
     $a = new Atendimento();
+	$a->setTipo($tipo);
     $a->setEmpresa($u->getUsuario()->getEmpresa());    
     $a->setCliente($cliente);
     $a->setArea($area);
     $a->setTitulo($app->request->post('titulo'));
     $a->setDescricao($app->request->post('descricao'));
     $a->setDataCriacao(new DateTime());
+	$a->setCriadoPor($u->getUsuario()->getNome());
 
     $Atendimentos = new Atendimentos();
     $a = $Atendimentos->salvar($a);
@@ -113,11 +124,19 @@ $app->get('/atendimentos/:id', function($id) use($app) {
         'usuario' => $u->getUsuario(),
         'id' => $id
     ));
+	
+	$Areas = new Areas();
+	$listaAreas = $Areas->getListaAreas(array(
+		'usuario' => $u->getUsuario(),
+		'pagina' => 0,
+		'qtdPorPagina' => 100
+	));
 
     $app->render('atendimento/ver.html.twig', array(
         'menuPrincipal' => 'consultar_atendimento',
-        'user' => $u,
-        'atendimento' => $atendimento
+        'user' 			=> $u,
+        'atendimento' 	=> $atendimento,
+		'areas'			=> $listaAreas['registros']
     ));
 })
 ->name('ver_atendimento');
@@ -167,8 +186,26 @@ $app->get('/atendimentos/:id/encaminhar', function($id) use($app) {
         ->name('encaminhar_atendimento');
 
 
-$app->get('/atendimentos/cadastrar-comentario', function() use($app) {
+$app->post('/atendimentos/:atendimentoId/cadastrar-comentario', function($atendimentoId) use($app) {
             $u = WebUser::getInstance();
+			
+			$A = new Atendimentos();
+			$atendimento = $A->getAtendimento(array(
+				'usuario' => $u->getUsuario(),
+				'id' => $atendimentoId
+			));
+			
+			$C = new ComentarioAtendimento();
+			$C->setEmpresa($u->getUsuario()->getEmpresa());
+			$C->setAtendimento($atendimento);
+			$C->setUsuario($u->getUsuario());
+			$C->setDataCriacao(new DateTime());
+			$C->setDescricao($app->request->post('comentario'));
+			$C->setPublico($app->request->post('comentario_publico') == 1 ? true : false);
+			
+			$A->salvarComentario($C);
+			
+			$app->redirectTo('ver_atendimento', array('id' => $atendimentoId));
         })
         ->name('cadastrar_comentario_atendimento');
 

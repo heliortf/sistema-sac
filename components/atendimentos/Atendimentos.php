@@ -149,4 +149,16 @@ class Atendimentos {
         $em->flush();
         return $atendimento;
     }
+	
+	/**
+	 * Salva o comentario em um determinado atendimento
+	 * 
+	 * @param ComentarioAtendimento $comentario
+	 */
+	public function salvarComentario(ComentarioAtendimento $comentario){
+		$em = Conexao::getEntityManager();
+		$em->persist($comentario);
+		$em->flush();
+		return $comentario;
+	}
 }
