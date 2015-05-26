@@ -134,9 +134,9 @@ $app->get('/atendimentos/:id', function($id) use($app) {
 
     $app->render('atendimento/ver.html.twig', array(
         'menuPrincipal' => 'consultar_atendimento',
-        'user' 			=> $u,
+        'user' 		=> $u,
         'atendimento' 	=> $atendimento,
-		'areas'			=> $listaAreas['registros']
+        'areas'		=> $listaAreas['registros']        
     ));
 })
 ->name('ver_atendimento');
@@ -212,38 +212,62 @@ $app->post('/atendimentos/:atendimentoId/cadastrar-comentario', function($atendi
         ->name('cadastrar_comentario_atendimento');
 
 $app->post('/atendimentos/:atendimentoId/fazer-encaminhamento', function($atendimentoId) use($app) {
-            $u = WebUser::getInstance();
-			
-            $A = new Atendimentos();
-            
-            // Consulta o atendimento
-            $atendimento = $A->getAtendimento(array(
-                'usuario'   => $u->getUsuario(),
-                'id'        => $atendimentoId
-            ));
+    $u = WebUser::getInstance();
 
-            $Areas = new Areas();
-            
-            // Consulta a nova area
-            $area = $Areas->getArea(array(
-                'usuario' => $u->getUsuario(),
-                'id'        => $app->request->post('area_id')
-            ));
-            
-            // Define a nova area do atendimento
-            $atendimento->setArea($area);
-            
-            $A->atualizar($atendimento);
-            
-            $app->flash('sucesso', 'Atendimento encaminhado com sucesso!');
+    $A = new Atendimentos();
 
-            $app->redirectTo('ver_atendimento', array('id' => $atendimentoId));
-        })
-        ->name('fazer_encaminhamento_atendimento');
+    // Consulta o atendimento
+    $atendimento = $A->getAtendimento(array(
+        'usuario'   => $u->getUsuario(),
+        'id'        => $atendimentoId
+    ));
 
+    $Areas = new Areas();
+
+    // Consulta a nova area
+    $area = $Areas->getArea(array(
+        'usuario' => $u->getUsuario(),
+        'id'        => $app->request->post('area_id')
+    ));
+
+    // Define a nova area do atendimento
+    $atendimento->setArea($area);
+    $atendimento->setDataAlteracao(new DateTime());
+    $A->atualizar($atendimento);
+
+    $app->flash('sucesso', 'Atendimento encaminhado com sucesso!');
+    $app->redirectTo('ver_atendimento', array('id' => $atendimentoId));
+})
+->name('fazer_encaminhamento_atendimento');
 
 
-$app->get('/atendimentos/cadastrar-conclusao', function() use($app) {
-            $u = WebUser::getInstance();
-        })
-        ->name('cadastrar_resolucao_atendimento');
+
+$app->post('/atendimentos/:atendimentoId/cadastrar-conclusao', function($atendimentoId) use($app) {
+    $u = WebUser::getInstance();
+    
+    $A = new Atendimentos();
+
+    // Consulta o atendimento
+    $atendimento = $A->getAtendimento(array(
+        'usuario'   => $u->getUsuario(),
+        'id'        => $atendimentoId
+    ));
+    
+    $status = $A->getStatus(array(
+        'usuario'   => $u->getUsuario(),
+        'nome'      => StatusAtendimento::STATUS_CONCLUIDO_NAO_AVALIADO
+    ));
+    
+    // Define a conclusão
+    $atendimento->setStatus($status);
+    $atendimento->setConclusao($app->request->post('conclusao'));
+    $atendimento->setDataAlteracao(new DateTime());
+    $atendimento->setDataConclusao(new DateTime());
+
+    $A->atualizar($atendimento);
+
+    $app->flash('sucesso', 'Atendimento concluído com sucesso!');
+
+    $app->redirectTo('ver_atendimento', array('id' => $atendimentoId));
+})
+->name('cadastrar_conclusao_atendimento');

@@ -103,7 +103,7 @@ class Atendimento {
     /**
      *
      * @var string
-     * @Column(type="text", name="descricao")
+     * @Column(type="text", name="descricao", nullable=true)
      */
     private $descricao;
 
@@ -111,7 +111,7 @@ class Atendimento {
      * Conclusão do atendimento
      * 
      * @var string
-     * @Column(type="text", name="conclusao")
+     * @Column(type="text", name="conclusao", nullable=true)
      */
     private $conclusao;
     

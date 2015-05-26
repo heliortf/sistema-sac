@@ -204,16 +204,20 @@ $em->persist($TipoA3);
 $em->flush();
 
 $Status1 = new StatusAtendimento();
-$Status1->setNome("Em Aberto");
+$Status1->setEmpresa($E);
+$Status1->setNome(StatusAtendimento::STATUS_ABERTO);
 
 $Status2 = new StatusAtendimento();
-$Status2->setNome("Análise Área");
+$Status2->setEmpresa($E);
+$Status2->setNome(StatusAtendimento::STATUS_ANALISE_AREA);
 
 $Status3 = new StatusAtendimento();
-$Status3->setNome("Concluído - Não Avaliado");
+$Status3->setEmpresa($E);
+$Status3->setNome(StatusAtendimento::STATUS_CONCLUIDO_NAO_AVALIADO);
 
 $Status4 = new StatusAtendimento();
-$Status4->setNome("Concluído - Avaliado");
+$Status4->setEmpresa($E);
+$Status4->setNome(StatusAtendimento::STATUS_CONCLUIDO_E_AVALIADO);
 
 $em->persist($Status1);
 $em->persist($Status2);

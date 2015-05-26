@@ -6,6 +6,25 @@
  */
 class Atendimentos {
     
+        public function getStatus($params=array()){
+            $em = Conexao::getEntityManager();
+            
+            $dql = "SELECT s from StatusAtendimento s WHERE s.empresa = :empresa ";
+            
+            $pDql = array(
+                'empresa' => $params['usuario']->getEmpresa()->getId()
+            );
+            
+            if(isset($params['nome']) && !empty($params['nome'])){
+                $dql .= " AND s.nome LIKE :nome ";
+                $pDql['nome'] = $params['nome'];
+            }
+            
+            return $em->createQuery($dql)
+                        ->setParameters($pDql)
+                        ->getSingleResult();
+        }
+    
 	/**
 	 * Consulta um atendimento pela id
 	 *
