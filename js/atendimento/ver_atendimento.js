@@ -1,37 +1,39 @@
 function VerAtendimento(id){
 	/** Variaveis **/
-	this.id = id;
-	this.btnEncaminhar = null;
+	this.id = id;	
+        
+        this.tabEncaminhar = null;
 	
-	/** Métodos privados **/
+	/** Metodos privados **/
 	this._initialize = function(){
-		this.btnEncaminhar = jQuery("button[name=btn_encaminhar]");
+            this.tabEncaminhar = jQuery("#encaminhar-area");
 	}
 	
 	/**
 	 *
 	 */
 	this._bind = function(){
-		this._setListenersBtnEncaminhar();
-	}
+            this._setListenersEncaminhar();
+	};
 	
 	this._sync = function(){
 	
-	}
+	};
 	
-	/** Implementações privadas **/	
-	this._setListenersBtnEncaminhar = function(){
-		this.btnEncaminhar.click(function(){
-			console.log("Clicou!");
-		});
-	}
+	/** Implementacoes privadas **/	
+	this._setListenersEncaminhar = function(){
+            this.tabEncaminhar.find("li > a").click(function(){                
+                jQuery("input[name=area_id]:hidden").val(jQuery(this).data("area_id"));
+                jQuery("#form-encaminhar").submit();
+            });
+	};
 	
-	/** Métodos publicos **/
+	/** Metodos publicos **/
 	this.render = function(){
-		this._bind();
-		this._sync();
-	}
+            this._bind();
+            this._sync();
+	};
 	
-	/** Métodos executados ao instanciar **/
+	/** Metodos executados ao instanciar **/
 	this._initialize();
 }

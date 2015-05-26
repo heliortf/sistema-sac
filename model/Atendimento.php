@@ -1,9 +1,11 @@
 <?php
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Tests\ORM\Functional\Ticket\Entity;
 use Symfony\Component\Console\Helper\Table;
 
@@ -14,8 +16,7 @@ use Symfony\Component\Console\Helper\Table;
  * @Table(name="tb_atendimento")
  */
 class Atendimento {
-    
-    
+
     /**
      * Empresa a que o atendimento pertence
      * 
@@ -24,7 +25,7 @@ class Atendimento {
      * @JoinColumn(name="tb_empresa_empresa_id", referencedColumnName="empresa_id")
      */
     private $empresa;
-    
+
     /**
      * Cliente a que se refere o atendimento
      * 
@@ -33,7 +34,7 @@ class Atendimento {
      * @JoinColumn(name="tb_cliente_cliente_id", referencedColumnName="cliente_id")
      */
     private $cliente;
-    
+
     /**
      * Area onde o atendimento está
      * 
@@ -42,7 +43,7 @@ class Atendimento {
      * @JoinColumn(name="tb_area_area_id", referencedColumnName="area_id")
      */
     private $area;
-    
+
     /**
      * Usuário que está resolvendo o atendimento
      * 
@@ -51,7 +52,7 @@ class Atendimento {
      * @JoinColumn(name="tb_usuario_usuario_id", referencedColumnName="usuario_id", nullable=true)
      */
     private $atendente;
-    
+
     /**
      *
      * @var StatusAtendimento
@@ -59,7 +60,7 @@ class Atendimento {
      * @JoinColumn(name="tb_status_tipo_status_tipo_id", referencedColumnName="status_tipo_id")
      */
     private $status;
-    
+
     /**
      *
      * @var TipoAtendimento
@@ -67,21 +68,20 @@ class Atendimento {
      * @JoinColumn(name="tb_ticket_tipo_ticket_tipo_id", referencedColumnName="ticket_tipo_id")
      */
     private $tipo;
-	
-	/**
-	 * @var ArrayCollection
-	 * @OneToMany(targetEntity="ComentarioAtendimento", mappedBy="atendimento")
-	 */
-	private $comentarios;
-    
+
+    /**
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="ComentarioAtendimento", mappedBy="atendimento")
+     */
+    private $comentarios;
+
     /**
      * Construtor
      */
     function __construct() {
-        $this->comentarios = new ArrayColection();	
+        $this->comentarios = new ArrayCollection();
     }
 
-    
     /**
      * ID do atendimento
      * 
@@ -91,7 +91,7 @@ class Atendimento {
      * @Column(type="integer", name="atendimento_id")
      */
     private $id;
-    
+
     /**
      * Titulo do atendimento
      * 
@@ -99,13 +99,21 @@ class Atendimento {
      * @Column(type="string", name="titulo", length=255)
      */
     private $titulo;
-    
+
     /**
      *
      * @var string
      * @Column(type="text", name="descricao")
      */
     private $descricao;
+
+    /**
+     * Conclusão do atendimento
+     * 
+     * @var string
+     * @Column(type="text", name="conclusao")
+     */
+    private $conclusao;
     
     /**
      * Data de criação do atendimento
@@ -114,28 +122,28 @@ class Atendimento {
      * @Column(type="datetime", name="data_criacao")
      */
     private $dataCriacao;
-    
+
     /**
      *
      * @var string
      * @Column(type="datetime", name="data_alteracao", nullable=true)
      */
     private $dataAlteracao;
-    
+
     /**
      *
      * @var string
      * @Column(type="datetime", name="data_conclusao", nullable=true)
      */
-    private $dataConclusao;    
-    
+    private $dataConclusao;
+
     /**
      *
      * @var string
      * @Column(type="string", length=100)
      */
     private $criadoPor;
-    
+
     /**
      * 
      * @return Empresa
@@ -159,10 +167,10 @@ class Atendimento {
     function getAtendente() {
         return $this->atendente;
     }
-	
-	function getComentarios() {
-		return $this->comentarios;
-	}
+
+    function getComentarios() {
+        return $this->comentarios;
+    }
 
     function getId() {
         return $this->id;
@@ -203,10 +211,10 @@ class Atendimento {
     function setAtendente(Usuario $atendente) {
         $this->atendente = $atendente;
     }
-	
-	function setComentarios($comentarios) {
-		$this->comentarios = $comentarios;
-	}
+
+    function setComentarios($comentarios) {
+        $this->comentarios = $comentarios;
+    }
 
     function setId($id) {
         $this->id = $id;
@@ -243,7 +251,7 @@ class Atendimento {
     function setArea(Area $area) {
         $this->area = $area;
     }
-    
+
     function getStatus() {
         return $this->status;
     }
@@ -251,12 +259,20 @@ class Atendimento {
     function setStatus(StatusAtendimento $status) {
         $this->status = $status;
     }
-    
+
     function getTipo() {
         return $this->tipo;
     }
 
     function setTipo(TipoAtendimento $tipo) {
         $this->tipo = $tipo;
+    }
+
+    function getConclusao() {
+        return $this->conclusao;
+    }
+
+    function setConclusao($conclusao) {
+        $this->conclusao = $conclusao;
     }
 }

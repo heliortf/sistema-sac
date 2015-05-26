@@ -149,6 +149,19 @@ class Atendimentos {
         $em->flush();
         return $atendimento;
     }
+    
+    /**
+     * Cadastra um atendimento no sistema
+     * 
+     * @param Atendimento $atendimento
+     * @return Atendimento
+     */
+    public function atualizar(Atendimento $atendimento){
+        $em = Conexao::getEntityManager();
+        $em->persist($atendimento);
+        $em->flush();
+        return $atendimento;
+    }
 	
 	/**
 	 * Salva o comentario em um determinado atendimento
