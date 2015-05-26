@@ -52,18 +52,11 @@ $app->get('/admin/areas', function($id) use($app){
 
 
 $app->get('/admin/dashboard', function() use($app){
-	$u = WebUser::getInstance();
+	$u = WebUser::getInstance();	
 	
-	$A = new Atendimentos();
-	$atendimento = $A->getAtendimento(array(
-		'usuario' 	=> $u->getUsuario(),
-		'id'		=> $id
-	));
-	
-	$app->render('atendimento/resolucao.html.twig', array(
-		'menuPrincipal' => 'consultar_atendimento',
-		'user'			=> $u,
-		'atendimento'	=> $atendimento
+	$app->render('admin/dashboard.html.twig', array(
+		'menuPrincipal' => 'dashboard',
+		'user'			=> $u
 	));
 })
 ->name('dashboard_admin');

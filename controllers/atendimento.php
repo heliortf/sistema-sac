@@ -27,7 +27,7 @@ $app->get('/atendimentos', function() use($app) {
             
             $atendimentos = $A->getListaAtendimentos($pListaAtendimentos);
 
-    echo "<pre>"; print_r($atendimentos['paginacao']); echo "</pre>";
+    ///echo "<pre>"; print_r($atendimentos['paginacao']); echo "</pre>";
 
             $app->render('atendimento/consultar.html.twig', array(
                 'menuPrincipal' => 'consultar_atendimento',
@@ -84,6 +84,8 @@ $app->post('/atendimentos/salvar', function() use($app) {
         'id'        => $app->request->post('cliente'),
         'usuario'   => $u->getUsuario()
     ));
+	
+	$Atendimentos = new Atendimentos();
 
     # Consulta a area recebida
     $A = new Areas();
@@ -97,18 +99,23 @@ $app->post('/atendimentos/salvar', function() use($app) {
 		'id' => $app->request->post('tipo')
 	));	
 	
+	$status = $Atendimentos->getStatus(array(
+		'usuario' 	=> $u->getUsuario(),
+		'nome'		=> StatusAtendimento::STATUS_ABERTO
+	));
+	
     # Cria o atendimento
     $a = new Atendimento();
 	$a->setTipo($tipo);
     $a->setEmpresa($u->getUsuario()->getEmpresa());    
     $a->setCliente($cliente);
     $a->setArea($area);
+	$a->setStatus($status);
     $a->setTitulo($app->request->post('titulo'));
     $a->setDescricao($app->request->post('descricao'));
     $a->setDataCriacao(new DateTime());
 	$a->setCriadoPor($u->getUsuario()->getNome());
-
-    $Atendimentos = new Atendimentos();
+    
     $a = $Atendimentos->salvar($a);
     
     $app->redirect($app->urlFor('ver_atendimento', array('id' => $a->getId())));

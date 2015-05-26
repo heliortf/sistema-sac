@@ -1,6 +1,7 @@
 <ul class="nav nav-tabs">
+	<li role="presentation" {% if menuPrincipal == 'dashboard' %}class="active"{% endif %}><a href="{{ urlFor('dashboard_admin') }}">Dashboard</a></li>
     <li role="presentation" {% if menuPrincipal == 'consultar_atendimento' %}class="active"{% endif %}><a href="{{ urlFor('consultar_atendimento') }}">Consultar Atendimento</a></li>
-    <li role="presentation" {% if menuPrincipal == 'relatorios_gerenciais' %}class="active"{% endif %}><a href="{{ urlFor('relatorios_gerenciais') }}">Relat&oacute;rios Gerenciais</a></li>    
+    <li role="presentation" {% if menuPrincipal == 'relatorios_gerenciais' %}class="active"{% endif %}><a href="{{ urlFor('relatorios_gerenciais_admin') }}">Relat&oacute;rios Gerenciais</a></li>    
 	<li role="presentation" {% if menuPrincipal == 'cadastro_usuario' %}class="active"{% endif %}><a href="{{ urlFor('lista_usuarios') }}">Cadastro de Usu&aacute;rio</a></li>    
 	<li role="presentation" {% if menuPrincipal == 'cadastro_area' %}class="active"{% endif %}><a href="{{ urlFor('lista_areas') }}">Cadastro de &Aacute;rea</a></li>    
 </ul>

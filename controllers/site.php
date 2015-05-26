@@ -12,7 +12,7 @@ $app->get('/', function() use($app) {
             $app->redirectTo('consultar_atendimento');
         }
         else if($user->getUsuario()->isResponsavelArea()){
-            $app->redirectTo('dashboard_responsavel_area');
+            $app->redirectTo('consultar_atendimento');
         }
         else if($user->getUsuario()->isAdministrador()){
             $app->redirectTo('dashboard_admin');
