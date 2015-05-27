@@ -8,12 +8,13 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Tests\ORM\Functional\Ticket\Entity;
 use Symfony\Component\Console\Helper\Table;
+use Zend\Permissions\Acl\Role\RoleInterface;
 
 /**
  * @Entity
  * @Table(name="tb_usuario")
  */
-class Usuario {
+class Usuario implements RoleInterface {
     
     /**
      * Cargo do usuario
@@ -284,5 +285,14 @@ class Usuario {
      */
     public function isResponsavelArea(){
         return ($this->getCargo()->getNome() == Cargo::RESPONSAVEL_AREA) ? true : false;
+    }
+    
+    /**
+     * Retorna o roleid pro zend saber quem é
+     * 
+     * @return string
+     */
+    public function getRoleId() {
+        return $this->getCargo()->getNome();
     }
 }

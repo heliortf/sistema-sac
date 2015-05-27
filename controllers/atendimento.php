@@ -12,31 +12,29 @@ global $app;
  */
 $app->get('/atendimentos', function() use($app) {
 
-            $user = WebUser::getInstance();
+    $user = WebUser::getInstance();
 
-            $A = new Atendimentos();
-            
-            $paginaAtual = 1;
-            $qtdPorPagina = 20;
-            
-            $pListaAtendimentos = array(
-                'usuario'       => $user->getUsuario(),
-                'pagina'        => $paginaAtual,
-                'qtdPorPagina'  => $qtdPorPagina
-            );
-            
-            $atendimentos = $A->getListaAtendimentos($pListaAtendimentos);
+    $A = new Atendimentos();
 
-    ///echo "<pre>"; print_r($atendimentos['paginacao']); echo "</pre>";
+    $paginaAtual = 1;
+    $qtdPorPagina = 20;
 
-            $app->render('atendimento/consultar.html.twig', array(
-                'menuPrincipal' => 'consultar_atendimento',
-                'atendimentos'  => $atendimentos['registros'],
-                'user'          => $user,
-                'paginacao'     => $atendimentos['paginacao']
-            ));
-        })
-        ->name('consultar_atendimento');
+    $pListaAtendimentos = array(
+        'usuario'       => $user->getUsuario(),
+        'pagina'        => $paginaAtual,
+        'qtdPorPagina'  => $qtdPorPagina
+    );
+
+    $atendimentos = $A->getListaAtendimentos($pListaAtendimentos);
+
+    $app->render('atendimento/consultar.html.twig', array(
+        'menuPrincipal' => 'consultar_atendimento',
+        'atendimentos'  => $atendimentos['registros'],
+        'user'          => $user,
+        'paginacao'     => $atendimentos['paginacao']
+    ));
+})
+->name('consultar_atendimento');
 
 /**
  * Tela de novo atendimento
@@ -132,12 +130,17 @@ $app->get('/atendimentos/:id', function($id) use($app) {
         'id' => $id
     ));
 	
-	$Areas = new Areas();
-	$listaAreas = $Areas->getListaAreas(array(
-		'usuario' => $u->getUsuario(),
-		'pagina' => 0,
-		'qtdPorPagina' => 100
-	));
+    $Areas = new Areas();
+    $listaAreas = $Areas->getListaAreas(array(
+            'usuario' => $u->getUsuario(),
+            'pagina' => 0,
+            'qtdPorPagina' => 100
+    ));
+    
+    
+    $ACL = SacACL::getInstance();
+    $allowed = $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::COMENTARIO_CADASTRAR);
+    var_dump($allowed);
 
     $app->render('atendimento/ver.html.twig', array(
         'menuPrincipal' => 'consultar_atendimento',

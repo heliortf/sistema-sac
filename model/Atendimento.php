@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Tests\ORM\Functional\Ticket\Entity;
 use Symfony\Component\Console\Helper\Table;
+use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Description of Atendimento
@@ -15,7 +16,7 @@ use Symfony\Component\Console\Helper\Table;
  * @Entity
  * @Table(name="tb_atendimento")
  */
-class Atendimento {
+class Atendimento implements ResourceInterface {
 
     /**
      * Empresa a que o atendimento pertence
@@ -274,5 +275,15 @@ class Atendimento {
 
     function setConclusao($conclusao) {
         $this->conclusao = $conclusao;
+    }
+
+    /**
+     * Retorna a ID do atendimento como identificação de recurso
+     * para o Zend ACL
+     * 
+     * @returns string
+     */
+    public function getResourceId() {
+        return 'atendimento';
     }
 }
