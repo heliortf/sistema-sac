@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% if user.isLogado() %}
+                :: {{ user.getUsuario().getEmpresa().getNomeFantasia() }} :: 
+            {% else %}
+                :: Effort :: 
+            {% endif %}
+            {% block titulo %}{% endblock %}
+        </title>
+        <base href="{{ urlFor('home') }}" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.4-dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.4-dist/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">        
+        <link rel="stylesheet/less" type="text/css" href="css/estilo.less" />
+        {% block css %}{% endblock %}
+    </head>
+    <body>
+        <div class="container-fluid effort site">
+            {% if user.isLogado() %}
+                <div class="row barra-status">                    
+                    <div class="col-md-12">
+                        <ul class="nav navbar-nav navbar-right">                    
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i> {{ user.getUsuario().getNome() }} <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#"><i class="fa fa-cogs"></i> Configura&ccedil;&otilde;es</a></li>
+                                    <li><a href="{{ urlFor('logout') }}"><i class="fa fa-sign-out"></i> Sair</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                
+            {% endif %}
+            <div class="row menu">
+                {% block menu_principal %}
+                    {% if user.isLogado() %}
+                        {% set menu = "menu/" ~ user.getUsuario().getCargo().getNome() ~ ".html.twig" %}
+                        {% include menu %}
+                    {% endif %}
+                {% endblock %}
+            </div>
+            <div class="row conteudo">
+                <div class="col-md-12">
+                    {% block conteudo %}{% endblock %}
+                </div>
+            </div>
+        </div>        
+        <script type="text/javascript" src="js/lib/jquery/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="css/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/lib/less/lesscss.js"></script>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                setTimeout(function(){
+                    jQuery(".alert").fadeOut();
+                }, 2500);
+            });
+        </script>
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

@@ -1,96 +1,126 @@
 {% extends "layout/sistema.html.twig" %}
 {% block titulo %}Consultar Atendimento{% endblock %}
 {% block conteudo %}
-    <div class="row consultar-atendimento">
-        <div class="col-md-10 col-md-offset-1 bloco-principal">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1 filtro-consultar-atendimento">
-                    <form method="get" action="{{ consultar_atendimento }}" class="form form-horizontal">
-                        <input type="hidden" name="pagina" value="{{ paginacao.paginaAtual }}" />
-                        <input type="hidden" name="qtdPorPagina" value="{{ paginacao.qtdPorPagina }}" />
-                        <fieldset>
-                            <legend>Filtro de Atendimentos</legend>
-                            <div class="form-group">
-                                <label for="numero" class="col-sm-2 control-label">N&uacute;mero</label>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="numero" id="numero" placeholder="N&uacute;mero do atendimento">
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="submit" name="btn_consultar" class="btn btn-primary">Pesquisar</button>
-                                </div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Consultar Atendimentos</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Consultar Atendimento</a></li>
+        </ol>
+    </section>        
+    <!-- Main content -->
+    <section class="content">
+        <div class="row consultar-atendimento">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3 class="box-title">Filtro de Atendimentos</h3>
+                            </div>                            
+                            <div class="col-md-9 text-right">
+                                Registros por p&aacute;gina
+                                <select name="qtd_por_pagina">
+                                    <option value="20">20</option>
+                                    <option value="20">30</option>
+                                    <option value="20">50</option>
+                                    <option value="20">100</option>
+                                </select>
                             </div>
-                            <div class="form-group">
-                                <label for="cliente" class="col-sm-2 control-label">Cliente</label>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="cliente" id="cliente" placeholder="Nome do cliente">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cliente" class="col-sm-2 control-label">Documento</label>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control" id="documento" placeholder="Nome do documento">
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
-            <div class="row lista-atendimentos">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-5 informacoes-paginacao">
-                            Exibindo {{ paginacao.inicio + 1 }} - {{ paginacao.fim }} de {{ paginacao.qtdRegistros }} registro(s)
-                        </div>
-                        <div class="col-md-7 text-right">
-                            Registros por p&aacute;gina
-                            <select name="qtd_por_pagina">
-                                <option value="20">20</option>
-                                <option value="20">30</option>
-                                <option value="20">50</option>
-                                <option value="20">100</option>
-                            </select>
                         </div>
                     </div>
-                    <table class="table tabela-atendimentos table-bordered">
-                        <thead>
-                            <tr>
-                                <th>N&uacute;mero</th>
-                                <th>Cliente</th>                                
-                                <th>Respons&aacute;vel</th>
-                                <th>Doc.</th>
-                                <th>T&iacute;tulo</th>
-                                <th>Data</th>
-                                <th>Status</th>
-                                <th>&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for a in atendimentos %}
-                                <tr>
-                                    <td>{{ a.getId() }}</td>
-                                    <td>{{ a.getCliente().getNome() }}</td>
-                                    <td>{{ a.getAtendente().getNome() }}</td>
-                                    <td></td>
-                                    <td>{{ a.getTitulo() }}</td>
-                                    <td>{{ a.getDataCriacao().format("d/m/Y") }}</td>
-                                    <td>{{ a.getStatus().getNome() }}</td>
-                                    <td>
-										<a href="{{ urlFor('ver_atendimento', { id : a.getId() }) }}">
-											<button id="dLabel" type="button">
-												<i class="fa fa-search"></i> Visualizar
-											</button>                                        
-										</a>
-                                    </td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="8">Nenhum atendimento</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 filtro-consultar-atendimento">
+                                <form method="get" action="{{ consultar_atendimento }}" class="form form-horizontal">
+                                    <input type="hidden" name="pagina" value="{{ paginacao.paginaAtual }}" />
+                                    <input type="hidden" name="qtdPorPagina" value="{{ paginacao.qtdPorPagina }}" />                                    
+                                    <div class="form-group">
+                                        <label for="numero" class="col-sm-2 control-label">N&uacute;mero</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" name="numero" id="numero" placeholder="N&uacute;mero do atendimento">
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button type="submit" name="btn_consultar" class="btn btn-primary">Pesquisar</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cliente" class="col-sm-2 control-label">Cliente</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" name="cliente" id="cliente" placeholder="Nome do cliente">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cliente" class="col-sm-2 control-label">Documento</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" id="documento" placeholder="Nome do documento">
+                                        </div>
+                                    </div>                                    
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row lista-atendimentos">
+                            <div class="col-md-12">                                
+                                <table class="table tabela-atendimentos table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>N&uacute;mero</th>
+                                            <th>Cliente</th>                                
+                                            <th>Respons&aacute;vel</th>
+                                            <th>Doc.</th>
+                                            <th>T&iacute;tulo</th>
+                                            <th>Data</th>
+                                            <th>Status</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for a in atendimentos %}
+                                            <tr>
+                                                <td>{{ a.getId() }}</td>
+                                                <td>{{ a.getCliente().getNome() }}</td>
+                                                <td>{{ a.getAtendente().getNome() }}</td>
+                                                <td></td>
+                                                <td>{{ a.getTitulo() }}</td>
+                                                <td>{{ a.getDataCriacao().format("d/m/Y") }}</td>
+                                                <td>{{ a.getStatus().getNome() }}</td>
+                                                <td>
+                                                    <a href="{{ urlFor('ver_atendimento', { id : a.getId() }) }}">
+                                                        <button id="dLabel" type="button">
+                                                            <i class="fa fa-search"></i> Visualizar
+                                                        </button>                                        
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="8">Nenhum atendimento</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <div class="row">
+                            <div class="col-md-4 informacoes-paginacao">
+                                Exibindo {{ paginacao.inicio + 1 }} - {{ paginacao.fim }} de {{ paginacao.qtdRegistros }} registro(s)
+                            </div>
+                            <div class="col-md-8">
+                                <ul class="pagination pagination-sm no-margin pull-right">
+                                    <li><a href="#">«</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">»</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div>   <!-- /.row -->
+    </section><!-- /.content -->            
 {% endblock %}
