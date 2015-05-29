@@ -1,66 +1,88 @@
 {% extends "layout/sistema.html.twig" %}
 {% block titulo %}Registrar Atendimento{% endblock %}
 {% block conteudo %}
-    <div class="row registrar-atendimento">
-        <div class="col-md-10 col-md-offset-1  bloco-principal">
-            <form method="post" action="{{ urlFor('salvar_atendimento') }}" class="form form-horizontal">
-                <div class="form-group">
-                    <label for="numero" class="col-sm-2 control-label">Tipo:</label>
-					{% for t in tipos %}
-						<div class="col-sm-2">
-							<input type="radio" name="tipo" id="tipo_solicitacao" value="{{ t.getId() }}" /> <label for="tipo_solicitacao">{{ t.getNome() }}</label>
-						</div>
-					{% endfor %}
-                </div>
-                <div class="form-group">
-                    <label for="area" class="col-sm-2 control-label">&Aacute;rea</label>
-                    <div class="col-sm-5">
-                        <select name="area" class="form-control">
-                            {% for a in areas %}
-                                <option value="{{ a.getId() }}">{{ a.getNome() }}</option>
-                            {% endfor %}
-                        </select>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Registrar Atendimento</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Registrar Atendimento</a></li>
+        </ol>
+    </section>        
+    <!-- Main content -->
+    <section class="content">
+        <div class="row registrar-atendimento">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3 class="box-title">Formul&aacute;rio</h3>
+                            </div>                                                        
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <form method="post" action="{{ urlFor('salvar_atendimento') }}" class="form form-horizontal">
+                            <div class="form-group">
+                                <label for="numero" class="col-sm-2 control-label">Tipo:</label>
+                                {% for t in tipos %}
+                                    <div class="col-sm-2">
+                                        <input type="radio" name="tipo" id="tipo_solicitacao_{{ t.getId() }}" value="{{ t.getId() }}" /> <label for="tipo_solicitacao_{{ t.getId() }}">{{ t.getNome() }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <label for="area" class="col-sm-2 control-label">&Aacute;rea</label>
+                                <div class="col-sm-5">
+                                    <select name="area" class="form-control">
+                                        {% for a in areas %}
+                                            <option value="{{ a.getId() }}">{{ a.getNome() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cliente" class="col-sm-2 control-label">Cliente</label>
+                                <div class="col-sm-5">
+                                    <select name="cliente" class="form-control">
+                                        {% for c in clientes %}
+                                            <option value="{{ c.getId() }}">{{ c.getNome() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cliente" class="col-sm-2 control-label">Documento</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="documento" placeholder="Nome do documento">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cliente" class="col-sm-2 control-label">T&iacute;tulo</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="titulo" id="titulo" placeholder="T&iacute;tulo do atendimento">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="descricao" class="col-sm-2 control-label">Descri&ccedil;&atilde;o</label>
+                                <div class="col-sm-5">
+                                    <textarea class="form-control" name="descricao" id="descricao"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-5 col-sm-offset-2">
+                                    <button type="submit" name="btn_salvar" class="btn btn-primary">Salvar</button>
+                                    <a href="{{ urlFor('consultar_atendimento') }}">
+                                        <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="cliente" class="col-sm-2 control-label">Cliente</label>
-                    <div class="col-sm-5">
-                        <select name="cliente" class="form-control">
-                            {% for c in clientes %}
-                                <option value="{{ c.getId() }}">{{ c.getNome() }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="cliente" class="col-sm-2 control-label">Documento</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" id="documento" placeholder="Nome do documento">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="cliente" class="col-sm-2 control-label">T&iacute;tulo</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" name="titulo" id="titulo" placeholder="T&iacute;tulo do atendimento">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="descricao" class="col-sm-2 control-label">Descri&ccedil;&atilde;o</label>
-                    <div class="col-sm-5">
-                        <textarea class="form-control" name="descricao" id="descricao"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-5 col-sm-offset-2">
-                        <button type="submit" name="btn_salvar" class="btn btn-primary">Salvar</button>
-                        <a href="{{ urlFor('consultar_atendimento') }}">
-                            <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
-                        </a>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </section><!-- .content -->
 {% endblock %}
 
 {% block scripts %}

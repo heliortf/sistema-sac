@@ -1,6 +1,9 @@
-<ul class="nav nav-tabs">
-    <li role="presentation" class="{% if menuPrincipal == 'consultar_atendimento' %}active{% endif %} text-center">
-        <a href="{{ urlFor('consultar_atendimento') }}"><i class="fa fa-search"></i> <span>Consultar Atendimento</span></a>
-    </li>
-    <li role="presentation" {% if menuPrincipal == 'registrar_atendimento' %}class="active"{% endif %}><a href="{{ urlFor('novo_atendimento') }}"><i class="fa fa-plus"></i> Registrar Atendimento</a></li>    
-</ul>
+<li class="treeview">
+    <a href="#">
+        <i class="fa fa-ticket"></i> <span>Atendimentos</span> <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+        <li><a href="{{ urlFor('consultar_atendimento') }}"><i class="fa fa-search"></i> Consultar</a></li>
+        <li><a href="{{ urlFor('novo_atendimento') }}"><i class="fa fa-plus"></i> Registrar</a></li>
+    </ul>
+</li>   
