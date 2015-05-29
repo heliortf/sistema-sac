@@ -29,15 +29,7 @@ class Empresa {
      * @var ArrayCollection
      * @OneToMany(targetEntity="Area", mappedBy="empresa", fetch="LAZY")
      */
-    private $areas;
-	
-    /**
-     * Perfis cadastrados para a empresa
-     * 
-     * @var ArrayCollection
-     * @OneToMany(targetEntity="Perfil", mappedBy="empresa", fetch="LAZY")
-     */
-    private $perfis;
+    private $areas;	
     
     /**
      * Lista de cargos da empresa
@@ -84,8 +76,7 @@ class Empresa {
      */
     public function __construct(){
         $this->usuarios     = new ArrayCollection();
-        $this->areas        = new ArrayCollection();
-        $this->perfis       = new ArrayCollection();
+        $this->areas        = new ArrayCollection();        
         $this->cargos       = new ArrayCollection();
         $this->clientes     = new ArrayCollection();
         $this->listaStatusAtendimento   = new ArrayCollection();
@@ -195,10 +186,6 @@ class Empresa {
         return $this->areas;
     }
 
-    function getPerfis() {
-        return $this->perfis;
-    }
-
     function getCargos() {
         return $this->cargos;
     }
@@ -257,10 +244,6 @@ class Empresa {
 
     function setAreas(ArrayCollection $areas) {
         $this->areas = $areas;
-    }
-
-    function setPerfis(ArrayCollection $perfis) {
-        $this->perfis = $perfis;
     }
 
     function setCargos(ArrayCollection $cargos) {

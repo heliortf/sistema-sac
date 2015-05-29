@@ -23,15 +23,7 @@ class Usuario implements RoleInterface {
      * @ManyToOne(targetEntity="Cargo", inversedBy="usuarios", fetch="LAZY")
      * @JoinColumn(name="tb_cargo_cargo_id", referencedColumnName="cargo_id")
      */
-    protected $cargo;
-    
-    /**
-     *
-     * @var Perfil
-     * @ManyToOne(targetEntity="Perfil", inversedBy="usuarios", fetch="LAZY")
-     * @JoinColumn(name="tb_perfil_perfil_id", referencedColumnName="perfil_id")
-     */
-    protected $perfil;
+    protected $cargo;    
     
     /**
      * Area que o usuário pertence
@@ -138,18 +130,10 @@ class Usuario implements RoleInterface {
      * @Column(type="integer", length=3, name="celular_ddd", nullable=true)
      */
     protected $dddCelular;
-    
  
-    function getPerfil() {
-        return $this->perfil;
-    }
 
     function getMeusAtendimentos() {
         return $this->meusAtendimentos;
-    }
-
-    function setPerfil(Perfil $perfil) {
-        $this->perfil = $perfil;
     }
 
     function setMeusAtendimentos(ArrayCollection $meusAtendimentos) {

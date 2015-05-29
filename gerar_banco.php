@@ -14,8 +14,6 @@ $classes = array(
     $em->getClassMetadata('Area'),
     $em->getClassMetadata('Cargo'),
     $em->getClassMetadata('Usuario'),
-    $em->getClassMetadata('Perfil'),
-    $em->getClassMetadata('AcaoPerfil'),
     $em->getClassMetadata('Cliente'),
     $em->getClassMetadata('StatusAtendimento'),
     $em->getClassMetadata('TipoAtendimento'),
@@ -79,30 +77,10 @@ $em->persist($A2);
 $em->persist($A3);
 $em->flush();
 
-// Cadastra o perfil
-$P = new Perfil();
-$P->setNome("Atendente");
-$P->setEmpresa($E);
-
-$P2 = new Perfil();
-$P2->setNome("Administrador");
-$P2->setEmpresa($E);
-
-$P3 = new Perfil();
-$P3->setNome("Responsavel por Área");
-$P3->setEmpresa($E);
-
-$em->persist($P);
-$em->persist($P2);
-$em->persist($P3);
-$em->flush();
-
-
 $U = new Usuario();
 $U->setEmpresa($E);
 $U->setCargo($C);
 $U->setArea($A);
-$U->setPerfil($P);
 $U->setCpf(13447868716);
 $U->setNome("Helio Ricardo");
 $U->setEmail("heliortf@gmail.com");
@@ -120,7 +98,6 @@ $U2 = new Usuario();
 $U2->setEmpresa($E);
 $U2->setCargo($C3);
 $U2->setArea($A);
-$U2->setPerfil($P3);
 $U2->setCpf(13643828711);
 $U2->setNome("João Lopes");
 $U2->setEmail("joao.lopes@gmail.com");
@@ -138,7 +115,6 @@ $U3 = new Usuario();
 $U3->setEmpresa($E);
 $U3->setCargo($C2);
 $U3->setArea($A2);
-$U3->setPerfil($P2);
 $U3->setCpf(13643828711);
 $U3->setNome("Gideão");
 $U3->setEmail("gideao@gmail.com");
