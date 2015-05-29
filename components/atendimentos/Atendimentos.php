@@ -36,23 +36,23 @@ class Atendimentos {
          * @return Atendimento
 	 */
 	public function getAtendimento($params=array()){
-		$em = Conexao::getEntityManager();
-		
-		$u = $params['usuario'];
-		
-		$dql = "select a from Atendimento a WHERE a.empresa = :empresa AND a.id = :id ";
-		$query = $em->createQuery($dql);
-		$atendimentos = $query->setParameters(array(
-			'empresa' 	=> $u->getEmpresa()->getId(),
-			'id'		=> $params['id']
-		))->getResult();
-		
-		if(count($atendimentos) == 1){
-			return $atendimentos[0];
-		}
-		else {
-			return false;
-		}
+            $em = Conexao::getEntityManager();
+
+            $u = $params['usuario'];
+
+            $dql = "select a from Atendimento a WHERE a.empresa = :empresa AND a.id = :id ";
+            $query = $em->createQuery($dql);
+            $atendimentos = $query->setParameters(array(
+                    'empresa' 	=> $u->getEmpresa()->getId(),
+                    'id'		=> $params['id']
+            ))->getResult();
+
+            if(count($atendimentos) == 1){
+                    return $atendimentos[0];
+            }
+            else {
+                    return false;
+            }
 	}
 	
     /**

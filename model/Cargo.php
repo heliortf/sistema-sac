@@ -75,6 +75,17 @@ class Cargo {
     function getNome() {
         return $this->nome;
     }
+    
+    function getLabel() {
+        switch($this->getNome()){
+            case Cargo::ATENDENTE:
+                return 'Atendente';
+            case Cargo::RESPONSAVEL_AREA:
+                return 'Responsável Área';
+            case Cargo::ADMINISTRADOR:
+                return 'Administrador';
+        }
+    }
 
     function setEmpresa(Empresa $empresa) {
         $this->empresa = $empresa;

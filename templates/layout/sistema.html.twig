@@ -55,7 +55,7 @@
                                 <li class="user-header">
                                     <img src="dist/img/icone-{{ user.getUsuario().getCargo().getNome() }}.png" class="img-circle" alt="{{ user.getUsuario().getNome() }}" />
                                     <p>
-                                        {{ user.getUsuario().getNome() }} - {{ user.getUsuario().getCargo().getNome()|capitalize }}
+                                        {{ user.getUsuario().getNome() }} - {{ user.getUsuario().getCargo().getLabel() }}
                                         <small>{{ user.getUsuario().getEmpresa().getNome() }}</small>
                                     </p>
                                 </li>                                

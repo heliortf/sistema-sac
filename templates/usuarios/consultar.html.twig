@@ -1,0 +1,106 @@
+{% extends "layout/sistema.html.twig" %}
+{% block titulo %}Consultar Usu&aacute;rio{% endblock %}
+{% block conteudo %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Consultar Usu&aacute;rios</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Consultar Usu&aacute;rio</a></li>
+        </ol>
+    </section>        
+    <!-- Main content -->
+    <section class="content">
+        <div class="row consultar-usuario">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3 class="box-title">Filtro de Usu&aacute;rios</h3>
+                            </div>                            
+                            <div class="col-md-9 text-right">
+                                Registros por p&aacute;gina
+                                <select name="qtd_por_pagina">
+                                    <option value="20">20</option>
+                                    <option value="20">30</option>
+                                    <option value="20">50</option>
+                                    <option value="20">100</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 filtro-consultar-usuario">
+                                <form method="get" action="{{ urlFor('lista_usuarios') }}" class="form form-horizontal">
+                                    <input type="hidden" name="pagina" value="{{ paginacao.paginaAtual }}" />
+                                    <input type="hidden" name="qtdPorPagina" value="{{ paginacao.qtdPorPagina }}" />                                    
+                                    <div class="form-group">
+                                        <label for="nome" class="col-sm-2 control-label">Nome</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" name="nome" id="nome" value="{{ filtro.nome }}" placeholder="Nome do Usu&aacute;rio">
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button type="submit" name="btn_consultar" class="btn btn-primary">Pesquisar</button>
+                                        </div>
+                                    </div>                          
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row lista-atendimentos">
+                            <div class="col-md-12">                                
+                                <table class="table tabela-atendimentos table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nome</th>                                
+                                            <th>Cargo</th>
+                                            <th>CPF</th>
+                                            <th>E-mail</th>
+                                            <th>Login</th>                                            
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for u in usuarios %}
+                                            <tr>
+                                                <td>{{ u.getId() }}</td>                                                
+                                                <td>{{ u.getNome() }}</td>
+                                                <td>{{ u.getCargo().getLabel() }}</td>
+                                                <td>{{ u.getCPF() }}</td>
+                                                <td>{{ u.getEmail() }}</td>
+                                                <td>{{ u.getLogin() }}</td>                                                                                       
+                                                <td>
+                                                    <a href="{{ urlFor('ver_usuario', { id : u.getId() }) }}">
+                                                        <button id="dLabel" type="button">
+                                                            <i class="fa fa-search"></i> Visualizar
+                                                        </button>                                        
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="8">Nenhum usu&aacute;rio</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <div class="row">
+                            <div class="col-md-4">
+                                {% include "paginacao/informativo.html.twig" %}
+                            </div>
+                            <div class="col-md-8">
+                                {% include "paginacao/paginacao.html.twig" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   <!-- /.row -->
+    </section><!-- /.content -->            
+{% endblock %}

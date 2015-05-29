@@ -32,6 +32,5 @@ require_once('controllers/usuario.php');
 require_once('controllers/administrador.php');
 require_once('controllers/responsavel_area.php');
 
-
 $app->run();
 

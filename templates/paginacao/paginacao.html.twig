@@ -1,0 +1,17 @@
+<ul class="pagination pagination-sm no-margin pull-right">                                    
+    {% if paginacao.pagina == 1 %}
+        <li class="disabled">
+            <a href="javascript:void(0);">«</a>
+        </li> 
+    {% elseif paginacao.pagina > 1 %}
+        <li class="disabled">
+            <a href="#">«</a>
+        </li> 
+    {% endif %}                                    
+    <li class="active"><a href="#">1</a></li>
+        {% if paginacao.pagina < paginacao.qtdPaginas %}
+        <li><a href="#">»</a></li>
+        {% else %}
+        <li class="disabled"><a href="#">»</a></li>
+        {% endif %}
+</ul>
