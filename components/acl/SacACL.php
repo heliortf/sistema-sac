@@ -13,7 +13,8 @@ class SacACL {
     /**
      * Define o ID da ação
      */
-    const COMENTARIO_CADASTRAR = 'comentario.cadastrar';
+    const ATENDIMENTO_COMENTAR = 'atendimento.comentar';
+    const ATENDIMENTO_ENCAMINHAR = 'atendimento.encaminhar';
     
     /**
      *
@@ -65,7 +66,8 @@ class SacACL {
         $atendimentoResource = new Resource('atendimento');
         $this->acl->addResource($atendimentoResource);
         
-        $this->acl->allow(null, null, self::COMENTARIO_CADASTRAR, new ComentarAtendimentoAssertion());
+        $this->acl->allow(null, null, self::ATENDIMENTO_COMENTAR, new ComentarAtendimentoAssertion());
+        $this->acl->allow(null, null, self::ATENDIMENTO_ENCAMINHAR, new EncaminharAtendimentoAssertion());
     }
     
     /**

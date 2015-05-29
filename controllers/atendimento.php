@@ -139,14 +139,17 @@ $app->get('/atendimentos/:id', function($id) use($app) {
     
     
     $ACL = SacACL::getInstance();
-    $allowed = $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::COMENTARIO_CADASTRAR);
-    var_dump($allowed);
-
+    $permissoes = array(
+        'atendimento_comentar'      => $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::ATENDIMENTO_COMENTAR),
+        'atendimento_encaminhar'    => $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::ATENDIMENTO_ENCAMINHAR)
+    );
+    
     $app->render('atendimento/ver.html.twig', array(
         'menuPrincipal' => 'consultar_atendimento',
         'user' 		=> $u,
         'atendimento' 	=> $atendimento,
-        'areas'		=> $listaAreas['registros']        
+        'areas'		=> $listaAreas['registros'],
+        'permissoes'    => $permissoes
     ));
 })
 ->name('ver_atendimento');

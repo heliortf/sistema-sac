@@ -7,7 +7,7 @@ use Zend\Permissions\Acl\Assertion\AssertionInterface;
  *
  * @author PONTOFRIO
  */
-class ComentarAtendimentoAssertion implements AssertionInterface {
+class EncaminharAtendimentoAssertion implements AssertionInterface {
 
     /**
      * Verifica se pode ou não registrar atendimento
@@ -71,8 +71,7 @@ class ComentarAtendimentoAssertion implements AssertionInterface {
                              * Se for atendente
                              */
                             case Cargo::ATENDENTE:                                
-                                return false;
-                                break;
+                                return false;                                
                             /**
                              * Se for responsável da area. Não pode comentar
                              */

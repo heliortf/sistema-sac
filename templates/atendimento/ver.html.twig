@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        <form method="post" action="" class="form form-horizontal">                            
+                        <div class="form form-horizontal">                            
                             <div class="form-group">
                                 <label for="numero" class="col-sm-2 control-label">Tipo:</label>
                                 <div class="col-sm-2">
@@ -113,50 +113,58 @@
                                     <div role="tabpanel">
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs" role="tablist">
-                                            <li role="presentation" class="active"><a href="#adicionar-comentario" aria-controls="adicionar-comentario" role="tab" data-toggle="tab"><i class="fa fa-comments-o"></i> Adicionar Coment&aacute;rio</a></li>
-                                            <li role="presentation"><a href="#encaminhar-area" aria-controls="encaminhar-area" role="tab" data-toggle="tab"><i class="fa fa-mail-forward"></i> Encaminhar para &Aacute;rea</a></li>
+                                            {% if permissoes.cadastrar_comentario == true %}
+                                                <li role="presentation" class="active"><a href="#adicionar-comentario" aria-controls="adicionar-comentario" role="tab" data-toggle="tab"><i class="fa fa-comments-o"></i> Adicionar Coment&aacute;rio</a></li>
+                                            {% endif %}
+                                            {% if permissoes.encaminhar_atendimento == true %}
+                                                <li role="presentation" class="active"><a href="#encaminhar-area" aria-controls="encaminhar-area" role="tab" data-toggle="tab"><i class="fa fa-mail-forward"></i> Encaminhar para &Aacute;rea</a></li>
+                                            {% endif %}
                                             <li role="presentation"><a href="#concluir" aria-controls="concluir" role="tab" data-toggle="tab"><i class="fa fa-check-circle-o"></i> Concluir</a></li>
                                         </ul>
 
                                         <!-- Tab panes -->
                                         <div class="tab-content">
-                                            <div role="tabpanel" class="tab-pane active" id="adicionar-comentario">
-                                                <form class="form form-horizontal form-comentarios" method="post" action="{{ urlFor('cadastrar_comentario_atendimento', { atendimentoId : atendimento.getId() } ) }}">                                    
-                                                    <div class="form-group">
-                                                        <label for="comentario" class="col-sm-3 control-label">Adicionar Coment&aacute;rio:</label>
-                                                        <div class="col-sm-9">
-                                                            <textarea name="comentario" class="form-control" rows="8"></textarea>
-                                                            <p class="form-control-static"><input type="checkbox" name="comentario_publico" value="1" checked /> Tornar coment&aacute;rio p&uacute;blico</p>
-                                                        </div>
-                                                    </div>				
-                                                    <div class="form-group">
-                                                        <div class="col-sm-3 col-sm-offset-9 text-right">                                            
-                                                            <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Adicionar</button>
-                                                        </div>
-                                                    </div>                                    
-                                                </form>
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane" id="encaminhar-area">
-                                                <div class="dropdown">
-                                                    <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" clas="btn btn-default">
-                                                        Encaminhar para
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                                        {% for a in areas %}
-                                                            <li>
-                                                                {% if a.getId() != atendimento.getArea().getId() %}
-                                                                    <a href="javascript:void(0);" data-area_id="{{ a.getId() }}">{{ a.getNome() }}</a>
-                                                                {% endif %}
-                                                            </li>	
-                                                        {% endfor %}
-                                                    </ul>                                    
+                                            {% if permissoes.atendimento_comentar == true %}
+                                                <div role="tabpanel" class="tab-pane active" id="adicionar-comentario">
+                                                    <form class="form form-horizontal form-comentarios" method="post" action="{{ urlFor('cadastrar_comentario_atendimento', { atendimentoId : atendimento.getId() } ) }}">                                    
+                                                        <div class="form-group">
+                                                            <label for="comentario" class="col-sm-3 control-label">Adicionar Coment&aacute;rio:</label>
+                                                            <div class="col-sm-9">
+                                                                <textarea name="comentario" class="form-control" rows="8"></textarea>
+                                                                <p class="form-control-static"><input type="checkbox" name="comentario_publico" value="1" checked /> Tornar coment&aacute;rio p&uacute;blico</p>
+                                                            </div>
+                                                        </div>				
+                                                        <div class="form-group">
+                                                            <div class="col-sm-3 col-sm-offset-9 text-right">                                            
+                                                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Adicionar</button>
+                                                            </div>
+                                                        </div>                                    
+                                                    </form>
                                                 </div>
-                                                <form method="post" action="{{ urlFor('fazer_encaminhamento_atendimento', { atendimentoId : atendimento.getId() }) }}" id="form-encaminhar">
-                                                    <input type="hidden" name="atendimento_id" value="{{ atendimento.getId() }}" />
-                                                    <input type="hidden" name="area_id" value="" />
-                                                </form>
-                                            </div>
+                                            {% endif %}
+                                            {% if permissoes.atendimento_encaminhar == true %}
+                                                <div role="tabpanel" class="tab-pane" id="encaminhar-area">
+                                                    <div class="dropdown">
+                                                        <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" clas="btn btn-default">
+                                                            Encaminhar para
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                            {% for a in areas %}
+                                                                <li>
+                                                                    {% if a.getId() != atendimento.getArea().getId() %}
+                                                                        <a href="javascript:void(0);" data-area_id="{{ a.getId() }}">{{ a.getNome() }}</a>
+                                                                    {% endif %}
+                                                                </li>	
+                                                            {% endfor %}
+                                                        </ul>                                    
+                                                    </div>
+                                                    <form method="post" action="{{ urlFor('fazer_encaminhamento_atendimento', { atendimentoId : atendimento.getId() }) }}" id="form-encaminhar">
+                                                        <input type="hidden" name="atendimento_id" value="{{ atendimento.getId() }}" />
+                                                        <input type="hidden" name="area_id" value="" />
+                                                    </form>
+                                                </div>
+                                            {% endif %}
                                             <div role="tabpanel" class="tab-pane" id="concluir">
                                                 <form method="post" class="form form-horizontal form-solucao" action="{{ urlFor('cadastrar_conclusao_atendimento', { atendimentoId : atendimento.getId() }) }}">                                    
                                                     <div class="form-group">
@@ -176,7 +184,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col-md-12 -->            
