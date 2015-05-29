@@ -33,6 +33,7 @@ class Atendimentos {
 	 *  - int $id
 	 *
 	 * @param array $params
+         * @return Atendimento
 	 */
 	public function getAtendimento($params=array()){
 		$em = Conexao::getEntityManager();

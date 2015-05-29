@@ -113,13 +113,21 @@
                                     <div role="tabpanel">
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs" role="tablist">
-                                            {% if permissoes.cadastrar_comentario == true %}
+                                            {% if permissoes.atendimento_comentar == true %}
                                                 <li role="presentation" class="active"><a href="#adicionar-comentario" aria-controls="adicionar-comentario" role="tab" data-toggle="tab"><i class="fa fa-comments-o"></i> Adicionar Coment&aacute;rio</a></li>
                                             {% endif %}
-                                            {% if permissoes.encaminhar_atendimento == true %}
-                                                <li role="presentation" class="active"><a href="#encaminhar-area" aria-controls="encaminhar-area" role="tab" data-toggle="tab"><i class="fa fa-mail-forward"></i> Encaminhar para &Aacute;rea</a></li>
+                                            {% if permissoes.atendimento_encaminhar == true %}
+                                                <li 
+                                                    role="presentation" 
+                                                    {% if permissoes.atendimento_comentar == false %}
+                                                        class="active"
+                                                    {% endif %}
+                                                >
+                                                    <a href="#encaminhar-area" aria-controls="encaminhar-area" role="tab" data-toggle="tab"><i class="fa fa-mail-forward"></i> Encaminhar para &Aacute;rea</a></li>
                                             {% endif %}
-                                            <li role="presentation"><a href="#concluir" aria-controls="concluir" role="tab" data-toggle="tab"><i class="fa fa-check-circle-o"></i> Concluir</a></li>
+                                            {% if permissoes.atendimento_concluir == true %}
+                                                <li role="presentation"><a href="#concluir" aria-controls="concluir" role="tab" data-toggle="tab"><i class="fa fa-check-circle-o"></i> Concluir</a></li>
+                                            {% endif %}
                                         </ul>
 
                                         <!-- Tab panes -->
@@ -150,6 +158,9 @@
                                                             <span class="caret"></span>
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                            <li role="presentation" class="dropdown-header">Na minha &aacute;rea</li>
+                                                            <li><a href="javascript:void(0);" data-area_id="responsavel_area">Respons&aacute;vel da minha &Aacute;rea</a></li>
+                                                            <li role="presentation" class="dropdown-header">Outras &aacute;reas</li>
                                                             {% for a in areas %}
                                                                 <li>
                                                                     {% if a.getId() != atendimento.getArea().getId() %}
@@ -165,21 +176,23 @@
                                                     </form>
                                                 </div>
                                             {% endif %}
-                                            <div role="tabpanel" class="tab-pane" id="concluir">
-                                                <form method="post" class="form form-horizontal form-solucao" action="{{ urlFor('cadastrar_conclusao_atendimento', { atendimentoId : atendimento.getId() }) }}">                                    
-                                                    <div class="form-group">
-                                                        <label for="conclusao" class="col-sm-3 control-label">Descreva a conclus&atilde;o:</label>
-                                                        <div class="col-sm-9">
-                                                            <textarea name="conclusao" class="form-control" rows="8"></textarea>
+                                            {% if permissoes.atendimento_concluir == true %}
+                                                <div role="tabpanel" class="tab-pane" id="concluir">
+                                                    <form method="post" class="form form-horizontal form-solucao" action="{{ urlFor('cadastrar_conclusao_atendimento', { atendimentoId : atendimento.getId() }) }}">                                    
+                                                        <div class="form-group">
+                                                            <label for="conclusao" class="col-sm-3 control-label">Descreva a conclus&atilde;o:</label>
+                                                            <div class="col-sm-9">
+                                                                <textarea name="conclusao" class="form-control" rows="8"></textarea>
+                                                            </div>
+                                                        </div>				
+                                                        <div class="form-group">
+                                                            <div class="col-sm-3 col-sm-offset-9 text-right">                                            
+                                                                <button type="submit" class="btn btn-primary"><i class="fa fa-check-circle-o"></i> Concluir</button>
+                                                            </div>
                                                         </div>
-                                                    </div>				
-                                                    <div class="form-group">
-                                                        <div class="col-sm-3 col-sm-offset-9 text-right">                                            
-                                                            <button type="submit" class="btn btn-primary"><i class="fa fa-check-circle-o"></i> Concluir</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                                    </form>
+                                                </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>

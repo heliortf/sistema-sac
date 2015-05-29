@@ -141,7 +141,8 @@ $app->get('/atendimentos/:id', function($id) use($app) {
     $ACL = SacACL::getInstance();
     $permissoes = array(
         'atendimento_comentar'      => $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::ATENDIMENTO_COMENTAR),
-        'atendimento_encaminhar'    => $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::ATENDIMENTO_ENCAMINHAR)
+        'atendimento_encaminhar'    => $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::ATENDIMENTO_ENCAMINHAR),
+        'atendimento_concluir'      => $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::ATENDIMENTO_CONCLUIR)
     );
     
     $app->render('atendimento/ver.html.twig', array(
@@ -235,16 +236,27 @@ $app->post('/atendimentos/:atendimentoId/fazer-encaminhamento', function($atendi
         'id'        => $atendimentoId
     ));
 
-    $Areas = new Areas();
+    
+    if($app->request->post('area_id') == 'responsavel_area'){
+        $novoStatus = $A->getStatus(array(
+            'usuario'   => $u->getUsuario(),
+            'nome'      => StatusAtendimento::STATUS_ANALISE_AREA
+        ));
+        $atendimento->setStatus($novoStatus);
+    }
+    else {
+        $Areas = new Areas();
 
-    // Consulta a nova area
-    $area = $Areas->getArea(array(
-        'usuario' => $u->getUsuario(),
-        'id'        => $app->request->post('area_id')
-    ));
-
-    // Define a nova area do atendimento
-    $atendimento->setArea($area);
+        // Consulta a nova area
+        $area = $Areas->getArea(array(
+            'usuario' => $u->getUsuario(),
+            'id'        => $app->request->post('area_id')
+        ));
+        
+        // Define a nova area do atendimento
+        $atendimento->setArea($area);
+    }
+    
     $atendimento->setDataAlteracao(new DateTime());
     $A->atualizar($atendimento);
 
