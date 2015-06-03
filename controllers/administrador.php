@@ -77,7 +77,7 @@ $app->get('/admin/usuarios/novo', function() use($app){
 ->name('novo_usuario');
 
 
-$app->get('/admin/usuarios/salvar', function($id) use($app){    
+$app->post('/admin/usuarios/salvar', function() use($app){    
 
     $u = WebUser::getInstance();    
 	
@@ -120,6 +120,62 @@ $app->get('/admin/usuarios/salvar', function($id) use($app){
     ));
 })
 ->name('salvar_usuario');
+
+
+$app->post('/admin/usuarios/atualizar', function() use($app){    
+
+    $u = WebUser::getInstance();    
+	
+    // Consulta a area
+    $A = new Areas();
+    $Area = $A->getArea(array(
+        'usuario' => $u->getUsuario(),
+        'id' => $app->request->post('area')
+    ));
+
+    // Consulta o cargo
+    $C = new Cargos();
+    $Cargo = $C->getCargo(array(
+        'usuario' => $u->getUsuario(),
+        'id' => $app->request->post('cargo')
+    ));
+    
+    // Classe que persiste o usuario
+    $U = new Usuarios();
+    $Usuario = $U->getUsuario(array(
+        'usuario'   => $u->getUsuario(),
+        'id'        => $app->request->post('id')
+    ));
+    
+    if($Usuario instanceof Usuario){
+        $Usuario->setEmpresa($u->getUsuario()->getEmpresa());
+        $Usuario->setArea($Area);
+        $Usuario->setCargo($Cargo);
+        $Usuario->setNome($app->request->post('nome'));
+        $Usuario->setEmail($app->request->post('email'));
+        $Usuario->setCPF($app->request->post('cpf'));
+        $Usuario->setLogin($app->request->post('login'));
+        $Usuario->setSenha($app->request->post('senha'));
+        $Usuario->setDddTelefone($app->request->post('ddd_telefone'));
+        $Usuario->setTelefone($app->request->post('telefone'));    
+        $Usuario->setDddCelular($app->request->post('ddd_celular'));
+        $Usuario->setCelular($app->request->post('celular'));        
+
+        $U->salvar($Usuario);
+        
+        $app->flash('sucesso', 'Usuario atualizado com sucesso!');
+    
+        $app->redirectTo('ver_usuario', array(
+            'id' => $Usuario->getId()
+        ));
+    }
+    else {
+        $app->flash('erro', 'Usuário não encontrado');
+        
+        $app->redirectTo('lista_usuarios');
+    }
+})
+->name('atualizar_usuario');
 
 $app->get('/admin/usuarios/:id/editar', function($id) use($app){    
 

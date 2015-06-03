@@ -224,24 +224,24 @@ class Usuario implements RoleInterface {
         $this->senha = $senha;
     }
 
-    function setCpf($cpf) {
-        $this->cpf = $cpf;
+    function setCpf($cpf) {        
+        $this->cpf = preg_replace("/[^0-9]/", "", $cpf);
     }
 
     function setTelefone($telefone) {
-        $this->telefone = $telefone;
+        $this->telefone = preg_replace("/[^0-9]/", "", $telefone);
     }
 
     function setDddTelefone($dddTelefone) {
-        $this->dddTelefone = $dddTelefone;
+        $this->dddTelefone = preg_replace("/[^0-9]/", "", $dddTelefone);
     }
 
     function setCelular($celular) {
-        $this->celular = $celular;
+        $this->celular = preg_replace("/[^0-9]/", "", $celular);
     }
 
     function setDddCelular($dddCelular) {
-        $this->dddCelular = $dddCelular;
+        $this->dddCelular = preg_replace("/[^0-9]/", "", $dddCelular);
     }
 
     /**
