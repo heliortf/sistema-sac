@@ -132,9 +132,22 @@ $app->get('/admin/usuarios/:id/editar', function($id) use($app){
         'id'        => $id
     ));
     
+    
+    $A = new Areas();
+    $areas = $A->getListaAreas(array(
+        'usuario' => $u->getUsuario()
+    ));
+    
+    $C = new Cargos();
+    $cargos = $C->getListaCargos(array(
+        'usuario' => $u->getUsuario()
+    ));
+    
     $app->render('usuarios/editar.html.twig', array(
         'menuPrincipal' => 'cadastro_usuario',
         'usuario'       => $usuario,
+        'areas'         => $areas['registros'],
+        'cargos'        => $cargos['registros'],
         'user'          => $u
     ));
 })

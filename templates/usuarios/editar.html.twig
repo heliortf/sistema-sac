@@ -22,11 +22,11 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        <form method="post" action="{{ urlFor('salvar_usuario') }}" class="form form-horizontal">
+                        <form method="post" action="{{ urlFor('atualizar_usuario') }}" class="form form-horizontal">
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Nome:</label>                                
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="nome" id="nome" value="" placeholder="Nome completo" />
+                                    <input type="text" class="form-control" name="nome" id="nome" value="{{ usuario.getNome() }}" placeholder="Nome completo" />
                                 </div>
                             </div>							
                             <div class="form-group">
@@ -34,7 +34,7 @@
                                 <div class="col-sm-5">
                                     <select name="area" class="form-control">
                                         {% for a in areas %}
-                                            <option value="{{ a.getId() }}">{{ a.getNome() }}</option>
+                                            <option value="{{ a.getId() }}" {% if usuario.getArea().getId() == a.getId() %}selected{% endif %}>{{ a.getNome() }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -44,7 +44,7 @@
                                 <div class="col-sm-5">
                                     <select name="cargo" class="form-control">
                                         {% for c in cargos %}
-                                            <option value="{{ c.getId() }}">{{ c.getLabel() }}</option>
+                                            <option value="{{ c.getId() }}" {% if usuario.getCargo().getId() == c.getId() %}selected{% endif %}>{{ c.getLabel() }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -52,49 +52,49 @@
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">E-mail:</label>
                                 <div class="col-sm-5">
-                                    <input type="email" class="form-control" name="email" id="email" value="" placeholder="E-mail" />
+                                    <input type="email" class="form-control" name="email" id="email" value="{{ usuario.getEmail() }}" placeholder="E-mail" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">CPF:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" name="cpf" id="cpf" value="" placeholder="CPF" />
+                                    <input type="text" class="form-control" name="cpf" id="cpf" value="{{ usuario.getCpf() }}" placeholder="CPF" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Telefone:</label>
                                 <div class="col-sm-1">
-                                    <input type="text" class="form-control" name="ddd_telefone" id="ddd_telefone" value="" placeholder="DDD" />
+                                    <input type="text" class="form-control" name="ddd_telefone" id="ddd_telefone" value="{{ usuario.getDddTelefone() }}" placeholder="DDD" />
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" name="telefone" id="telefone" value="" placeholder="Telefone" />
+                                    <input type="text" class="form-control" name="telefone" id="telefone" value="{{ usuario.getTelefone() }}" placeholder="Telefone" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Celular:</label>
                                 <div class="col-sm-1">
-                                    <input type="text" class="form-control" name="ddd_celular" id="ddd_celular" value="" placeholder="DDD" />
+                                    <input type="text" class="form-control" name="ddd_celular" id="ddd_celular" value="{{ usuario.getDddCelular() }}" placeholder="DDD" />
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" name="celular" id="celular" value="" placeholder="Celular" />
+                                    <input type="text" class="form-control" name="celular" id="celular" value="{{ usuario.getCelular() }}" placeholder="Celular" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="cliente" class="col-sm-2 control-label">Login:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" name="login" id="login" placeholder="Login do usuario">
+                                    <input type="text" class="form-control" name="login" id="login" placeholder="Login do usuario" value="{{ usuario.getLogin() }}"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="senha" class="col-sm-2 control-label">Senha:</label>
                                 <div class="col-sm-3">
-                                    <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite a senha" />
+                                    <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite a senha" value="{{ usuario.getSenha() }}"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="confirme_senha" class="col-sm-2 control-label">Confirme a senha:</label>
                                 <div class="col-sm-3">
-                                    <input type="password" class="form-control" name="confirme_senha" id="confirme_senha" placeholder="Digite a senha novamente" />
+                                    <input type="password" class="form-control" name="confirme_senha" id="confirme_senha" placeholder="Digite a senha novamente" value="{{ usuario.getSenha() }}" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -115,6 +115,11 @@
 
 {% block scripts %}
     <script type="text/javascript">
-        
+        jQuery(document).ready(function(){
+            jQuery("#form_novo_usuario").validationEngine();
+            jQuery("#cpf").setMask('cpf');
+            jQuery("#ddd_telefone, #ddd_celular").setMask("99");
+            jQuery("#telefone, #celular").setMask("9999-99999");
+        });
     </script>
 {% endblock %}
