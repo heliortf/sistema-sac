@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Realiza consultas de areas
+ * Realiza consultas de cargos
  *
  */
-class Areas {
+class Cargos {
 
     /**
-     * Consulta um area pela id
+     * Consulta um cargo pela id
      *
      * Parametros:
      * 	- Usuario $usuario
@@ -15,49 +15,49 @@ class Areas {
      *
      * @param array $params
      */
-    public function getArea($params = array()) {
+    public function getCargo($params = array()) {
         $em = Conexao::getEntityManager();
 
         $u = $params['usuario'];
 
-        $dql = "select a from Area a WHERE a.empresa = :empresa AND a.id = :id ";
+        $dql = "select a from Cargo a WHERE a.empresa = :empresa AND a.id = :id ";
         $query = $em->createQuery($dql);
-        $areas = $query->setParameters(array(
+        $cargos = $query->setParameters(array(
                     'empresa' => $u->getEmpresa()->getId(),
                     'id' => $params['id']
                 ))->getResult();
 
-        if (count($areas) == 1) {
-            return $areas[0];
+        if (count($cargos) == 1) {
+            return $cargos[0];
         } else {
             return false;
         }
     }
 
     /**
-     * Retorna a lista de areas para o usuario logado
+     * Retorna a lista de cargos para o usuario logado
      * 
      * Parametros:
      * - Usuario $usuario
-     * - string $statusArea
+     * - string $statusCargo
      * - int $pagina
      * - in $qtdPorPagina
      * 
      * @param array $params
      */
-    public function getListaAreas($params = array()) {
+    public function getListaCargos($params = array()) {
         $em = Conexao::getEntityManager();
 
         $params['qtdPorPagina'] = isset($params['qtdPorPagina']) ? $params['qtdPorPagina'] : 100;
         $params['pagina'] = isset($params['pagina']) ? $params['pagina'] : 0;
 
-        $dql = "from Area a WHERE a.empresa = :empresa ";
+        $dql = "from Cargo a WHERE a.empresa = :empresa ";
         $pDql = array(
             'empresa' => $params['usuario']->getEmpresa()->getId()
         );
 
         $query = $em->createQuery("select a $dql");
-        $areas = $query->setParameters($pDql)
+        $cargos = $query->setParameters($pDql)
                 ->setMaxResults($params['qtdPorPagina'])
                 ->setFirstResult($params['pagina'])
                 ->getResult();
@@ -67,7 +67,7 @@ class Areas {
                 ->getSingleScalarResult();
 
         return array(
-            'registros' => $areas,
+            'registros' => $cargos,
             'paginacao' => array(
                 'qtdRegistros' => $qtd,
                 'qtdPorPagina' => $params['qtdPorPagina'],

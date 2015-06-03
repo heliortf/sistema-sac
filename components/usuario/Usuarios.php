@@ -6,6 +6,12 @@
  */
 class Usuarios {
 
+    /**
+     * Consulta um usuario pela id
+     * 
+     * @param array $params
+     * @return boolean
+     */
     public function getUsuario($params = array()) {
         $em = Conexao::getEntityManager();
 
@@ -84,6 +90,17 @@ class Usuarios {
                 'qtdPaginas' => ceil($qtd / $params['qtdPorPagina'])
             )
         );
+    }
+    
+    /**
+     * Cadastra um usuario no sistema
+     * 
+     * @param Usuario $u
+     */
+    public function salvar(Usuario $u){
+        $em = Conexao::getEntityManager();
+        $em->persist($u);
+        $em->flush();
     }
 
 }
