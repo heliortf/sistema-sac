@@ -107,6 +107,7 @@ $app->post('/atendimentos/salvar', function() use($app) {
 	$a->setTipo($tipo);
     $a->setEmpresa($u->getUsuario()->getEmpresa());    
     $a->setCliente($cliente);
+	$a->setAtendente($u->getUsuario());
     $a->setArea($area);
 	$a->setStatus($status);
     $a->setTitulo($app->request->post('titulo'));

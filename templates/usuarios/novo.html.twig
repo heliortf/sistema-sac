@@ -24,13 +24,11 @@
                     <div class="box-body">
                         <form method="post" action="{{ urlFor('salvar_usuario') }}" class="form form-horizontal">
                             <div class="form-group">
-                                <label for="numero" class="col-sm-2 control-label">Tipo:</label>
-                                {% for t in tipos %}
-                                    <div class="col-sm-2">
-                                        <input type="radio" name="tipo" id="tipo_solicitacao_{{ t.getId() }}" value="{{ t.getId() }}" /> <label for="tipo_solicitacao_{{ t.getId() }}">{{ t.getNome() }}</label>
-                                    </div>
-                                {% endfor %}
-                            </div>
+                                <label for="nome" class="col-sm-2 control-label">Nome:</label>                                
+								<div class="col-sm-2">
+									<input type="text" name="nome" id="nome" value="" placeholder="Nome do usuário" />
+								</div>
+                            </div>							
                             <div class="form-group">
                                 <label for="area" class="col-sm-2 control-label">&Aacute;rea</label>
                                 <div class="col-sm-5">
@@ -41,22 +39,52 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="cliente" class="col-sm-2 control-label">Documento</label>
+							<div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">E-mail:</label>
+								<div class="col-sm-2">
+									<input type="text" name="email" id="email" value="" placeholder="E-mail" />
+								</div>
+                            </div>
+							<div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">CPF:</label>
+								<div class="col-sm-2">
+									<input type="text" name="cpf" id="cpf" value="" placeholder="CPF" />
+								</div>
+                            </div>
+							<div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Telefone:</label>
+								<div class="col-sm-1">
+									<input type="text" name="ddd_telefone" id="ddd_telefone" value="" placeholder="DDD" />
+								</div>
+								<div class="col-sm-2">
+									<input type="text" name="telefone" id="telefone" value="" placeholder="Telefone" />
+								</div>
+                            </div>
+							<div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Celular:</label>
+								<div class="col-sm-1">
+									<input type="text" name="ddd_celular" id="ddd_celular" value="" placeholder="DDD" />
+								</div>
+								<div class="col-sm-2">
+									<input type="text" name="celular" id="celular" value="" placeholder="Celular" />
+								</div>
+                            </div>
+							<div class="form-group">
+                                <label for="cliente" class="col-sm-2 control-label">Login</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" id="documento" placeholder="Nome do documento">
+                                    <input type="text" class="form-control" name="login" id="login" placeholder="Login do usuario">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="cliente" class="col-sm-2 control-label">T&iacute;tulo</label>
+                                <label for="senha" class="col-sm-2 control-label">Senha:</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="titulo" id="titulo" placeholder="T&iacute;tulo do usuario">
+                                    <input type="password" class="form-control" id="senha" placeholder="">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="descricao" class="col-sm-2 control-label">Descri&ccedil;&atilde;o</label>
+							<div class="form-group">
+                                <label for="confirme_senha" class="col-sm-2 control-label">Confirme a senha:</label>
                                 <div class="col-sm-5">
-                                    <textarea class="form-control" name="descricao" id="descricao"></textarea>
+                                    <input type="password" class="form-control" id="confirme_senha" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">

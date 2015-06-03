@@ -75,12 +75,22 @@ $app->get('/admin/usuarios/salvar', function($id) use($app){
 
     $u = WebUser::getInstance();
     
+	
+	$A = new Areas();
+	$Area = $A->getArea(array(
+		'usuario' => $u->getUsuario()->getId(),
+		'id' => $app->request->post('area_id')
+	));
     
     $U = new Usuarios();
-    $usuario = $U->getUsuario(array(
-        'usuario' => $u->getUsuario(),
-        'id' => $id
-    ));
+    
+	$Usuario = new Usuario();
+	$Usuario->setEmpresa($u->getUsuario()->getEmpresa());
+	$Usuario->setArea($Area);
+	$Usuario->setCargo($Cargo);
+	$Usuario->setNome($app->request->post('nome'));
+	$Usuario->setEmail($app->request->post('email'));
+	$Usuario->setCPF($app->request->post('cpf'));
 })
 ->name('salvar_usuario');
 
