@@ -45,3 +45,25 @@ $app->get('/usuarios/por-area/:areaId', function($areaId) use($app){
     echo json_encode($json);
 })
 ->name('get_usuarios_por_area');
+
+/**
+ * Tela de consulta de atendimentos
+ */
+$app->get('/admin/usuarios/existe-login/:login/:id', function($login, $id) use($app){    
+    // Usuario logado
+    $user = WebUser::getInstance();
+    
+    // Consulta os usuarios da area
+    $U = new Usuarios();
+    $existe = $U->existeLogin(array(
+        'usuario'   => $user->getUsuario(),
+        'login'     => $login,
+        'id'        => ($id == 'no-id' ? '' : $id)
+    ));
+    
+    $json = array('existe' => $existe);
+    
+    header("Content-type: application/json");
+    echo json_encode($json);
+})
+->name('verifica_existe_login');

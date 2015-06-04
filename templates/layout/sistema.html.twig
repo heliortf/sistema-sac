@@ -25,7 +25,6 @@
 </head>
 <body class="skin-blue sidebar-mini effort">
     <div class="wrapper">
-
         <header class="main-header">
             <!-- Logo -->
             <a href="{{ urlFor('home') }}" class="logo">
@@ -127,6 +126,7 @@
         }, 2500);
     });
 </script>
+{% include "layout/flash.html.twig" %}
 {% block scripts %}{% endblock %}
 </body>
 </html>

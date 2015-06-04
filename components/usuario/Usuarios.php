@@ -103,4 +103,37 @@ class Usuarios {
         $em->flush();
     }
 
+    /**
+     * Verifica a existencia de um login no sistema
+     * 
+     * @param array $params
+     *          Usuario $usuario -> usuario logado
+     *          string $login -> login a ser verificado
+     *          int $id -> ( opcional ) id do usuario ou id do cliente
+     */
+    public function existeLogin($params=array()){
+        $em = Conexao::getEntityManager();
+        
+        $dql    = "select count(u.id) as qtd from Usuario u WHERE u.login = :login AND u.empresa = :empresa ";
+        $pDql   = array(
+            'empresa'   => $params['usuario']->getEmpresa()->getId(),
+            'login'     => $params['login']
+        );
+        
+        if(isset($params['id']) && !empty($params['id'])){
+            $dql .= " AND u.id <> :id ";
+            $pDql['id'] = $params['id'];
+        }
+        
+        $qtdUsuarios = $em->createQuery($dql)
+                    ->setParameters($pDql)
+                    ->getSingleScalarResult();        
+        
+        if($qtdUsuarios > 0){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

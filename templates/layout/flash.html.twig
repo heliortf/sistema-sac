@@ -1,0 +1,45 @@
+{% if flash.sucesso %}
+    <div class="modal fade" id="modalSuccess" tabindex="-1" role="dialog" aria-labelledby="modalSuccess">
+        <div class="modal-dialog">      
+            <div class="alert alert-success" role="alert">{{ flash.sucesso }}</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#modalSuccess").modal('show');
+            setTimeout(function(){
+                jQuery("#modalSuccess").modal('hide');
+            },2000);
+        });
+    </script>
+{% endif %}
+{% if flash.warning %}
+    <div class="modal fade" id="modalWarning" tabindex="-1" role="dialog" aria-labelledby="modalWarning">
+        <div class="modal-dialog">                    
+            <div class="alert alert-warning" role="alert">{{ flash.warning }}</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#modalWarning").modal('show');
+            setTimeout(function(){
+                jQuery("#modalWarning").modal('hide');
+            },2000);
+        });
+    </script>
+{% endif %}
+{% if flash.erro %}
+    <div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="modalError">
+        <div class="modal-dialog">                    
+            <div class="alert alert-danger" role="alert">{{ flash.erro }}</div>                                            
+        </div>
+    </div>            
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#modalError").modal('show');
+            setTimeout(function(){
+                jQuery("#modalError").modal('hide');
+            },2000);
+        });
+    </script>
+{% endif %}
