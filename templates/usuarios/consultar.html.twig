@@ -22,10 +22,10 @@
                             <div class="col-md-9 text-right">
                                 Registros por p&aacute;gina
                                 <select name="qtd_por_pagina">
-                                    <option value="20">20</option>
-                                    <option value="20">30</option>
-                                    <option value="20">50</option>
-                                    <option value="20">100</option>
+                                    <option value="20" {% if paginacao.getQtdPorPagina() == 20 %}selected{% endif %}>20</option>
+                                    <option value="30" {% if paginacao.getQtdPorPagina() == 30 %}selected{% endif %}>30</option>
+                                    <option value="50" {% if paginacao.getQtdPorPagina() == 50 %}selected{% endif %}>50</option>
+                                    <option value="100" {% if paginacao.getQtdPorPagina() == 100 %}selected{% endif %}>100</option>
                                 </select>
                             </div>
                         </div>
@@ -33,13 +33,14 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1 filtro-consultar-usuario">
-                                <form method="get" action="{{ urlFor('lista_usuarios') }}" class="form form-horizontal">
-                                    <input type="hidden" name="pagina" value="{{ paginacao.paginaAtual }}" />
-                                    <input type="hidden" name="qtdPorPagina" value="{{ paginacao.qtdPorPagina }}" />                                    
+                                <form method="post" action="{{ urlFor('buscar') }}" class="form form-horizontal">
+                                    <input type="hidden" name="rota" value="lista_usuarios" />
+                                    <input type="hidden" name="p[pagina]" value="1" />
+                                    <input type="hidden" name="p[qtdPorPagina]" value="{{ paginacao.getQtdPorPagina() }}" />                                    
                                     <div class="form-group">
                                         <label for="nome" class="col-sm-2 control-label">Nome</label>
                                         <div class="col-sm-5">
-                                            <input type="text" class="form-control" name="nome" id="nome" value="{{ filtro.nome }}" placeholder="Nome do Usu&aacute;rio">
+                                            <input type="text" class="form-control" name="p[nome]" id="nome" value="{{ filtro.nome }}" placeholder="Nome do Usu&aacute;rio">
                                         </div>
                                         <div class="col-sm-3">
                                             <button type="submit" name="btn_consultar" class="btn btn-primary">Pesquisar</button>
@@ -103,4 +104,14 @@
             </div>
         </div>   <!-- /.row -->
     </section><!-- /.content -->            
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("select[name=qtd_por_pagina]").on("change", function(){
+                jQuery("form input[name='p[qtdPorPagina]']:hidden").val(jQuery(this).val());
+                jQuery("form").submit();
+            });
+        });
+    </script>
 {% endblock %}

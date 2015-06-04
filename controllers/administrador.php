@@ -7,6 +7,17 @@ use Slim\Slim;
  */
 global $app;
 
+$app->post('/do-search', function() use($app){    
+    $p = $app->request->post('p');
+    foreach($p as $k => $v){
+        if($v == ''){
+            unset($p[$k]);
+        }
+    }
+    $app->redirectTo($app->request->post('rota'), $p);
+})
+->name('buscar');
+
 /**
  * Tela de consulta de atendimentos
  */
@@ -26,25 +37,41 @@ $app->get('/admin/relatorios', function() use($app){
 /**
  * Tela de listagem de usuarios
  */
-$app->get('/admin/usuarios', function() use($app){    
+$app->get('/admin/usuarios(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina=1, $qtdPorPagina=20, $nome='') use($app){    
 
     $u = WebUser::getInstance();
-
+    
     $U = new Usuarios();
     $listaUsuarios = $U->getLista(array(
         'usuario'       => $u->getUsuario(),
-        'pagina'        => 1,
-        'qtdPorPagina'  => 20,
-        'nome'          => "%".$app->request->get('nome', '')."%"
+        'pagina'        => $pagina,
+        'qtdPorPagina'  => $qtdPorPagina,
+        'nome'          => "%".$nome."%"
     ));
-
+    
+    $parametros = array(
+        'pagina'        => $pagina,
+        'qtdPorPagina'  => $qtdPorPagina
+    );
+    
+    if(!empty($nome)){
+        $parametros['nome'] = $nome;
+    }    
+    $Paginacao = new Paginacao(array_merge(
+        $listaUsuarios['paginacao'], 
+        array(
+            'parametros' => $parametros,
+            'rota' => 'lista_usuarios'
+        )
+    ));
+    
     $app->render('usuarios/consultar.html.twig', array(
         'menuPrincipal'         => 'cadastro_usuario',
         'user' 			=> $u,
         'usuarios'              => $listaUsuarios['registros'],
-        'paginacao'             => $listaUsuarios['paginacao'],
+        'paginacao'             => $Paginacao,
         'filtro'                => array(
-            'nome'  => $app->request->get('nome')
+            'nome'  => $nome
         )
     ));
 })
@@ -231,12 +258,19 @@ $app->get('/admin/usuarios/:id', function($id) use($app){
 /**
 * Listagem de áreas
 */
-$app->get('/admin/areas', function($id) use($app){
+$app->get('/admin/areas', function() use($app){
 	$u = WebUser::getInstance();
 	
+        $A = new Areas();
+        $areas = $A->getListaAreas(array(
+            'usuario' => $u->getUsuario()
+        ));
+        
 	$app->render('areas/consultar.html.twig', array(
-		'menuPrincipal' => 'cadastro_areas',
-		'user'			=> $u
+            'menuPrincipal' => 'cadastro_areas',
+            'user'          => $u,
+            'areas'         => $areas['registros'],
+            'paginacao'     => $areas['paginacao']
 	));
 })
 ->name('lista_areas');
