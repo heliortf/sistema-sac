@@ -121,6 +121,7 @@
 {% endblock %}
 
 {% block scripts %}
+    <script type="text/javascript" src="js/usuario/usuario.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function(){
             jQuery("#form_editar_usuario").validationEngine();
@@ -133,7 +134,8 @@
             jQuery("#form_editar_usuario").on("submit", function(){
                 if(jQuery(this).validationEngine('validate')){
                     if(jQuery("#senha").val() == jQuery("#confirme_senha").val()){
-                        return true;
+                        
+                        return false;
                     }
                     else {
                         jQuery("#senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);

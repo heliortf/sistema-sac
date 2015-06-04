@@ -1,0 +1,17 @@
+<div class="modal fade" id="modalAguarde" tabindex="-1" role="dialog" aria-labelledby="modalAguarde">
+    <div class="modal-dialog">      
+        <div class="modal-content">
+            <div class="modal-header"><i class="fa fa-spinner fa-spin"></i> <span>Por favor, aguarde..</span></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var Aguarde = {
+        show : function(){
+            $("#modalAguarde").modal('show');
+        },
+        hide : function(){
+            $("#modalAguarde").modal('hide');
+        }
+    };
+</script>
