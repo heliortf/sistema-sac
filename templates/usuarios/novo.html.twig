@@ -64,43 +64,43 @@
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">CPF:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" name="cpf" id="cpf" value="" placeholder="CPF" />
+                                    <input type="text" class="form-control validate[required, minSize[14], maxSize[14]]" name="cpf" id="cpf" value="" placeholder="CPF" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Telefone:</label>
                                 <div class="col-sm-1">
-                                    <input type="text" class="form-control" name="ddd_telefone" id="ddd_telefone" value="" placeholder="DDD" />
+                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_telefone" id="ddd_telefone" value="" placeholder="DDD" />
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" name="telefone" id="telefone" value="" placeholder="Telefone" />
+                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="telefone" id="telefone" value="" placeholder="Telefone" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Celular:</label>
                                 <div class="col-sm-1">
-                                    <input type="text" class="form-control" name="ddd_celular" id="ddd_celular" value="" placeholder="DDD" />
+                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_celular" id="ddd_celular" value="" placeholder="DDD" />
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" name="celular" id="celular" value="" placeholder="Celular" />
+                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="celular" id="celular" value="" placeholder="Celular" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="cliente" class="col-sm-2 control-label">Login:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" name="login" id="login" placeholder="Login do usuario">
+                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="login" id="login" placeholder="Login do usuario">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="senha" class="col-sm-2 control-label">Senha:</label>
                                 <div class="col-sm-3">
-                                    <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite a senha" />
+                                    <input type="password" class="form-control validate[required, minSize[5]]" name="senha" id="senha" placeholder="Digite a senha" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="confirme_senha" class="col-sm-2 control-label">Confirme a senha:</label>
                                 <div class="col-sm-3">
-                                    <input type="password" class="form-control" name="confirme_senha" id="confirme_senha" placeholder="Digite a senha novamente" />
+                                    <input type="password" class="form-control validate[required, minSize[5]]" name="confirme_senha" id="confirme_senha" placeholder="Digite a senha novamente" />
                                 </div>
                             </div>                            
                         </div><!-- .box-body -->
@@ -120,12 +120,43 @@
 {% endblock %}
 
 {% block scripts %}
+    <script type="text/javascript" src="js/usuario/usuario.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function(){
             jQuery("#form_novo_usuario").validationEngine();
             jQuery("#cpf").setMask('cpf');
             jQuery("#ddd_telefone, #ddd_celular").setMask("99");
             jQuery("#telefone, #celular").setMask("9999-99999");
+            
+            
+            
+            jQuery("#form_novo_usuario").on("submit", function(){
+                if(jQuery(this).validationEngine('validate')){
+                    if(jQuery("#senha").val() == jQuery("#confirme_senha").val()){
+                        Aguarde.show();
+                        Usuario.validarLogin({
+                            'login'     : jQuery("#login").val(),                            
+                            'callback'  : function(existe){
+                                Aguarde.hide();
+                                
+                                if(existe === true){
+                                    jQuery("#login").validationEngine('showPrompt', 'Login já existente. Por favor, escolha outro', 'error', 'topRight', true);
+                                }
+                                else {
+                                    jQuery("#form_novo_usuario").unbind('submit').submit();
+                                }
+                            }
+                        });
+                        
+                        return false;
+                    }
+                    else {
+                        jQuery("#senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
+                        jQuery("#confirme_senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
+                        return false;
+                    }
+                }
+            });
         });
     </script>
 {% endblock %}

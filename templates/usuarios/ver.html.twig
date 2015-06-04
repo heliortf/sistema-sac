@@ -64,13 +64,17 @@
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Telefone:</label>
                                 <div class="col-sm-3">
-                                    <p class="form-control-static">({{ usuario.getDddTelefone() }}) {{ usuario.getTelefone() }}</p>
+                                    {% if usuario.getTelefone() != "" %}
+                                        <p class="form-control-static">({{ usuario.getDddTelefone() }}) {{ usuario.getTelefone() }}</p>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Celular:</label>
                                 <div class="col-sm-3">
-                                    <p class="form-control-static">({{ usuario.getDddCelular() }}) {{ usuario.getCelular() }}</p>
+                                    {% if usuario.getCelular() != "" %}
+                                        <p class="form-control-static">({{ usuario.getDddCelular() }}) {{ usuario.getCelular() }}</p>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="form-group">

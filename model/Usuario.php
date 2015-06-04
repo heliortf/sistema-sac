@@ -229,19 +229,23 @@ class Usuario implements RoleInterface {
     }
 
     function setTelefone($telefone) {
-        $this->telefone = preg_replace("/[^0-9]/", "", $telefone);
+        $telefone = preg_replace("/[^0-9]/", "", $telefone);
+        $this->telefone = (empty($telefone) ? null : $telefone);
     }
 
     function setDddTelefone($dddTelefone) {
-        $this->dddTelefone = preg_replace("/[^0-9]/", "", $dddTelefone);
+        $dddTelefone = preg_replace("/[^0-9]/", "", $dddTelefone);
+        $this->dddTelefone = (empty($dddTelefone) ? null : $dddTelefone);
     }
 
     function setCelular($celular) {
-        $this->celular = preg_replace("/[^0-9]/", "", $celular);
+        $celular = preg_replace("/[^0-9]/", "", $celular);
+        $this->celular = (empty($celular) ? null : $celular);
     }
 
     function setDddCelular($dddCelular) {
-        $this->dddCelular = preg_replace("/[^0-9]/", "", $dddCelular);
+        $dddCelular = preg_replace("/[^0-9]/", "", $dddCelular);
+        $this->dddCelular = (empty($dddCelular) ? null : $dddCelular);
     }
 
     /**

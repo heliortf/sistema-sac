@@ -134,6 +134,21 @@
             jQuery("#form_editar_usuario").on("submit", function(){
                 if(jQuery(this).validationEngine('validate')){
                     if(jQuery("#senha").val() == jQuery("#confirme_senha").val()){
+                        Aguarde.show();
+                        Usuario.validarLogin({
+                            'login'     : jQuery("#login").val(),
+                            'id'        : {{ usuario.getId() }},
+                            'callback'  : function(existe){
+                                Aguarde.hide();
+                                
+                                if(existe === true){
+                                    jQuery("#login").validationEngine('showPrompt', 'Login já existente. Por favor, escolha outro', 'error', 'topRight', true);
+                                }
+                                else {
+                                    jQuery("#form_editar_usuario").unbind('submit').submit();
+                                }
+                            }
+                        });
                         
                         return false;
                     }
