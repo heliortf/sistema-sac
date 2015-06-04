@@ -21,11 +21,16 @@ class Areas {
         $u = $params['usuario'];
 
         $dql = "select a from Area a WHERE a.empresa = :empresa AND a.id = :id ";
-        $query = $em->createQuery($dql);
-        $areas = $query->setParameters(array(
+        $pDql = array(
                     'empresa' => $u->getEmpresa()->getId(),
                     'id' => $params['id']
-                ))->getResult();
+                );
+        
+        
+        
+        $query = $em->createQuery($dql);
+        $areas = $query->setParameters($pDql)
+                        ->getResult();
 
         if (count($areas) == 1) {
             return $areas[0];
@@ -49,12 +54,17 @@ class Areas {
         $em = Conexao::getEntityManager();
 
         $params['qtdPorPagina'] = isset($params['qtdPorPagina']) ? $params['qtdPorPagina'] : 100;
-        $params['pagina'] = isset($params['pagina']) ? $params['pagina'] : 0;
+        $params['pagina'] = isset($params['pagina']) ? $params['pagina'] : 1;
 
         $dql = "from Area a WHERE a.empresa = :empresa ";
         $pDql = array(
             'empresa' => $params['usuario']->getEmpresa()->getId()
-        );
+        );        
+        
+        if(isset($params['nome']) && !empty($params['nome'])){
+            $dql .= " AND a.nome LIKE :nome";
+            $pDql['nome'] = $params['nome'];
+        }
         
         $inicio = ($params['pagina'] - 1) * $params['qtdPorPagina'];
 

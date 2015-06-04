@@ -1,21 +1,21 @@
 {% extends "layout/sistema.html.twig" %}
-{% block titulo %}Editar Usu&aacute;rio{% endblock %}
+{% block titulo %}Editar &Aacute;rea{% endblock %}
 {% block conteudo %}
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>Editar Usu&aacute;rio</h1>
+        <h1>Editar &Aacute;rea</h1>
         <ol class="breadcrumb">
-            <li><a href="{{ urlFor('lista_usuarios') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="{{ urlFor('novo_usuario') }}">Editar Usu&aacute;rio</a></li>
+            <li><a href="{{ urlFor('lista_areas') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="{{ urlFor('nova_area') }}">Editar &Aacute;rea</a></li>
         </ol>
     </section>        
     <!-- Main content -->
     <section class="content">
-        <div class="row registrar-usuario">
+        <div class="row registrar-area">
             <div class="col-md-12">
                 <div class="box">
-                    <form method="post" action="{{ urlFor('atualizar_usuario') }}" class="form form-horizontal" id="form_editar_usuario">
-                        <input type="hidden" name="id" value="{{ usuario.getId() }}" />
+                    <form method="post" action="{{ urlFor('atualizar_area') }}" class="form form-horizontal" id="form_editar_area">
+                        <input type="hidden" name="id" value="{{ area.getId() }}" />
                         <div class="box-header with-border">                        
                             <div class="row">
                                 <div class="col-md-3">
@@ -23,7 +23,7 @@
                                 </div>   
                                 <div class="col-md-5 pull-right text-right">
                                     <button type="submit" name="btn_salvar" class="btn btn-primary">Salvar</button>
-                                    <a href="{{ urlFor('lista_usuarios') }}">
+                                    <a href="{{ urlFor('lista_areas') }}">
                                         <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
                                     </a>
                                 </div>
@@ -33,82 +33,14 @@
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Nome:</label>                                
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required]" name="nome" id="nome" value="{{ usuario.getNome() }}" placeholder="Nome completo" />
+                                    <input type="text" class="form-control validate[required]" name="nome" id="nome" value="{{ area.getNome() }}" placeholder="Nome completo" />
                                 </div>
-                            </div>							
-                            <div class="form-group">
-                                <label for="area" class="col-sm-2 control-label">&Aacute;rea:</label>
-                                <div class="col-sm-5">
-                                    <select name="area" class="form-control">
-                                        {% for a in areas %}
-                                            <option value="{{ a.getId() }}" {% if usuario.getArea().getId() == a.getId() %}selected{% endif %}>{{ a.getNome() }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="area" class="col-sm-2 control-label">Cargo:</label>
-                                <div class="col-sm-5">
-                                    <select name="cargo" class="form-control">
-                                        {% for c in cargos %}
-                                            <option value="{{ c.getId() }}" {% if usuario.getCargo().getId() == c.getId() %}selected{% endif %}>{{ c.getLabel() }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">E-mail:</label>
-                                <div class="col-sm-5">
-                                    <input type="email" class="form-control validate[custom[email]]" name="email" id="email" value="{{ usuario.getEmail() }}" placeholder="E-mail" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">CPF:</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control validate[required, minSize[14], maxSize[14]]" name="cpf" id="cpf" value="{{ usuario.getCpf() }}" placeholder="CPF" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Telefone:</label>
-                                <div class="col-sm-1">
-                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_telefone" id="ddd_telefone" value="{{ usuario.getDddTelefone() }}" placeholder="DDD" />
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="telefone" id="telefone" value="{{ usuario.getTelefone() }}" placeholder="Telefone" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Celular:</label>
-                                <div class="col-sm-1">
-                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_celular" id="ddd_celular" value="{{ usuario.getDddCelular() }}" placeholder="DDD" />
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="celular" id="celular" value="{{ usuario.getCelular() }}" placeholder="Celular" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cliente" class="col-sm-2 control-label">Login:</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="login" id="login" placeholder="Login do usuario" value="{{ usuario.getLogin() }}"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="senha" class="col-sm-2 control-label">Senha:</label>
-                                <div class="col-sm-3">
-                                    <input type="password" class="form-control validate[required, minSize[5]]" name="senha" id="senha" placeholder="Digite a senha" value="{{ usuario.getSenha() }}"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirme_senha" class="col-sm-2 control-label">Confirme a senha:</label>
-                                <div class="col-sm-3">
-                                    <input type="password" class="form-control validate[required, minSize[5]]" name="confirme_senha" id="confirme_senha" placeholder="Digite a senha novamente" value="{{ usuario.getSenha() }}" />
-                                </div>
-                            </div>                                                    
+                            </div>							                                               
                         </div><!-- .box-body -->
                         <div class="box-footer">
                             <div class="col-sm-5 pull-right text-right">
                                 <button type="submit" name="btn_salvar" class="btn btn-primary">Salvar</button>
-                                <a href="{{ urlFor('lista_usuarios') }}">
+                                <a href="{{ urlFor('lista_areas') }}">
                                     <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
                                 </a>
                             </div>
@@ -118,47 +50,4 @@
             </div><!-- .col-md-12 -->
         </div>
     </section><!-- .content -->
-{% endblock %}
-
-{% block scripts %}
-    <script type="text/javascript" src="js/usuario/usuario.js"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function(){
-            jQuery("#form_editar_usuario").validationEngine();
-            jQuery("#cpf").setMask('cpf');
-            jQuery("#ddd_telefone, #ddd_celular").setMask("99");
-            jQuery("#telefone, #celular").setMask("9999-99999");
-            
-            
-            
-            jQuery("#form_editar_usuario").on("submit", function(){
-                if(jQuery(this).validationEngine('validate')){
-                    if(jQuery("#senha").val() == jQuery("#confirme_senha").val()){
-                        Aguarde.show();
-                        Usuario.validarLogin({
-                            'login'     : jQuery("#login").val(),
-                            'id'        : {{ usuario.getId() }},
-                            'callback'  : function(existe){
-                                Aguarde.hide();
-                                
-                                if(existe === true){
-                                    jQuery("#login").validationEngine('showPrompt', 'Login já existente. Por favor, escolha outro', 'error', 'topRight', true);
-                                }
-                                else {
-                                    jQuery("#form_editar_usuario").unbind('submit').submit();
-                                }
-                            }
-                        });
-                        
-                        return false;
-                    }
-                    else {
-                        jQuery("#senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
-                        jQuery("#confirme_senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
-                        return false;
-                    }
-                }
-            });
-        });
-    </script>
 {% endblock %}

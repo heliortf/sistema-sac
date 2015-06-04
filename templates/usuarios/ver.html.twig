@@ -86,13 +86,15 @@
                         </div>
                     </div><!-- /.box-body -->
                     <div class="box-footer">
-                        <div class="col-sm-5 pull-right text-right">
-                            <a href="{{ urlFor('editar_usuario', { id : usuario.getId() }) }}">
-                                <button type="button" name="btn_editar" class="btn btn-primary">Editar</button>
-                            </a>
-                            <a href="{{ urlFor('lista_usuarios') }}">
-                                <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
-                            </a>
+                        <div class="row">
+                            <div class="col-sm-5 pull-right text-right">
+                                <a href="{{ urlFor('editar_usuario', { id : usuario.getId() }) }}">
+                                    <button type="button" name="btn_editar" class="btn btn-primary">Editar</button>
+                                </a>
+                                <a href="{{ urlFor('lista_usuarios') }}">
+                                    <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div><!-- /.box -->
