@@ -1,0 +1,112 @@
+{% extends "layout/sistema.html.twig" %}
+{% block titulo %}Ver Usuario{% endblock %}
+{% block conteudo %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Visualizar Usuario</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Visualizar Usuario</a></li>
+        </ol>
+    </section>        
+    <!-- Main content -->
+    <section class="content">
+        <div class="row ver-usuario">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3 class="box-title"><i class="fa fa-ticket"></i> Usuario #{{ usuario.getId() }}</h3>
+                            </div>                                                        
+                            <div class="col-sm-5 pull-right text-right">
+                                <a href="{{ urlFor('editar_usuario', { id : usuario.getId() }) }}">
+                                    <button type="button" name="btn_editar" class="btn btn-primary">Editar</button>
+                                </a>
+                                <a href="{{ urlFor('lista_usuarios') }}">
+                                    <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form form-horizontal">                            
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Nome:</label>                                
+                                <div class="col-sm-5">
+                                    <p class="form-control-static">{{ usuario.getNome() }}</p>
+                                </div>
+                            </div>							
+                            <div class="form-group">
+                                <label for="area" class="col-sm-2 control-label">&Aacute;rea:</label>
+                                <div class="col-sm-5">                                    
+                                    <p class="form-control-static">{{ usuario.getArea().getNome() }}</p>                                    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="area" class="col-sm-2 control-label">Cargo:</label>
+                                <div class="col-sm-5">
+                                    <p class="form-control-static">{{ usuario.getCargo().getLabel() }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">E-mail:</label>
+                                <div class="col-sm-5">
+                                    <p class="form-control-static">{{ usuario.getEmail() }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">CPF:</label>
+                                <div class="col-sm-3">
+                                    <p class="form-control-static">{{ usuario.getCpf() }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Telefone:</label>
+                                <div class="col-sm-3">
+                                    {% if usuario.getTelefone() != "" %}
+                                        <p class="form-control-static">({{ usuario.getDddTelefone() }}) {{ usuario.getTelefone() }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Celular:</label>
+                                <div class="col-sm-3">
+                                    {% if usuario.getCelular() != "" %}
+                                        <p class="form-control-static">({{ usuario.getDddCelular() }}) {{ usuario.getCelular() }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cliente" class="col-sm-2 control-label">Login:</label>
+                                <div class="col-sm-3">
+                                    <p class="form-control-static">{{ usuario.getLogin() }}</p>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="col-sm-5 pull-right text-right">
+                            <a href="{{ urlFor('editar_usuario', { id : usuario.getId() }) }}">
+                                <button type="button" name="btn_editar" class="btn btn-primary">Editar</button>
+                            </a>
+                            <a href="{{ urlFor('lista_usuarios') }}">
+                                <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
+                            </a>
+                        </div>
+                    </div>
+                </div><!-- /.box -->
+            </div><!-- /.col-md-12 -->            
+        </div><!-- /.ver-usuario -->
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="js/usuario/ver_usuario.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var VA = new VerUsuario({{ usuario.getId() }});
+            VA.render();
+        });
+    </script>
+{% endblock %}

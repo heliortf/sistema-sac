@@ -258,20 +258,44 @@ $app->get('/admin/usuarios/:id', function($id) use($app){
 /**
 * Listagem de áreas
 */
-$app->get('/admin/areas', function() use($app){
-	$u = WebUser::getInstance();
-	
-        $A = new Areas();
-        $areas = $A->getListaAreas(array(
-            'usuario' => $u->getUsuario()
-        ));
+$app->get('/admin/areas(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina=1, $qtdPorPagina=20, $nome='') use($app){
+    $u = WebUser::getInstance();
+
+    $A = new Areas();
+    $areas = $A->getListaAreas(array(
+        'usuario'       => $u->getUsuario(),
+        'nome'          => $nome,
+        'pagina'        => $pagina,
+        'qtdPorPagina'  => $qtdPorPagina
+    ));
         
-	$app->render('areas/consultar.html.twig', array(
-            'menuPrincipal' => 'cadastro_areas',
-            'user'          => $u,
-            'areas'         => $areas['registros'],
-            'paginacao'     => $areas['paginacao']
-	));
+        
+    $parametros = array(
+        'pagina'        => $pagina,
+        'qtdPorPagina'  => $qtdPorPagina
+    );
+    
+    if(!empty($nome)){
+        $parametros['nome'] = $nome;
+    }    
+    
+    $Paginacao = new Paginacao(array_merge(
+        $areas['paginacao'], 
+        array(
+            'parametros' => $parametros,
+            'rota' => 'lista_areas'
+        )
+    ));
+    
+    $app->render('areas/consultar.html.twig', array(
+        'menuPrincipal'         => 'cadastro_areas',
+        'user' 			=> $u,
+        'areas'                 => $areas['registros'],
+        'paginacao'             => $Paginacao,
+        'filtro'                => array(
+            'nome'  => $nome
+        )
+    ));
 })
 ->name('lista_areas');
 
@@ -288,6 +312,25 @@ $app->get('/admin/areas/nova', function($id) use($app){
 })
 ->name('nova_area');
 
+
+$app->get('/admin/areas/:id', function($id) use($app){    
+
+    $u = WebUser::getInstance();
+    
+    
+    $U = new Areas();
+    $area = $U->getArea(array(
+        'area'   => $u->getArea(),
+        'id'        => $id
+    ));
+    
+    $app->render('areas/ver.html.twig', array(
+        'menuPrincipal' => 'cadastro_area',
+        'area'       => $area,
+        'user'          => $u
+    ));
+})
+->name('ver_area');
 
 $app->get('/admin/dashboard', function() use($app){
 	$u = WebUser::getInstance();	

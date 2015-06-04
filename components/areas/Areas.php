@@ -55,12 +55,20 @@ class Areas {
         $pDql = array(
             'empresa' => $params['usuario']->getEmpresa()->getId()
         );
+        
+        $inicio = ($params['pagina'] - 1) * $params['qtdPorPagina'];
 
         $query = $em->createQuery("select a $dql");
         $areas = $query->setParameters($pDql)
                 ->setMaxResults($params['qtdPorPagina'])
-                ->setFirstResult($params['pagina'])
+                ->setFirstResult($inicio)
                 ->getResult();
+        
+        $fim = $inicio + $params['qtdPorPagina'];
+
+        if (count($areas) < $params['qtdPorPagina']) {
+            $fim = $inicio + count($areas);
+        }
 
         $queryTotal = $em->createQuery("select count(a.id) as qtd $dql");
         $qtd = $queryTotal->setParameters($pDql)
@@ -71,6 +79,8 @@ class Areas {
             'paginacao' => array(
                 'qtdRegistros' => $qtd,
                 'qtdPorPagina' => $params['qtdPorPagina'],
+                'inicio' => $inicio,
+                'fim' => $fim,
                 'pagina' => $params['pagina'],
                 'qtdPaginas' => ceil($qtd / $params['qtdPorPagina'])
             )
