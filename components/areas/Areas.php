@@ -96,5 +96,16 @@ class Areas {
             )
         );
     }
+    
+    /**
+     * Salva uma área no banco de dados
+     * 
+     * @param Area $area
+     */
+    public function salvar(Area $area){
+        $em = Conexao::getEntityManager();
+        $em->persist($area);
+        $em->flush();
+    }
 
 }

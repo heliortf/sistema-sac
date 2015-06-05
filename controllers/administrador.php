@@ -259,13 +259,13 @@ $app->get('/admin/usuarios(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina=
 /**
  * Tela de nova area
  */
-$app->get('/admin/areas/nova', function($id) use($app){
-	$u = WebUser::getInstance();
-	
-	$app->render('areas/nova.html.twig', array(
-		'menuPrincipal' => 'cadastro_areas',
-		'user'			=> $u
-	));
+$app->get('/admin/areas/nova', function() use($app){
+    $u = WebUser::getInstance();
+
+    $app->render('areas/nova.html.twig', array(
+            'menuPrincipal' => 'cadastro_areas',
+            'user'			=> $u
+    ));
 })
 ->name('nova_area');
 
@@ -276,27 +276,17 @@ $app->post('/admin/areas/salvar', function() use($app){
     $u = WebUser::getInstance();    
 	
     // Classe que persiste o usuario
-    $U = new Usuarios();
+    $A = new Areas();
     
-    // Usuario
-    $Usuario = new Usuario();
-    $Usuario->setEmpresa($u->getUsuario()->getEmpresa());
-    $Usuario->setArea($Area);
-    $Usuario->setCargo($Cargo);
-    $Usuario->setNome($app->request->post('nome'));
-    $Usuario->setEmail($app->request->post('email'));
-    $Usuario->setCPF($app->request->post('cpf'));
-    $Usuario->setLogin($app->request->post('login'));
-    $Usuario->setSenha($app->request->post('senha'));
-    $Usuario->setDddTelefone($app->request->post('ddd_telefone'));
-    $Usuario->setTelefone($app->request->post('telefone'));    
-    $Usuario->setDddCelular($app->request->post('ddd_celular'));
-    $Usuario->setCelular($app->request->post('celular'));
+    // Area
+    $Area = new Area();    
+    $Area->setEmpresa($u->getUsuario()->getEmpresa());
+    $Area->setNome($app->request->post('nome'));
     
-    $U->salvar($Usuario);
+    $A->salvar($Area);
     
-    $app->redirectTo('ver_usuario', array(
-        'id' => $Usuario->getId()
+    $app->redirectTo('ver_area', array(
+        'id' => $Area->getId()
     ));
 })
 ->name('salvar_area');
@@ -309,50 +299,22 @@ $app->post('/admin/areas/atualizar', function() use($app){
     // Consulta a area
     $A = new Areas();
     $Area = $A->getArea(array(
-        'usuario' => $u->getUsuario(),
-        'id' => $app->request->post('area')
-    ));
-
-    // Consulta o cargo
-    $C = new Cargos();
-    $Cargo = $C->getCargo(array(
-        'usuario' => $u->getUsuario(),
-        'id' => $app->request->post('cargo')
-    ));
-    
-    // Classe que persiste o usuario
-    $U = new Usuarios();
-    $Usuario = $U->getUsuario(array(
         'usuario'   => $u->getUsuario(),
         'id'        => $app->request->post('id')
     ));
     
-    if($Usuario instanceof Usuario){
-        $Usuario->setEmpresa($u->getUsuario()->getEmpresa());
-        $Usuario->setArea($Area);
-        $Usuario->setCargo($Cargo);
-        $Usuario->setNome($app->request->post('nome'));
-        $Usuario->setEmail($app->request->post('email'));
-        $Usuario->setCPF($app->request->post('cpf'));
-        $Usuario->setLogin($app->request->post('login'));
-        $Usuario->setSenha($app->request->post('senha'));
-        $Usuario->setDddTelefone($app->request->post('ddd_telefone'));
-        $Usuario->setTelefone($app->request->post('telefone'));    
-        $Usuario->setDddCelular($app->request->post('ddd_celular'));
-        $Usuario->setCelular($app->request->post('celular'));        
-
-        $U->salvar($Usuario);
+    if($Area instanceof Area){
+        $Area->setNome($app->request->post('nome'));        
+        $A->salvar($Area);
         
-        $app->flash('sucesso', 'Usuario atualizado com sucesso!');
-    
-        $app->redirectTo('ver_usuario', array(
-            'id' => $Usuario->getId()
+        $app->flash('sucesso', 'Área atualizada com sucesso!');    
+        $app->redirectTo('ver_area', array(
+            'id' => $Area->getId()
         ));
     }
     else {
-        $app->flash('erro', 'Usuário não encontrado');
-        
-        $app->redirectTo('lista_usuarios');
+        $app->flash('erro', 'Área não encontrada');        
+        $app->redirectTo('lista_areas');
     }
 })
 ->name('atualizar_area');
