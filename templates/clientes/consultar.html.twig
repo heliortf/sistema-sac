@@ -1,0 +1,109 @@
+{% extends "layout/sistema.html.twig" %}
+{% block titulo %}Consultar Cliente{% endblock %}
+{% block conteudo %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Consultar Clientes</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Consultar Cliente</a></li>
+        </ol>
+    </section>        
+    <!-- Main content -->
+    <section class="content">
+        <div class="row consultar-cliente">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3 class="box-title">Filtro de Clientes</h3>
+                            </div>                            
+                            <div class="col-md-9 text-right">
+                                Registros por p&aacute;gina
+                                <select name="qtd_por_pagina">
+                                    <option value="20" {% if paginacao.getQtdPorPagina() == 20 %}selected{% endif %}>20</option>
+                                    <option value="30" {% if paginacao.getQtdPorPagina() == 30 %}selected{% endif %}>30</option>
+                                    <option value="50" {% if paginacao.getQtdPorPagina() == 50 %}selected{% endif %}>50</option>
+                                    <option value="100" {% if paginacao.getQtdPorPagina() == 100 %}selected{% endif %}>100</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 filtro-consultar-cliente">
+                                <form method="post" action="{{ urlFor('buscar') }}" class="form form-horizontal">
+                                    <input type="hidden" name="rota" value="lista_clientes" />
+                                    <input type="hidden" name="p[pagina]" value="1" />
+                                    <input type="hidden" name="p[qtdPorPagina]" value="{{ paginacao.getQtdPorPagina() }}" />                                    
+                                    <div class="form-group">
+                                        <label for="nome" class="col-sm-2 control-label">Nome</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" name="p[nome]" id="nome" value="{{ filtro.nome }}" placeholder="Nome da Cliente">
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button type="submit" name="btn_consultar" class="btn btn-primary">Pesquisar</button>
+                                        </div>
+                                    </div>                          
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row lista-clientes">
+                            <div class="col-md-12">                                
+                                <table class="table tabela-clientes table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th width="5%">ID</th>
+                                            <th width="85%">Nome</th>
+                                            <th width="10%">&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for u in clientes %}
+                                            <tr>
+                                                <td>{{ u.getId() }}</td>                                                
+                                                <td>{{ u.getNome() }}</td>
+                                                <td>
+                                                    <a href="{{ urlFor('ver_cliente', { id : u.getId() }) }}">
+                                                        <button id="dLabel" type="button">
+                                                            <i class="fa fa-search"></i> Visualizar
+                                                        </button>                                        
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="8">Nenhum &aacute;rea</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <div class="row">
+                            <div class="col-md-4">
+                                {% include "paginacao/informativo.html.twig" %}
+                            </div>
+                            <div class="col-md-8">
+                                {% include "paginacao/paginacao.html.twig" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   <!-- /.row -->
+    </section><!-- /.content -->            
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("select[name=qtd_por_pagina]").on("change", function(){
+                jQuery("form input[name='p[qtdPorPagina]']:hidden").val(jQuery(this).val());
+                jQuery("form").submit();
+            });
+        });
+    </script>
+{% endblock %}

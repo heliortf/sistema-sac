@@ -269,8 +269,6 @@ $app->get('/admin/areas/nova', function() use($app){
 })
 ->name('nova_area');
 
-
-
 $app->post('/admin/areas/salvar', function() use($app){    
 
     $u = WebUser::getInstance();    
@@ -290,7 +288,6 @@ $app->post('/admin/areas/salvar', function() use($app){
     ));
 })
 ->name('salvar_area');
-
 
 $app->post('/admin/areas/atualizar', function() use($app){    
 
@@ -338,7 +335,6 @@ $app->get('/admin/areas/:id/editar', function($id) use($app){
 })
 ->name('editar_area');
 
-
 $app->get('/admin/areas/:id', function($id) use($app){    
 
     $u = WebUser::getInstance();
@@ -357,7 +353,6 @@ $app->get('/admin/areas/:id', function($id) use($app){
     ));
 })
 ->name('ver_area');
-
 
 /**
 * Listagem de áreas
@@ -402,6 +397,150 @@ $app->get('/admin/areas(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina=1, 
     ));
 })
 ->name('lista_areas');
+
+/**
+ * Tela de nova cliente
+ */
+$app->get('/admin/clientes/nova', function() use($app){
+    $u = WebUser::getInstance();
+
+    $app->render('clientes/nova.html.twig', array(
+            'menuPrincipal' => 'cadastro_clientes',
+            'user'			=> $u
+    ));
+})
+->name('novo_cliente');
+
+$app->post('/admin/clientes/salvar', function() use($app){    
+
+    $u = WebUser::getInstance();    
+	
+    // Classe que persiste o usuario
+    $A = new Clientes();
+    
+    // Cliente
+    $Cliente = new Cliente();    
+    $Cliente->setEmpresa($u->getUsuario()->getEmpresa());
+    $Cliente->setNome($app->request->post('nome'));
+    
+    $A->salvar($Cliente);
+    
+    $app->redirectTo('ver_cliente', array(
+        'id' => $Cliente->getId()
+    ));
+})
+->name('salvar_cliente');
+
+$app->post('/admin/clientes/atualizar', function() use($app){    
+
+    $u = WebUser::getInstance();    
+	
+    // Consulta a cliente
+    $A = new Clientes();
+    $Cliente = $A->getCliente(array(
+        'usuario'   => $u->getUsuario(),
+        'id'        => $app->request->post('id')
+    ));
+    
+    if($Cliente instanceof Cliente){
+        $Cliente->setNome($app->request->post('nome'));        
+        $A->salvar($Cliente);
+        
+        $app->flash('sucesso', 'Área atualizada com sucesso!');    
+        $app->redirectTo('ver_cliente', array(
+            'id' => $Cliente->getId()
+        ));
+    }
+    else {
+        $app->flash('erro', 'Área não encontrada');        
+        $app->redirectTo('lista_clientes');
+    }
+})
+->name('atualizar_cliente');
+
+$app->get('/admin/clientes/:id/editar', function($id) use($app){    
+
+    $u = WebUser::getInstance();
+    
+    
+    $U = new Clientes();
+    $cliente = $U->getCliente(array(
+        'usuario'   => $u->getUsuario(),
+        'id'        => $id
+    ));
+    
+    $app->render('clientes/editar.html.twig', array(
+        'menuPrincipal' => 'cadastro_cliente',
+        'cliente'          => $cliente,
+        'user'          => $u
+    ));
+})
+->name('editar_cliente');
+
+$app->get('/admin/clientes/:id', function($id) use($app){    
+
+    $u = WebUser::getInstance();
+    
+    
+    $U = new Clientes();
+    $cliente = $U->getCliente(array(
+        'usuario'   => $u->getUsuario(),
+        'id'        => $id
+    ));
+    
+    $app->render('clientes/ver.html.twig', array(
+        'menuPrincipal' => 'cadastro_cliente',
+        'cliente'          => $cliente,
+        'user'          => $u
+    ));
+})
+->name('ver_cliente');
+
+/**
+* Listagem de áreas
+*/
+$app->get('/admin/clientes(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina=1, $qtdPorPagina=20, $nome='') use($app){
+    $u = WebUser::getInstance();
+
+    $A = new Clientes();
+    $clientes = $A->getListaClientes(array(
+        'usuario'       => $u->getUsuario(),
+        'nome'          => (!empty($nome) ? "%$nome%" : ""),
+        'pagina'        => $pagina,
+        'qtdPorPagina'  => $qtdPorPagina
+    ));
+        
+        
+    $parametros = array(
+        'pagina'        => $pagina,
+        'qtdPorPagina'  => $qtdPorPagina
+    );
+    
+    if(!empty($nome)){
+        $parametros['nome'] = $nome;
+    }    
+    
+    $Paginacao = new Paginacao(array_merge(
+        $clientes['paginacao'], 
+        array(
+            'parametros' => $parametros,
+            'rota' => 'lista_clientes'
+        )
+    ));
+    
+    $app->render('clientes/consultar.html.twig', array(
+        'menuPrincipal'         => 'cadastro_clientes',
+        'user' 			=> $u,
+        'clientes'                 => $clientes['registros'],
+        'paginacao'             => $Paginacao,
+        'filtro'                => array(
+            'nome'  => $nome
+        )
+    ));
+})
+->name('lista_clientes');
+
+
 
 $app->get('/admin/dashboard', function() use($app){
 	$u = WebUser::getInstance();	
