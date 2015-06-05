@@ -61,6 +61,14 @@ class Cliente {
     private $nome;
     
     /**
+     * Login do cliente
+     * 
+     * @v ar string
+     * @Col umn(type="string", length=50)
+     */
+//    private $login;
+    
+    /**
      *
      * @var string
      * @Column(type="string", length=20)
@@ -267,5 +275,11 @@ class Cliente {
         $this->dataAcesso = $dataAcesso;
     }
 
+    function getLogin() {
+        return $this->login;
+    }
 
+    function setLogin($login) {
+        $this->login = $login;
+    }
 }

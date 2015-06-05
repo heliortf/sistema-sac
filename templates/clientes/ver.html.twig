@@ -36,7 +36,65 @@
                                 <div class="col-sm-5">
                                     <p class="form-control-static">{{ cliente.getNome() }}</p>
                                 </div>
-                            </div>							                            
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">E-mail:</label>                                
+                                <div class="col-sm-5">
+                                    <p class="form-control-static">{{ cliente.getEmail() }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Senha:</label>                                
+                                <div class="col-sm-5">
+                                    <p class="form-control-static">{{ cliente.getSenha() }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">CPF:</label>                                
+                                <div class="col-sm-5">
+                                    <p class="form-control-static">{{ cliente.getCpf() }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">CNPJ:</label>                                
+                                <div class="col-sm-5">
+                                    <p class="form-control-static">{{ cliente.getCnpj() }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Telefone:</label>                                
+                                <div class="col-sm-5">
+                                    {% if cliente.getTelefone() != "" %}
+                                        <p class="form-control-static">({{ cliente.getDddTelefone() }}) {{ cliente.getTelefone() }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Celular:</label>                                
+                                <div class="col-sm-5">
+                                    {% if cliente.getTelefone() != "" %}
+                                        <p class="form-control-static">({{ cliente.getDddCelular() }}) {{ cliente.getCelular() }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Data Cria&ccedil;&atilde;o:</label>                                
+                                <div class="col-sm-5">                                    
+                                    <p class="form-control-static">{{ cliente.getDataCriacao().format("d/m/Y H:i") }}</p>                                    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Data Altera&ccedil;&atilde;o:</label>                                
+                                <div class="col-sm-5">                                    
+                                    <p class="form-control-static">{{ cliente.getDataAlteracao().format("d/m/Y H:i") }}</p>                                    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Data Acesso:</label>                                
+                                <div class="col-sm-5">                                    
+                                    <p class="form-control-static">{{ cliente.getDataAcesso().format("d/m/Y H:i") }}</p>                                    
+                                </div>
+                            </div>
                         </div>
                     </div><!-- /.box-body -->
                     <div class="box-footer">

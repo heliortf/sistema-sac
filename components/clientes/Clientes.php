@@ -81,7 +81,9 @@ class Clientes {
     }
 
     public function salvar(Cliente $cliente) {
-        
+        $em = Conexao::getEntityManager();
+        $em->persist($cliente);
+        $em->flush();
     }
 
 }

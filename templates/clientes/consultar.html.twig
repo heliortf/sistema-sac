@@ -40,7 +40,7 @@
                                     <div class="form-group">
                                         <label for="nome" class="col-sm-2 control-label">Nome</label>
                                         <div class="col-sm-5">
-                                            <input type="text" class="form-control" name="p[nome]" id="nome" value="{{ filtro.nome }}" placeholder="Nome da Cliente">
+                                            <input type="text" class="form-control" name="p[nome]" id="nome" value="{{ filtro.nome }}" placeholder="Nome do Cliente">
                                         </div>
                                         <div class="col-sm-3">
                                             <button type="submit" name="btn_consultar" class="btn btn-primary">Pesquisar</button>
@@ -55,7 +55,11 @@
                                     <thead>
                                         <tr>
                                             <th width="5%">ID</th>
-                                            <th width="85%">Nome</th>
+                                            <th width="35%">Nome</th>                                            
+                                            <th width="15%">Email</th>                                            
+                                            <th width="10%">CPF/CNPJ</th>
+                                            <th width="10%">Cidade</th>
+                                            <th width="10%">Estado</th>
                                             <th width="10%">&nbsp;</th>
                                         </tr>
                                     </thead>
@@ -64,6 +68,10 @@
                                             <tr>
                                                 <td>{{ u.getId() }}</td>                                                
                                                 <td>{{ u.getNome() }}</td>
+                                                <td>{{ u.getEmail() }}</td>
+                                                <td>{{ u.getCpf() }}{{ u.getCnpj() }}</td>
+                                                <td>{{ u.getCidade() }}</td>
+                                                <td>{{ u.getEstado() }}</td>
                                                 <td>
                                                     <a href="{{ urlFor('ver_cliente', { id : u.getId() }) }}">
                                                         <button id="dLabel" type="button">

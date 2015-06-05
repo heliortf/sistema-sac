@@ -401,12 +401,12 @@ $app->get('/admin/areas(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina=1, 
 /**
  * Tela de nova cliente
  */
-$app->get('/admin/clientes/nova', function() use($app){
+$app->get('/admin/clientes/novo', function() use($app){
     $u = WebUser::getInstance();
 
     $app->render('clientes/nova.html.twig', array(
-            'menuPrincipal' => 'cadastro_clientes',
-            'user'			=> $u
+        'menuPrincipal' => 'cadastro_clientes',
+        'user'          => $u
     ));
 })
 ->name('novo_cliente');
@@ -431,6 +431,19 @@ $app->post('/admin/clientes/salvar', function() use($app){
 })
 ->name('salvar_cliente');
 
+
+$app->get('/admin/clientes/importar', function() use($app){    
+
+    $u = WebUser::getInstance();    
+	
+    $app->render('clientes/importar.html.twig', array(
+        'menuPrincipal' => 'cadastro_cliente',        
+        'user'          => $u
+    ));
+})
+->name('importar_clientes');
+
+
 $app->post('/admin/clientes/atualizar', function() use($app){    
 
     $u = WebUser::getInstance();    
@@ -443,20 +456,29 @@ $app->post('/admin/clientes/atualizar', function() use($app){
     ));
     
     if($Cliente instanceof Cliente){
-        $Cliente->setNome($app->request->post('nome'));        
+        $Cliente->setNome($app->request->post('nome'));   
+        $Cliente->setCpf($app->request->post('cpf'));
+        $Cliente->setCnpj($app->request->post('cnpj'));
+        $Cliente->setEmail($app->request->post('email'));
+        $Cliente->setSenha($app->request->post('senha'));
+        $Cliente->setDddTelefone($app->request->post('ddd_telefone'));
+        $Cliente->setTelefone($app->request->post('telefone'));
+        $Cliente->setDddCelular($app->request->post('ddd_celular'));
+        $Cliente->setCelular($app->request->post('celular'));
         $A->salvar($Cliente);
         
-        $app->flash('sucesso', 'Área atualizada com sucesso!');    
+        $app->flash('sucesso', 'Cliente atualizado com sucesso!');    
         $app->redirectTo('ver_cliente', array(
             'id' => $Cliente->getId()
         ));
     }
     else {
-        $app->flash('erro', 'Área não encontrada');        
+        $app->flash('erro', 'Cliente não encontrado');        
         $app->redirectTo('lista_clientes');
     }
 })
 ->name('atualizar_cliente');
+
 
 $app->get('/admin/clientes/:id/editar', function($id) use($app){    
 
@@ -494,7 +516,8 @@ $app->get('/admin/clientes/:id', function($id) use($app){
         'user'          => $u
     ));
 })
-->name('ver_cliente');
+->name('ver_cliente')
+->conditions(array('id' => '[0-9]{1,}'));;
 
 /**
 * Listagem de áreas
