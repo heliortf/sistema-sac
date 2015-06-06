@@ -404,7 +404,7 @@ $app->get('/admin/areas(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina=1, 
 $app->get('/admin/clientes/novo', function() use($app){
     $u = WebUser::getInstance();
 
-    $app->render('clientes/nova.html.twig', array(
+    $app->render('clientes/novo.html.twig', array(
         'menuPrincipal' => 'cadastro_clientes',
         'user'          => $u
     ));
@@ -430,6 +430,34 @@ $app->post('/admin/clientes/salvar', function() use($app){
     ));
 })
 ->name('salvar_cliente');
+
+$app->post('/admin/clientes/excluir', function() use($app){    
+
+    $u = WebUser::getInstance();    
+	
+    // Classe que persiste o usuario
+    $C = new Clientes();
+    
+    // Cliente
+    $Cliente = $C->getCliente(array(
+		'usuario' 	=> $u->getUsuario(),
+		'id'		=> $app->request->post('id')
+	));
+    
+	if($Cliente instanceof Cliente){		
+		$C->excluir($Cliente);
+		
+		$app->flash('successo', 'Cliente excluído com sucesso!');
+		$app->redirectTo('lista_clientes');
+	}
+	else {
+		$app->flash('erro', 'Cliente não encontrado!');
+		$app->redirectTo('ver_cliente', array(
+			'id' => $Cliente->getId()
+		));
+	}
+})
+->name('excluir_cliente');
 
 
 $app->get('/admin/clientes/importar', function() use($app){    

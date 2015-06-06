@@ -19,13 +19,17 @@
                             <div class="col-md-3">
                                 <h3 class="box-title"><i class="fa fa-ticket"></i> Cliente #{{ cliente.getId() }}</h3>
                             </div>                                                        
-                            <div class="col-sm-5 pull-right text-right">
-                                <a href="{{ urlFor('editar_cliente', { id : cliente.getId() }) }}">
-                                    <button type="button" name="btn_editar" class="btn btn-primary">Editar</button>
-                                </a>
-                                <a href="{{ urlFor('lista_clientes') }}">
-                                    <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
-                                </a>
+                            <div class="col-sm-6 pull-right text-right">
+								<form method="post" action="{{ urlFor('excluir_cliente') }}">
+									<input type="hidden" name="id" value="{{ cliente.getId() }}" />
+                                    <button type="submit" name="btn_excluir" class="btn btn-danger">Excluir</button>
+									<a href="{{ urlFor('editar_cliente', { id : cliente.getId() }) }}">
+										<button type="button" name="btn_editar" class="btn btn-primary">Editar</button>
+									</a>
+									<a href="{{ urlFor('lista_clientes') }}">
+										<button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
+									</a>
+                                </form>                                
                             </div>
                         </div>
                     </div>
@@ -100,12 +104,16 @@
                     <div class="box-footer">
                         <div class="row">
                             <div class="col-sm-5 pull-right text-right">
-                                <a href="{{ urlFor('editar_cliente', { id : cliente.getId() }) }}">
-                                    <button type="button" name="btn_editar" class="btn btn-primary">Editar</button>
-                                </a>
-                                <a href="{{ urlFor('lista_clientes') }}">
-                                    <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
-                                </a>
+                                <form method="post" action="{{ urlFor('excluir_cliente') }}">
+									<input type="hidden" name="id" value="{{ cliente.getId() }}" />
+                                    <button type="submit" name="btn_excluir" class="btn btn-danger">Excluir</button>
+									<a href="{{ urlFor('editar_cliente', { id : cliente.getId() }) }}">
+										<button type="button" name="btn_editar" class="btn btn-primary">Editar</button>
+									</a>
+									<a href="{{ urlFor('lista_clientes') }}">
+										<button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
+									</a>
+                                </form>
                             </div>
                         </div>
                     </div>
