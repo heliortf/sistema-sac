@@ -133,7 +133,24 @@ class Usuarios {
             return true;
         }
         else {
-            return false;
+		
+			$dql2 = "select count(u.id) as qtd from Cliente u WHERE u.login = :login AND u.empresa = :empresa ";
+			$pDql2   = array(
+				'empresa'   => $params['usuario']->getEmpresa()->getId(),
+				'login'     => $params['login']
+			);
+		
+				
+			if(isset($params['id']) && !empty($params['id'])){
+				$dql2 .= " AND u.id <> :id ";
+				$pDql2['id'] = $params['id'];
+			}
+        
+			$qtdClientes = $em->createQuery($dql)
+							->setParameters($pDql)
+							->getSingleScalarResult();        
+        
+			return $qtdClientes > 0 ? true : false;
         }
     }
 }

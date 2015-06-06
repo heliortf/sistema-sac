@@ -14,7 +14,7 @@
         <div class="row registrar-cliente">
             <div class="col-md-12">
                 <div class="box">
-                    <form method="post" action="{{ urlFor('atualizar_cliente') }}" class="form form-horizontal" id="form_editar_cliente">
+                    <form method="post" action="{{ urlFor('salvar_cliente') }}" class="form form-horizontal" id="form_novo_cliente">
                         <input type="hidden" name="id" value="{{ cliente.getId() }}" />
                         <div class="box-header with-border">                        
                             <div class="row">
@@ -33,51 +33,63 @@
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Nome:</label>                                
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required]" name="nome" id="nome" value="{{ cliente.getNome() }}" placeholder="Nome completo" />
+                                    <input type="text" class="form-control validate[required]" name="nome" id="nome" value="" placeholder="Nome completo" />
                                 </div>
                             </div>
 							<div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">CPF:</label>                                
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, minSize[14],maxSize[14]]" name="cpf" id="cpf" value="{{ cliente.getCpf() }}" />
+                                    <input type="text" class="form-control validate[required, minSize[14],maxSize[14]]" name="cpf" id="cpf" value="" placeholder="CPF" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">CNPJ:</label>                                
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, minSize[18],maxSize[18]]" name="cnpj" id="cnpj" value="{{ cliente.getCnpj() }}" />
+                                    <input type="text" class="form-control validate[required, minSize[18],maxSize[18]]" name="cnpj" id="cnpj" value="" placeholder="CNPJ" />
                                 </div>
                             </div>							
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">E-mail:</label>                                
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, custom[email]]" name="email" id="email" value="{{ cliente.getEmail() }}" placeholder="E-mail" />
+                                    <input type="text" class="form-control validate[required, custom[email]]" name="email" id="email" value="" placeholder="E-mail" />
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Senha:</label>                                
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="senha" id="senha" value="{{ cliente.getSenha() }}" />
-                                </div>
-                            </div>                            
-                            <div class="form-group">
+							<div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Telefone:</label>                                                                
                                 <div class="col-sm-1">
-                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_telefone" id="ddd_telefone" value="{{ cliente.getDddTelefone() }}" placeholder="DDD" />
+                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_telefone" id="ddd_telefone" value="" placeholder="DDD" />
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="telefone" id="telefone" value="{{ cliente.getTelefone() }}" placeholder="Telefone" />
+                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="telefone" id="telefone" value="" placeholder="Telefone" />
                                 </div>                                
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Celular:</label>                                
                                 <div class="col-sm-1">
-                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_celular" id="ddd_celular" value="{{ cliente.getDddCelular() }}" placeholder="DDD" />
+                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_celular" id="ddd_celular" value="" placeholder="DDD" />
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="celular" id="celular" value="{{ cliente.getCelular() }}" placeholder="Celular" />
+                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="celular" id="celular" value="" placeholder="Celular" />
                                 </div>
                             </div>
+							<div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Login:</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="login" id="login" value="" placeholder="Login" />
+                                </div>
+                            </div>    
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Senha:</label>                                
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="senha" id="senha" value="" placeholder="Senha" />
+                                </div>
+                            </div>    
+							<div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Confirme a senha:</label>                                
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="confirme_senha" id="confirme_senha" value="" placeholder="Confirme a senha" />
+                                </div>
+                            </div>                            							                            
                         </div><!-- .box-body -->
                         <div class="box-footer">
                             <div class="row">
@@ -106,7 +118,7 @@
             
             
             
-            jQuery("#form_editar_usuario").on("submit", function(){
+            jQuery("#form_novo_cliente").on("submit", function(){
                 if(jQuery(this).validationEngine('validate')){
                     if(jQuery("#senha").val() == jQuery("#confirme_senha").val()){
                         Aguarde.show();

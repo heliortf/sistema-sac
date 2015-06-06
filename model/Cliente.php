@@ -63,15 +63,15 @@ class Cliente {
     /**
      * Login do cliente
      * 
-     * @v ar string
-     * @Col umn(type="string", length=50)
+     * @var string
+     * @Column(type="string", length=50, nullable=true)
      */
-//    private $login;
+    private $login;
     
     /**
      *
      * @var string
-     * @Column(type="string", length=20)
+     * @Column(type="string", length=20, nullable=true)
      */
     private $senha;
     

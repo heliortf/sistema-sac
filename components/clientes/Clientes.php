@@ -86,4 +86,9 @@ class Clientes {
         $em->flush();
     }
 
+    public function excluir(Cliente $cliente) {
+        $em = Conexao::getEntityManager();
+        $em->delete($cliente);
+        $em->flush();
+    }	
 }
