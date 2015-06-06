@@ -39,19 +39,19 @@
 							<div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">CPF:</label>                                
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, minSize[14],maxSize[14]]" name="cpf" id="cpf" value="" placeholder="CPF" />
+                                    <input type="text" class="form-control validate[minSize[14],maxSize[14]]" name="cpf" id="cpf" value="" placeholder="CPF" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">CNPJ:</label>                                
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, minSize[18],maxSize[18]]" name="cnpj" id="cnpj" value="" placeholder="CNPJ" />
+                                    <input type="text" class="form-control validate[minSize[18],maxSize[18]]" name="cnpj" id="cnpj" value="" placeholder="CNPJ" />
                                 </div>
                             </div>							
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">E-mail:</label>                                
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, custom[email]]" name="email" id="email" value="" placeholder="E-mail" />
+                                    <input type="text" class="form-control validate[custom[email]]" name="email" id="email" value="" placeholder="E-mail" />
                                 </div>
                             </div>
 							<div class="form-group">
@@ -75,19 +75,19 @@
 							<div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Login:</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="login" id="login" value="" placeholder="Login" />
+                                    <input type="text" class="form-control validate[minSize[5], maxSize[20]]" name="login" id="login" value="" placeholder="Login" />
                                 </div>
                             </div>    
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Senha:</label>                                
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="senha" id="senha" value="" placeholder="Senha" />
+                                    <input type="text" class="form-control validate[minSize[5], maxSize[20]]" name="senha" id="senha" value="" placeholder="Senha" />
                                 </div>
                             </div>    
 							<div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Confirme a senha:</label>                                
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="confirme_senha" id="confirme_senha" value="" placeholder="Confirme a senha" />
+                                    <input type="text" class="form-control validate[minSize[5], maxSize[20]]" name="confirme_senha" id="confirme_senha" value="" placeholder="Confirme a senha" />
                                 </div>
                             </div>                            							                            
                         </div><!-- .box-body -->
@@ -111,40 +111,43 @@
     <script type="text/javascript" src="js/usuario/usuario.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function(){
-            jQuery("#form_editar_usuario").validationEngine();
+            jQuery("#form_novo_usuario").validationEngine();
             jQuery("#cpf").setMask('cpf');
+			jQuery("#cnpj").setMask('cnpj');
             jQuery("#ddd_telefone, #ddd_celular").setMask("99");
-            jQuery("#telefone, #celular").setMask("9999-99999");
-            
-            
+            jQuery("#telefone, #celular").setMask("9999-99999");            
             
             jQuery("#form_novo_cliente").on("submit", function(){
-                if(jQuery(this).validationEngine('validate')){
-                    if(jQuery("#senha").val() == jQuery("#confirme_senha").val()){
-                        Aguarde.show();
-                        Usuario.validarLogin({
-                            'login'     : jQuery("#login").val(),
-                            'id'        : {{ usuario.getId() }},
-                            'callback'  : function(existe){
-                                Aguarde.hide();
-                                
-                                if(existe === true){
-                                    jQuery("#login").validationEngine('showPrompt', 'Login já existente. Por favor, escolha outro', 'error', 'topRight', true);
-                                }
-                                else {
-                                    jQuery("#form_editar_usuario").unbind('submit').submit();
-                                }
-                            }
-                        });
-                        
-                        return false;
-                    }
-                    else {
-                        jQuery("#senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
-                        jQuery("#confirme_senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
-                        return false;
-                    }
+                if(jQuery(this).validationEngine('validate')){				
+					if(jQuery("#senha").val().length > 0 || jQuery("#confirme_senha").val().length > 0){
+						if(jQuery("#senha").val() == jQuery("#confirme_senha").val()){
+							Aguarde.show();
+							Usuario.validarLogin({
+								'login'     : jQuery("#login").val(),                           
+								'callback'  : function(existe){
+									Aguarde.hide();
+									
+									if(existe === true){
+										jQuery("#login").validationEngine('showPrompt', 'Login já existente. Por favor, escolha outro', 'error', 'topRight', true);
+									}
+									else {
+										jQuery("#form_editar_usuario").unbind('submit').submit();
+									}
+								}
+							});
+							
+							return false;
+						}
+						else {
+							jQuery("#senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
+							jQuery("#confirme_senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
+							return false;
+						}
+					}
                 }
+				else {
+					return false;
+				}
             });
         });
     </script>

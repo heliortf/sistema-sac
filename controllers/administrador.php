@@ -422,7 +422,16 @@ $app->post('/admin/clientes/salvar', function() use($app){
     $Cliente = new Cliente();    
     $Cliente->setEmpresa($u->getUsuario()->getEmpresa());
     $Cliente->setNome($app->request->post('nome'));
-    
+	$Cliente->setCpf($app->request->post('cpf'));
+	$Cliente->setCnpj($app->request->post('cnpj'));
+	$Cliente->setEmail($app->request->post('email'));
+	$Cliente->setDddTelefone($app->request->post('ddd_telefone'));
+	$Cliente->setTelefone($app->request->post('telefone'));
+	$Cliente->setDddCelular($app->request->post('ddd_celular'));
+    $Cliente->setCelular($app->request->post('celular'));
+	$Cliente->setLogin($app->request->post('login'));
+	$Cliente->setSenha($app->request->post('senha'));
+	
     $A->salvar($Cliente);
     
     $app->redirectTo('ver_cliente', array(
