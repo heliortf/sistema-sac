@@ -59,12 +59,20 @@ class Clientes {
             $pDql['empresa'] = $params['usuario']->getEmpresa()->getId();
         }
 
+        $inicio = ($params['pagina'] - 1) * $params['qtdPorPagina'];
+        
         $query = $em->createQuery("select c $dql");
         $clientes = $query->setParameters($pDql)
                 ->setMaxResults($params['qtdPorPagina'])
-                ->setFirstResult($params['pagina'])
+                ->setFirstResult($inicio)
                 ->getResult();
 
+        $fim = $inicio + $params['qtdPorPagina'];
+
+        if (count($clientes) < $params['qtdPorPagina']) {
+            $fim = $inicio + count($clientes);
+        }
+        
         $queryTotal = $em->createQuery("select count(c.id) as qtd $dql");
         $qtd = $queryTotal->setParameters($pDql)
                 ->getSingleScalarResult();
@@ -74,6 +82,8 @@ class Clientes {
             'paginacao' => array(
                 'qtdRegistros' => $qtd,
                 'qtdPorPagina' => $params['qtdPorPagina'],
+                'inicio' => $inicio,
+                'fim' => $fim,
                 'pagina' => $params['pagina'],
                 'qtdPaginas' => ceil($qtd / $params['qtdPorPagina'])
             )

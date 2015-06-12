@@ -90,7 +90,7 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        {% if user.isUsuario() == true %}
+                        {% if user.isUsuario() %}
                             <img src="dist/img/icone-{{ user.getUsuario().getCargo().getNome() }}.png" class="img-circle" alt="{{ user.getUsuario().getNome() }}" />
                         {% else %}
                             <img src="dist/img/icone-cliente.png" class="img-circle" alt="{{ user.getUsuario().getNome() }}" />
@@ -106,7 +106,7 @@
                 <ul class="sidebar-menu">
                     <li class="header">PRINCIPAL</li>
                     {% block menu_principal %}
-                        {% if user.getUsuario().isUsuario() == true %}
+                        {% if user.isUsuario() == true %}
                             {% set menu = "menu/" ~ user.getUsuario().getCargo().getNome() ~ ".html.twig" %}
                         {% else %}
                             {% set menu = "menu/cliente.html.twig" %}
