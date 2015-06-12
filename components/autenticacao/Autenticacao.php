@@ -35,7 +35,7 @@ class Autenticacao {
                 2 => $params['senha']
             ));
             
-            $clientes = $query->getResult();
+            $clientes = $queryCliente->getResult();
             
             if(count($clientes) == 1){
                 return $clientes[0];

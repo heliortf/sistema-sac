@@ -20,6 +20,8 @@ $app->post('/autenticar', function() use($app){
         'senha' => $senha
     ));    
     
+//    var_dump($usuario); die();
+    
     if($usuario instanceof Usuario){
         $_SESSION['usuario'] = $usuario->getId();
         $_SESSION['tipo_usuario'] = 'usuario';

@@ -83,11 +83,22 @@ class Atendimentos {
     public function getListaAtendimentos($params=array()){
         $em = Conexao::getEntityManager();
         
-        $dql = "from Atendimento a WHERE a.empresa = :empresa AND a.area = :area ";
-        $pDql = array(
-            'empresa'   => $params['usuario']->getEmpresa()->getId(),
-            'area'      => $params['usuario']->getArea()->getId()
-        );
+        $dql = "from Atendimento a WHERE a.empresa = :empresa ";
+        
+        if(isset($params['usuario']) && $params['usuario'] instanceof Usuario){
+            $dql .= " AND a.area = :area ";
+            $pDql = array(
+                'empresa'   => isset($params['usuario']) ? $params['usuario']->getEmpresa()->getId() : $params['empresa']->getId(),
+                'area'      => $params['usuario']->getArea()->getId()
+            );
+        }
+        else {
+            $dql .= " AND a.cliente = :cliente ";
+            $pDql = array(
+                'empresa' => $params['empresa']->getId(),
+                'cliente'   => $params['cliente']->getId()
+            );
+        }
         
         if(isset($params['numeroAtendimento']) && !empty($params['numeroAtendimento'])){
             $dql .= " AND a.id = :id ";

@@ -19,19 +19,40 @@ $app->get('/atendimentos', function() use($app) {
     $paginaAtual = 1;
     $qtdPorPagina = 20;
 
-    $pListaAtendimentos = array(
-        'usuario'       => $user->getUsuario(),
-        'pagina'        => $paginaAtual,
-        'qtdPorPagina'  => $qtdPorPagina
-    );
+    if($user->isUsuario()){
+        $pListaAtendimentos = array(
+            'usuario'       => $user->getUsuario(),
+            'pagina'        => $paginaAtual,
+            'qtdPorPagina'  => $qtdPorPagina
+        );
+    }
+    // Se for cliente
+    else {
+        $pListaAtendimentos = array(
+            'empresa'       => $user->getUsuario()->getEmpresa(),
+            'cliente'       => $user->getUsuario(),
+            'pagina'        => $paginaAtual,
+            'qtdPorPagina'  => $qtdPorPagina
+        );
+    }
+    
+    $parametros = array();
 
     $atendimentos = $A->getListaAtendimentos($pListaAtendimentos);
 
+    $Paginacao = new Paginacao(array_merge(
+        $atendimentos['paginacao'], 
+        array(
+            'parametros' => $parametros,
+            'rota' => 'consultar_atendimento'
+        )
+    ));
+    
     $app->render('atendimento/consultar.html.twig', array(
         'menuPrincipal' => 'consultar_atendimento',
         'atendimentos'  => $atendimentos['registros'],
         'user'          => $user,
-        'paginacao'     => $atendimentos['paginacao']
+        'paginacao'     => $Paginacao
     ));
 })
 ->name('consultar_atendimento');
@@ -133,9 +154,9 @@ $app->get('/atendimentos/:id', function($id) use($app) {
 	
     $Areas = new Areas();
     $listaAreas = $Areas->getListaAreas(array(
-            'usuario' => $u->getUsuario(),
-            'pagina' => 0,
-            'qtdPorPagina' => 100
+        'usuario' => $u->getUsuario(),
+        'pagina' => 0,
+        'qtdPorPagina' => 100
     ));
     
     

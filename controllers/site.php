@@ -8,14 +8,20 @@ $app->get('/', function() use($app) {
     $user = WebUser::getInstance();
     
     if($user->isLogado()){
-        if($user->getUsuario()->isAtendente()){
-            $app->redirectTo('consultar_atendimento');
+        if($user->isUsuario()){
+            if($user->getUsuario()->isAtendente()){
+                $app->redirectTo('consultar_atendimento');
+            }
+            else if($user->getUsuario()->isResponsavelArea()){
+                $app->redirectTo('consultar_atendimento');
+            }
+            else if($user->getUsuario()->isAdministrador()){
+                $app->redirectTo('dashboard_admin');
+            }
         }
-        else if($user->getUsuario()->isResponsavelArea()){
+        // Cliente
+        else {
             $app->redirectTo('consultar_atendimento');
-        }
-        else if($user->getUsuario()->isAdministrador()){
-            $app->redirectTo('dashboard_admin');
         }
     }
     else {    
