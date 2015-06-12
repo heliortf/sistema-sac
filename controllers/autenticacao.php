@@ -22,6 +22,14 @@ $app->post('/autenticar', function() use($app){
     
     if($usuario instanceof Usuario){
         $_SESSION['usuario'] = $usuario->getId();
+        $_SESSION['tipo_usuario'] = 'usuario';
+        $app->flash('sucesso', 'Bem vindo, '.$usuario->getNome());
+        $app->redirectTo('home');
+    }
+    // Se logar como cliente
+    else if($usuario instanceof Cliente){
+        $_SESSION['usuario'] = $usuario->getId();
+        $_SESSION['tipo_usuario'] = 'cliente';
         $app->flash('sucesso', 'Bem vindo, '.$usuario->getNome());
         $app->redirectTo('home');
     }

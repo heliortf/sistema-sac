@@ -156,6 +156,7 @@ $C2->setDddCelular(21);
 $C2->setTelefone(26598856);
 $C2->setDddTelefone(21);
 $C2->setEmail("josiasf@gmail.com");
+$C2->setLogin("cliente2");
 $C2->setSenha("12345");
 $C2->setDataCriacao(new DateTime());
 
