@@ -431,6 +431,7 @@ $app->post('/admin/clientes/salvar', function() use($app){
     $Cliente->setCelular($app->request->post('celular'));
 	$Cliente->setLogin($app->request->post('login'));
 	$Cliente->setSenha($app->request->post('senha'));
+        $Cliente->setDataCriacao(new DateTime());        
 	
     $A->salvar($Cliente);
     

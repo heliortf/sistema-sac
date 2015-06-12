@@ -61,17 +61,33 @@ class Cliente {
     private $nome;
     
     /**
+     *
+     * @var string     
+     */
+    private $endereco;
+    
+    private $numero;
+    
+    private $bairro;
+    
+    private $cidade;
+    
+    private $estado;
+    
+    private $cep;
+    
+    /**
      * Login do cliente
      * 
      * @var string
-     * @Column(type="string", length=50, nullable=true)
+     * @Column(type="string", length=50)
      */
     private $login;
     
     /**
      *
      * @var string
-     * @Column(type="string", length=20, nullable=true)
+     * @Column(type="string", length=20)
      */
     private $senha;
     
@@ -248,19 +264,23 @@ class Cliente {
     }
 
     function setTelefone($telefone) {
-        $this->telefone = $telefone;
+        $telefone = preg_replace("/[^0-9]/", "", $telefone);
+        $this->telefone = (empty($telefone) ? null : $telefone);
     }
 
     function setDddTelefone($dddTelefone) {
-        $this->dddTelefone = $dddTelefone;
+        $dddTelefone = preg_replace("/[^0-9]/", "", $dddTelefone);
+        $this->dddTelefone = (empty($dddTelefone) ? null : $dddTelefone);
     }
 
     function setCelular($celular) {
-        $this->celular = $celular;
+        $celular = preg_replace("/[^0-9]/", "", $celular);
+        $this->celular = (empty($celular) ? null : $celular);
     }
 
     function setDddCelular($dddCelular) {
-        $this->dddCelular = $dddCelular;
+        $dddCelular = preg_replace("/[^0-9]/", "", $dddCelular);
+        $this->dddCelular = (empty($dddCelular) ? null : $dddCelular);
     }
 
     function setDataCriacao($dataCriacao) {

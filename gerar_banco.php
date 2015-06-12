@@ -141,6 +141,7 @@ $C->setDddCelular(21);
 $C->setTelefone(26598856);
 $C->setDddTelefone(21);
 $C->setEmail("jose.silva.souza@gmail.com");
+$C->setLogin("cliente");
 $C->setSenha("12345");
 $C->setDataCriacao(new DateTime());
 
