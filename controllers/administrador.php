@@ -504,6 +504,12 @@ $app->post('/admin/clientes/atualizar', function() use($app){
     
     if($Cliente instanceof Cliente){
         $Cliente->setNome($app->request->post('nome'));   
+		$Cliente->setEndereco($app->request->post('endereco'));
+		$Cliente->setNumero($app->request->post('numero'));
+		$Cliente->setBairro($app->request->post('bairro'));
+		$Cliente->setCidade($app->request->post('cidade'));
+		$Cliente->setEstado($app->request->post('estado'));
+		$Cliente->setCep($app->request->post('cep'));
         $Cliente->setCpf($app->request->post('cpf'));
         $Cliente->setCnpj($app->request->post('cnpj'));
         $Cliente->setEmail($app->request->post('email'));
@@ -512,6 +518,7 @@ $app->post('/admin/clientes/atualizar', function() use($app){
         $Cliente->setTelefone($app->request->post('telefone'));
         $Cliente->setDddCelular($app->request->post('ddd_celular'));
         $Cliente->setCelular($app->request->post('celular'));
+		$Cliente->setDataAlteracao(new DateTime());
         $A->salvar($Cliente);
         
         $app->flash('sucesso', 'Cliente atualizado com sucesso!');    

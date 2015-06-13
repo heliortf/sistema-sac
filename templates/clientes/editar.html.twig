@@ -14,7 +14,7 @@
         <div class="row registrar-cliente">
             <div class="col-md-12">
                 <div class="box">
-                    <form method="post" action="{{ urlFor('salvar_cliente') }}" class="form form-horizontal" id="form_editar_cliente">
+                    <form method="post" action="{{ urlFor('atualizar_cliente') }}" class="form form-horizontal" id="form_editar_cliente">
                         <input type="hidden" name="id" value="{{ cliente.getId() }}" />
                         <div class="box-header with-border">                        
                             <div class="row">
@@ -46,21 +46,21 @@
                                 </div>
                             </div>
 							<div class="form-group">
-								<label for="nome" class="col-sm-2 control-label">Cep:</label>                                
+								<label for="cep" class="col-sm-2 control-label">Cep:</label>                                
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control validate[minSize[9],maxSize[9]]" name="cep" id="cep" value="{{ cliente.getCep() }}" placeholder="26000-000" />
                                 </div>
-                                <label for="nome" class="col-sm-1 control-label">Bairro:</label>                                
+                                <label for="bairro" class="col-sm-1 control-label">Bairro:</label>                                
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control validate[maxSize[120]]" name="bairro" id="bairro" value="{{ cliente.getBairro() }}" placeholder="Bairro" />
                                 </div>								
                             </div>
 							<div class="form-group">
-								<label for="nome" class="col-sm-2 control-label">Cidade:</label>                                									
+								<label for="cidade" class="col-sm-2 control-label">Cidade:</label>                                									
 								<div class="col-sm-3">
 									<input type="text" class="form-control validate[maxSize[100]]" name="cidade" id="cidade" value="{{ cliente.getCidade() }}" placeholder="Cidade" />									
 								</div>
-                                <label for="nome" class="col-sm-1 control-label">Estado:</label>                                
+                                <label for="estado" class="col-sm-1 control-label">Estado:</label>                                
                                 <div class="col-sm-3">
 									<select name="estado" class="form-control">
 									{% for sigla,nome in estados %}
@@ -70,17 +70,17 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">CPF:</label>                                
+                                <label for="cpf" class="col-sm-2 control-label">CPF:</label>                                
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control validate[minSize[14],maxSize[14]]" name="cpf" id="cpf" value="{{ cliente.getCpf() }}" placeholder="CPF" />
                                 </div>
-                                <label for="nome" class="col-sm-1 control-label">CNPJ:</label>                                
+                                <label for="cnpj" class="col-sm-1 control-label">CNPJ:</label>                                
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control validate[minSize[18],maxSize[18]]" name="cnpj" id="cnpj" value="{{ cliente.getCnpj() }}" placeholder="CNPJ" />
                                 </div>
                             </div>										                            
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Telefone:</label>                                                                
+                                <label for="telefone" class="col-sm-2 control-label">Telefone:</label>                                                                
                                 <div class="col-sm-1">
                                     <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_telefone" id="ddd_telefone" value="{{ cliente.getDddTelefone() }}" placeholder="DDD" />
                                 </div>
@@ -89,7 +89,7 @@
                                 </div>                                
                             </div>
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Celular:</label>                                
+                                <label for="celular" class="col-sm-2 control-label">Celular:</label>                                
                                 <div class="col-sm-1">
                                     <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_celular" id="ddd_celular" value="{{ cliente.getDddCelular() }}" placeholder="DDD" />
                                 </div>
@@ -98,25 +98,25 @@
                                 </div>
                             </div>
 							<div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">E-mail:</label>                                
+                                <label for="email" class="col-sm-2 control-label">E-mail:</label>                                
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control validate[custom[email]]" name="email" id="email" value="{{ cliente.getEmail() }}" placeholder="E-mail" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Login:</label>
+                                <label for="login" class="col-sm-2 control-label">Login:</label>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="login" id="login" value="{{ cliente.getLogin() }}" placeholder="Login" />
                                 </div>
                             </div>    
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Senha:</label>                                
+                                <label for="senha" class="col-sm-2 control-label">Senha:</label>                                
                                 <div class="col-sm-5">
                                     <input type="password" class="form-control validate[required, minSize[5], maxSize[20]]" name="senha" id="senha" value="{{ cliente.getSenha() }}" placeholder="Senha" />
                                 </div>
                             </div>    
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Confirme a senha:</label>                                
+                                <label for="confirme_senha" class="col-sm-2 control-label">Confirme a senha:</label>                                
                                 <div class="col-sm-5">
                                     <input type="password" class="form-control validate[required, minSize[5], maxSize[20]]" name="confirme_senha" id="confirme_senha" value="{{ cliente.getSenha() }}" placeholder="Confirme a senha" />
                                 </div>

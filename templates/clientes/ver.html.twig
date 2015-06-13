@@ -41,6 +41,39 @@
                                     <p class="form-control-static">{{ cliente.getNome() }}</p>
                                 </div>
                             </div>
+							<div class="form-group">
+                                <label for="endereco" class="col-sm-2 control-label">Endere&ccedil;o:</label>                                
+                                <div class="col-sm-5">
+                                    <p class="form-control-static">{{ cliente.getEndereco() }}</p>
+                                </div>
+								<div class="col-sm-2">
+                                    <p class="form-control-static">{{ cliente.getNumero() }}</p>
+                                </div>
+                            </div>
+							<div class="form-group">
+								<label for="cep" class="col-sm-2 control-label">Cep:</label>                                
+                                <div class="col-sm-3">
+                                    <p class="form-control-static">{{ cliente.getCep() }}</p>
+                                </div>
+                                <label for="bairro" class="col-sm-1 control-label">Bairro:</label>                                
+                                <div class="col-sm-3">
+                                    <p class="form-control-static">{{ cliente.getBairro() }}</p>
+                                </div>								
+                            </div>
+							<div class="form-group">
+								<label for="cidade" class="col-sm-2 control-label">Cidade:</label>                                									
+								<div class="col-sm-3">
+									<input type="text" class="form-control validate[maxSize[100]]" name="cidade" id="cidade" value="{{ cliente.getCidade() }}" placeholder="Cidade" />									
+								</div>
+                                <label for="estado" class="col-sm-1 control-label">Estado:</label>                                
+                                <div class="col-sm-3">
+									<select name="estado" class="form-control">
+									{% for sigla,nome in estados %}
+										<option value="{{ sigla }}" {% if sigla == cliente.getEstado() %}selected{% endif %}>{{ nome }}</option>
+									{% endfor %}
+									</select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">E-mail:</label>                                
                                 <div class="col-sm-5">
