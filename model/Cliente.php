@@ -70,7 +70,7 @@ class Cliente {
 	/**
      *
      * @var int
-	 * @Column(type="int", length=8, nullable=true)
+	 * @Column(type="integer", length=8, nullable=true)
      */
     private $numero;
     
@@ -98,7 +98,7 @@ class Cliente {
 	/**
      *
      * @var string     
-	 * @Column(type="int", length=8, nullable=true)
+	 * @Column(type="integer", length=8, nullable=true)
      */
     private $cep;
     

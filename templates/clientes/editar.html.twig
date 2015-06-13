@@ -1,9 +1,9 @@
 {% extends "layout/sistema.html.twig" %}
-{% block titulo %}Editar Cliente{% endblock %}
+{% block titulo %}Novo Cliente{% endblock %}
 {% block conteudo %}
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>Editar Cliente</h1>
+        <h1>Novo Cliente</h1>
         <ol class="breadcrumb">
             <li><a href="{{ urlFor('lista_clientes') }}"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="{{ urlFor('editar_cliente', { id : cliente.getId() }) }}">Editar Cliente</a></li>
@@ -14,7 +14,7 @@
         <div class="row registrar-cliente">
             <div class="col-md-12">
                 <div class="box">
-                    <form method="post" action="{{ urlFor('atualizar_cliente') }}" class="form form-horizontal" id="form_editar_cliente">
+                    <form method="post" action="{{ urlFor('salvar_cliente') }}" class="form form-horizontal" id="form_editar_cliente">
                         <input type="hidden" name="id" value="{{ cliente.getId() }}" />
                         <div class="box-header with-border">                        
                             <div class="row">
@@ -32,34 +32,53 @@
                         <div class="box-body">                        
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Nome:</label>                                
-                                <div class="col-sm-5">
+                                <div class="col-sm-7">
                                     <input type="text" class="form-control validate[required]" name="nome" id="nome" value="{{ cliente.getNome() }}" placeholder="Nome completo" />
                                 </div>
-                            </div>			
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">E-mail:</label>                                
+                            </div>
+							<div class="form-group">
+                                <label for="endereco" class="col-sm-2 control-label">Endere&ccedil;o:</label>                                
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, custom[email]]" name="email" id="email" value="{{ cliente.getEmail() }}" placeholder="E-mail" />
+                                    <input type="text" class="form-control validate[maxSize[255]]" name="endereco" id="endereco" value="{{ cliente.getEndereco() }}" placeholder="Endere&ccedil;o" />
+                                </div>
+								<div class="col-sm-2">
+                                    <input type="text" class="form-control validate[maxSize[8]]" name="numero" id="numero" value="{{ cliente.getNumero() }}" placeholder="N&uacute;mero" />
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Senha:</label>                                
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="senha" id="senha" value="{{ cliente.getSenha() }}" />
+							<div class="form-group">
+								<label for="nome" class="col-sm-2 control-label">Cep:</label>                                
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control validate[minSize[9],maxSize[9]]" name="cep" id="cep" value="{{ cliente.getCep() }}" placeholder="26000-000" />
+                                </div>
+                                <label for="nome" class="col-sm-1 control-label">Bairro:</label>                                
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control validate[maxSize[120]]" name="bairro" id="bairro" value="{{ cliente.getBairro() }}" placeholder="Bairro" />
+                                </div>								
+                            </div>
+							<div class="form-group">
+								<label for="nome" class="col-sm-2 control-label">Cidade:</label>                                									
+								<div class="col-sm-3">
+									<input type="text" class="form-control validate[maxSize[100]]" name="cidade" id="cidade" value="{{ cliente.getCidade() }}" placeholder="Cidade" />									
+								</div>
+                                <label for="nome" class="col-sm-1 control-label">Estado:</label>                                
+                                <div class="col-sm-3">
+									<select name="estado" class="form-control">
+									{% for sigla,nome in estados %}
+										<option value="{{ sigla }}" {% if sigla == cliente.getEstado() %}selected{% endif %}>{{ nome }}</option>
+									{% endfor %}
+									</select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">CPF:</label>                                
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, minSize[14],maxSize[14]]" name="cpf" id="cpf" value="{{ cliente.getCpf() }}" />
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control validate[minSize[14],maxSize[14]]" name="cpf" id="cpf" value="{{ cliente.getCpf() }}" placeholder="CPF" />
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">CNPJ:</label>                                
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, minSize[18],maxSize[18]]" name="cnpj" id="cnpj" value="{{ cliente.getCnpj() }}" />
+                                <label for="nome" class="col-sm-1 control-label">CNPJ:</label>                                
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control validate[minSize[18],maxSize[18]]" name="cnpj" id="cnpj" value="{{ cliente.getCnpj() }}" placeholder="CNPJ" />
                                 </div>
-                            </div>
+                            </div>										                            
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Telefone:</label>                                                                
                                 <div class="col-sm-1">
@@ -78,6 +97,30 @@
                                     <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="celular" id="celular" value="{{ cliente.getCelular() }}" placeholder="Celular" />
                                 </div>
                             </div>
+							<div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">E-mail:</label>                                
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control validate[custom[email]]" name="email" id="email" value="{{ cliente.getEmail() }}" placeholder="E-mail" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Login:</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="login" id="login" value="{{ cliente.getLogin() }}" placeholder="Login" />
+                                </div>
+                            </div>    
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Senha:</label>                                
+                                <div class="col-sm-5">
+                                    <input type="password" class="form-control validate[required, minSize[5], maxSize[20]]" name="senha" id="senha" value="{{ cliente.getSenha() }}" placeholder="Senha" />
+                                </div>
+                            </div>    
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Confirme a senha:</label>                                
+                                <div class="col-sm-5">
+                                    <input type="password" class="form-control validate[required, minSize[5], maxSize[20]]" name="confirme_senha" id="confirme_senha" value="{{ cliente.getSenha() }}" placeholder="Confirme a senha" />
+                                </div>
+                            </div>                            							                            
                         </div><!-- .box-body -->
                         <div class="box-footer">
                             <div class="row">
@@ -98,40 +141,46 @@
 {% block scripts %}
     <script type="text/javascript" src="js/usuario/usuario.js"></script>
     <script type="text/javascript">
-        jQuery(document).ready(function(){
-            jQuery("#form_editar_usuario").validationEngine();
+        jQuery(document).ready(function () {
+            jQuery("#form_editar_cliente").validationEngine();
+			jQuery("#numero").setMask('99999999');
+			jQuery("#cep").setMask('cep');
             jQuery("#cpf").setMask('cpf');
+            jQuery("#cnpj").setMask('cnpj');
             jQuery("#ddd_telefone, #ddd_celular").setMask("99");
             jQuery("#telefone, #celular").setMask("9999-99999");
-            
-            
-            
-            jQuery("#form_editar_usuario").on("submit", function(){
-                if(jQuery(this).validationEngine('validate')){
-                    if(jQuery("#senha").val() == jQuery("#confirme_senha").val()){
-                        Aguarde.show();
-                        Usuario.validarLogin({
-                            'login'     : jQuery("#login").val(),
-                            'id'        : {{ usuario.getId() }},
-                            'callback'  : function(existe){
-                                Aguarde.hide();
-                                
-                                if(existe === true){
-                                    jQuery("#login").validationEngine('showPrompt', 'Login já existente. Por favor, escolha outro', 'error', 'topRight', true);
+
+            jQuery("#form_editar_cliente").on("submit", function () {
+                if (jQuery(this).validationEngine('validate')) {
+                    if (jQuery("#senha").val().length > 0 || jQuery("#confirme_senha").val().length > 0) {
+                        if (jQuery("#senha").val() == jQuery("#confirme_senha").val()) {
+                            Aguarde.show();
+                            Usuario.validarLogin({
+                                'login': jQuery("#login").val(),
+								'id' : {{ cliente.getId() }},
+                                'callback': function (existe) {
+                                    Aguarde.hide();
+
+                                    if (existe === true) {
+                                        jQuery("#login").validationEngine('showPrompt', 'Login já existente. Por favor, escolha outro', 'error', 'topRight', true);
+                                    }
+                                    else {
+                                        jQuery("#form_editar_cliente").unbind('submit').submit();
+                                    }
                                 }
-                                else {
-                                    jQuery("#form_editar_usuario").unbind('submit').submit();
-                                }
-                            }
-                        });
-                        
-                        return false;
+                            });
+
+                            return false;
+                        }
+                        else {
+                            jQuery("#senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
+                            jQuery("#confirme_senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
+                            return false;
+                        }
                     }
-                    else {
-                        jQuery("#senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
-                        jQuery("#confirme_senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
-                        return false;
-                    }
+                }
+                else {
+                    return false;
                 }
             });
         });
