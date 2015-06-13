@@ -32,28 +32,53 @@
                         <div class="box-body">                        
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Nome:</label>                                
-                                <div class="col-sm-5">
+                                <div class="col-sm-7">
                                     <input type="text" class="form-control validate[required]" name="nome" id="nome" value="" placeholder="Nome completo" />
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label for="endereco" class="col-sm-2 control-label">Endere&ccedil;o:</label>                                
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control validate[maxSize[255]]" name="endereco" id="endereco" value="" placeholder="Endereço" />
+                                </div>
+								<div class="col-sm-2">
+                                    <input type="text" class="form-control validate[maxSize[8]]" name="numero" id="numero" value="" placeholder="N&uacute;mero" />
+                                </div>
+                            </div>
+							<div class="form-group">
+								<label for="nome" class="col-sm-2 control-label">Cep:</label>                                
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control validate[minSize[9],maxSize[9]]" name="cep" id="cep" value="" placeholder="26000-000" />
+                                </div>
+                                <label for="nome" class="col-sm-1 control-label">Bairro:</label>                                
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control validate[maxSize[120]]" name="bairro" id="bairro" value="" placeholder="Bairro" />
+                                </div>								
+                            </div>
+							<div class="form-group">
+								<label for="nome" class="col-sm-2 control-label">Cidade:</label>                                									
+								<div class="col-sm-3">
+									<input type="text" class="form-control validate[maxSize[100]]" name="cidade" id="cidade" value="" placeholder="Cidade" />									
+								</div>
+                                <label for="nome" class="col-sm-1 control-label">Estado:</label>                                
+                                <div class="col-sm-3">
+									<select name="estado" class="form-control">
+									{% for sigla,nome in estados %}
+										<option value="{{ sigla }}" {% if sigla == 'RJ' %}selected{% endif %}>{{ nome }}</option>
+									{% endfor %}
+									</select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">CPF:</label>                                
-                                <div class="col-sm-5">
+                                <div class="col-sm-3">
                                     <input type="text" class="form-control validate[minSize[14],maxSize[14]]" name="cpf" id="cpf" value="" placeholder="CPF" />
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">CNPJ:</label>                                
-                                <div class="col-sm-5">
+                                <label for="nome" class="col-sm-1 control-label">CNPJ:</label>                                
+                                <div class="col-sm-3">
                                     <input type="text" class="form-control validate[minSize[18],maxSize[18]]" name="cnpj" id="cnpj" value="" placeholder="CNPJ" />
                                 </div>
-                            </div>							
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">E-mail:</label>                                
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[custom[email]]" name="email" id="email" value="" placeholder="E-mail" />
-                                </div>
-                            </div>
+                            </div>										                            
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Telefone:</label>                                                                
                                 <div class="col-sm-1">
@@ -70,6 +95,12 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="celular" id="celular" value="" placeholder="Celular" />
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">E-mail:</label>                                
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control validate[custom[email]]" name="email" id="email" value="" placeholder="E-mail" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -112,6 +143,8 @@
     <script type="text/javascript">
         jQuery(document).ready(function () {
             jQuery("#form_novo_cliente").validationEngine();
+			jQuery("#numero").setMask('99999999');
+			jQuery("#cep").setMask('cep');
             jQuery("#cpf").setMask('cpf');
             jQuery("#cnpj").setMask('cnpj');
             jQuery("#ddd_telefone, #ddd_celular").setMask("99");

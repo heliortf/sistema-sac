@@ -63,17 +63,43 @@ class Cliente {
     /**
      *
      * @var string     
+	 * @Column(type="string", length=255, nullable=true)
      */
     private $endereco;
     
+	/**
+     *
+     * @var int
+	 * @Column(type="int", length=8, nullable=true)
+     */
     private $numero;
     
+	/**
+     *
+     * @var string     
+	 * @Column(type="string", length=120, nullable=true)
+     */
     private $bairro;
     
+	/**
+     *
+     * @var string     
+	 * @Column(type="string", length=100, nullable=true)
+     */
     private $cidade;
     
+	/**
+     *
+     * @var string     
+	 * @Column(type="string", length=30, nullable=true)
+     */
     private $estado;
     
+	/**
+     *
+     * @var string     
+	 * @Column(type="int", length=8, nullable=true)
+     */
     private $cep;
     
     /**
@@ -302,4 +328,52 @@ class Cliente {
     function setLogin($login) {
         $this->login = $login;
     }
+	
+	public function setEndereco($endereco){
+		$this->endereco = $endereco;
+	}
+	
+	public function setNumero($numero){
+		$this->numero = $numero;
+	}
+	
+	public function setBairro($bairro){
+		$this->bairro = $bairro;
+	}
+	
+	public function setCidade($cidade){
+		$this->cidade = $cidade;
+	}
+	
+	public function setEstado($estado){
+		$this->estado = $estado;
+	}
+	
+	public function setCep($cep){
+		$this->cep = $cep;
+	}
+	
+	public function getCep(){
+		return $this->cep;
+	}
+	
+	public function getEstado(){
+		return $this->estado;
+	}
+	
+	public function getCidade(){
+		return $this->cidade;
+	}
+	
+	public function getBairro(){
+		return $this->bairro;
+	}
+	
+	public function getEndereco(){
+		return $this->endereco;
+	}
+	
+	public function getNumero(){
+		return $this->numero;
+	}
 }

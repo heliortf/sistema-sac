@@ -403,10 +403,13 @@ $app->get('/admin/areas(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina=1, 
  */
 $app->get('/admin/clientes/novo', function() use($app){
     $u = WebUser::getInstance();
+	
+	$estados = array("AC"=>"Acre", "AL"=>"Alagoas", "AM"=>"Amazonas", "AP"=>"Amapá","BA"=>"Bahia","CE"=>"Ceará","DF"=>"Distrito Federal","ES"=>"Espírito Santo","GO"=>"Goiás","MA"=>"Maranhão","MT"=>"Mato Grosso","MS"=>"Mato Grosso do Sul","MG"=>"Minas Gerais","PA"=>"Pará","PB"=>"Paraíba","PR"=>"Paraná","PE"=>"Pernambuco","PI"=>"Piauí","RJ"=>"Rio de Janeiro","RN"=>"Rio Grande do Norte","RO"=>"Rondônia","RS"=>"Rio Grande do Sul","RR"=>"Roraima","SC"=>"Santa Catarina","SE"=>"Sergipe","SP"=>"São Paulo","TO"=>"Tocantins");
 
     $app->render('clientes/novo.html.twig', array(
         'menuPrincipal' => 'cadastro_clientes',
-        'user'          => $u
+        'user'          => $u,
+		'estados'		=> $estados
     ));
 })
 ->name('novo_cliente');
@@ -422,6 +425,12 @@ $app->post('/admin/clientes/salvar', function() use($app){
     $Cliente = new Cliente();    
     $Cliente->setEmpresa($u->getUsuario()->getEmpresa());
     $Cliente->setNome($app->request->post('nome'));
+	$Cliente->setEndereco($app->request->post('endereco'));
+	$Cliente->setNumero($app->request->post('numero'));
+	$Cliente->setBairro($app->request->post('bairro'));
+	$Cliente->setCidade($app->request->post('cidade'));
+	$Cliente->setEstado($app->request->post('estado'));
+	$Cliente->setCep($app->request->post('cep'));
 	$Cliente->setCpf($app->request->post('cpf'));
 	$Cliente->setCnpj($app->request->post('cnpj'));
 	$Cliente->setEmail($app->request->post('email'));
@@ -431,7 +440,7 @@ $app->post('/admin/clientes/salvar', function() use($app){
     $Cliente->setCelular($app->request->post('celular'));
 	$Cliente->setLogin($app->request->post('login'));
 	$Cliente->setSenha($app->request->post('senha'));
-        $Cliente->setDataCriacao(new DateTime());        
+	$Cliente->setDataCriacao(new DateTime());        
 	
     $A->salvar($Cliente);
     
