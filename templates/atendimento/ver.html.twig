@@ -85,7 +85,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for c in atendimento.getComentarios() %}
+                                            {% set comentarios = (user.isCliente() ? atendimento.getComentariosPublicos() : atendimento.getComentarios() ) %} 
+                                            {% for c in comentarios %}
                                                 <tr>
                                                     <td>{{ c.getDescricao() }}</td>
                                                     <td class="text-center">

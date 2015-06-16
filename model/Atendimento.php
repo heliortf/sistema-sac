@@ -173,6 +173,16 @@ class Atendimento implements ResourceInterface {
         return $this->comentarios;
     }
 
+    function getComentariosPublicos() {
+        $c = new ArrayCollection();
+        foreach($this->comentarios as $cmt){
+            if($cmt->isPublico()){
+                $c[] = $cmt;
+            }
+        }
+        return $c;
+    }
+    
     function getId() {
         return $this->id;
     }
