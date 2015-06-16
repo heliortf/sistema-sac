@@ -33,28 +33,31 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1 filtro-consultar-atendimento">
-                                <form method="get" action="{{ consultar_atendimento }}" class="form form-horizontal">
-                                    <input type="hidden" name="pagina" value="{{ paginacao.paginaAtual }}" />
-                                    <input type="hidden" name="qtdPorPagina" value="{{ paginacao.qtdPorPagina }}" />                                    
+                                <form method="post" action="{{ urlFor('buscar') }}" class="form form-horizontal">
+                                    <input type="hidden" name="p[pagina]" value="1" />
+                                    <input type="hidden" name="p[qtdPorPagina]" value="{{ paginacao.getQtdPorPagina() }}" />                                    
+                                    <input type="hidden" name="rota" value="consultar_atendimento" />                                    
                                     <div class="form-group">
                                         <label for="numero" class="col-sm-2 control-label">N&uacute;mero</label>
                                         <div class="col-sm-5">
-                                            <input type="text" class="form-control" name="numero" id="numero" placeholder="N&uacute;mero do atendimento">
+                                            <input type="text" class="form-control" name="p[numero]" id="numero" value="{{ parametros.numero }}" placeholder="N&uacute;mero do atendimento">
                                         </div>
                                         <div class="col-sm-3">
                                             <button type="submit" name="btn_consultar" class="btn btn-primary">Pesquisar</button>
                                         </div>
                                     </div>
+                                    {% if user.isCliente() == false %}
                                     <div class="form-group">
                                         <label for="cliente" class="col-sm-2 control-label">Cliente</label>
                                         <div class="col-sm-5">
-                                            <input type="text" class="form-control" name="cliente" id="cliente" placeholder="Nome do cliente">
+                                            <input type="text" class="form-control" name="p[cliente]" id="cliente" placeholder="Nome do cliente">
                                         </div>
                                     </div>
+                                    {% endif %}
                                     <div class="form-group">
                                         <label for="cliente" class="col-sm-2 control-label">Documento</label>
                                         <div class="col-sm-5">
-                                            <input type="text" class="form-control" id="documento" placeholder="Nome do documento">
+                                            <input type="text" class="form-control" name="p[documento]" value="{{ parametros.documento }}" id="documento" placeholder="Nome do documento">
                                         </div>
                                     </div>                                    
                                 </form>
@@ -117,4 +120,22 @@
             </div>
         </div>   <!-- /.row -->
     </section><!-- /.content -->            
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("select[name=qtd_por_pagina]").on("change", function(){
+                jQuery("form input[name='p[qtdPorPagina]']:hidden").val(jQuery(this).val());
+                jQuery("form").submit();
+            });
+            $("form").submit(function(){
+                if(jQuery("input[name='p[numero]']").val() == ''){
+                    jQuery("input[name='p[numero]']").val('-');
+                }
+                if(jQuery("input[name='p[documento]']").val() == ''){
+                    jQuery("input[name='p[documento]']").val('-');
+                }
+            });
+        });
+    </script>
 {% endblock %}

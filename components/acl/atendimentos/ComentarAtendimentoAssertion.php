@@ -105,7 +105,13 @@ class ComentarAtendimentoAssertion implements AssertionInterface {
             else if($role instanceof Cliente){
                 // Se o atendimento é do cliente
                 if($role->getId() == $resource->getCliente()->getId()){
-                    return false;
+                    switch($resource->getStatus()->getNome()){
+                        case StatusAtendimento::STATUS_ABERTO:
+                        case StatusAtendimento::STATUS_ANALISE_AREA:
+                            return false;
+                        default:
+                            return false;
+                    }                    
                 }
                 // Se o atendimento não é do cliente
                 else {

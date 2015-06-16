@@ -137,11 +137,11 @@
                                                 <div role="tabpanel" class="tab-pane active" id="adicionar-comentario">
                                                     <form class="form form-horizontal form-comentarios" method="post" action="{{ urlFor('cadastrar_comentario_atendimento', { atendimentoId : atendimento.getId() } ) }}">                                    
                                                         <div class="form-group">
-                                                            <label for="comentario" class="col-sm-3 control-label">Adicionar Coment&aacute;rio:</label>
+                                                            <label for="comentario" class="col-sm-3 control-label">Adicionar Coment&aacute;rio:</label>                                                            
                                                             <div class="col-sm-9">
-                                                                <textarea name="comentario" class="form-control" rows="8"></textarea>
-                                                                <p class="form-control-static"><input type="checkbox" name="comentario_publico" value="1" checked /> Tornar coment&aacute;rio p&uacute;blico</p>
-                                                            </div>
+                                                                <textarea name="comentario" class="form-control" rows="8"></textarea>                                                                
+                                                                <p class="form-control-static {% if user.isCliente() %}hidden{% endif %}"><input type="checkbox" name="comentario_publico" value="1" checked /> Tornar coment&aacute;rio p&uacute;blico</p>                                                                
+                                                            </div>                                                            
                                                         </div>				
                                                         <div class="form-group">
                                                             <div class="col-sm-3 col-sm-offset-9 text-right">                                            

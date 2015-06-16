@@ -219,7 +219,7 @@ class Atendimento implements ResourceInterface {
         $this->cliente = $cliente;
     }
 
-    function setAtendente(Usuario $atendente) {
+    function setAtendente($atendente) {
         $this->atendente = $atendente;
     }
 

@@ -8,56 +8,6 @@ use Slim\Slim;
 global $app;
 
 /**
- * Tela de consulta de atendimentos
- */
-$app->get('/atendimentos', function() use($app) {
-
-    $user = WebUser::getInstance();
-
-    $A = new Atendimentos();
-
-    $paginaAtual = 1;
-    $qtdPorPagina = 20;
-
-    if($user->isUsuario()){
-        $pListaAtendimentos = array(
-            'usuario'       => $user->getUsuario(),
-            'pagina'        => $paginaAtual,
-            'qtdPorPagina'  => $qtdPorPagina
-        );
-    }
-    // Se for cliente
-    else {
-        $pListaAtendimentos = array(
-            'empresa'       => $user->getUsuario()->getEmpresa(),
-            'cliente'       => $user->getUsuario(),
-            'pagina'        => $paginaAtual,
-            'qtdPorPagina'  => $qtdPorPagina
-        );
-    }
-    
-    $parametros = array();
-
-    $atendimentos = $A->getListaAtendimentos($pListaAtendimentos);
-
-    $Paginacao = new Paginacao(array_merge(
-        $atendimentos['paginacao'], 
-        array(
-            'parametros' => $parametros,
-            'rota' => 'consultar_atendimento'
-        )
-    ));
-    
-    $app->render('atendimento/consultar.html.twig', array(
-        'menuPrincipal' => 'consultar_atendimento',
-        'atendimentos'  => $atendimentos['registros'],
-        'user'          => $user,
-        'paginacao'     => $Paginacao
-    ));
-})
-->name('consultar_atendimento');
-
-/**
  * Tela de novo atendimento
  */
 $app->get('/atendimentos/novo', function() use($app) {
@@ -68,7 +18,7 @@ $app->get('/atendimentos/novo', function() use($app) {
     $clientes = $C->getListaClientes(array(
         'usuario' => $u->getUsuario(),
         'text' => '%',
-        'pagina' => 0,
+        'pagina' => 1,
         'qtdPorPagina' => 100
     ));
 
@@ -97,44 +47,58 @@ $app->post('/atendimentos/salvar', function() use($app) {
 
     $u = WebUser::getInstance();
 
-    # Consulta o cliente recebido
-    $C = new Clientes();
-    $cliente = $C->getCliente(array(
-        'id'        => $app->request->post('cliente'),
-        'usuario'   => $u->getUsuario()
-    ));
+    if($u->isCliente() == false){
+        # Consulta o cliente recebido
+        $C = new Clientes();
+        $cliente = $C->getCliente(array(
+            'id'        => $app->request->post('cliente'),
+            'usuario'   => $u->getUsuario()
+        ));
+    }
+    else {
+        $cliente = $u->getUsuario();
+    }
 	
-	$Atendimentos = new Atendimentos();
+    $Atendimentos = new Atendimentos();
 
     # Consulta a area recebida
     $A = new Areas();
-    $area = $A->getArea(array(
-        'usuario'   => $u->getUsuario(),
-        'id'        => $app->request->post('area')
+    
+    if($u->isCliente() == false){
+        $area = $A->getArea(array(
+            'usuario'   => $u->getUsuario(),
+            'id'        => $app->request->post('area')
+        ));
+    }
+    else {
+        $area = $A->getArea(array(
+            'usuario'   => $u->getUsuario(),
+            'nome'      => 'Suporte'
+        ));
+    }
+	
+    $T = new TiposAtendimento();
+    $tipo = $T->getTipoAtendimento(array(		
+        'id' => $app->request->post('tipo')
+    ));	
+
+    $status = $Atendimentos->getStatus(array(
+        'usuario' 	=> $u->getUsuario(),
+        'nome'	=> StatusAtendimento::STATUS_ABERTO
     ));
-	
-	$T = new TiposAtendimento();
-	$tipo = $T->getTipoAtendimento(array(		
-		'id' => $app->request->post('tipo')
-	));	
-	
-	$status = $Atendimentos->getStatus(array(
-		'usuario' 	=> $u->getUsuario(),
-		'nome'		=> StatusAtendimento::STATUS_ABERTO
-	));
 	
     # Cria o atendimento
     $a = new Atendimento();
-	$a->setTipo($tipo);
+    $a->setTipo($tipo);
     $a->setEmpresa($u->getUsuario()->getEmpresa());    
     $a->setCliente($cliente);
-	$a->setAtendente($u->getUsuario());
+    $a->setAtendente(null);
     $a->setArea($area);
-	$a->setStatus($status);
+    $a->setStatus($status);
     $a->setTitulo($app->request->post('titulo'));
     $a->setDescricao($app->request->post('descricao'));
     $a->setDataCriacao(new DateTime());
-	$a->setCriadoPor($u->getUsuario()->getNome());
+    $a->setCriadoPor($u->getUsuario()->getNome());
     
     $a = $Atendimentos->salvar($a);
     
@@ -318,3 +282,61 @@ $app->post('/atendimentos/:atendimentoId/cadastrar-conclusao', function($atendim
     $app->redirectTo('ver_atendimento', array('id' => $atendimentoId));
 })
 ->name('cadastrar_conclusao_atendimento');
+
+
+/**
+ * Tela de consulta de atendimentos
+ */
+$app->get('/atendimentos(/:pagina(/:qtdPorPagina(/:numero(/:documento(/:cliente)))))', 
+function($pagina=1, $qtdPorPagina=20, $numero='', $documento='', $cliente='') use($app) {
+
+    $user = WebUser::getInstance();
+
+    $A = new Atendimentos();
+
+    if($user->isUsuario()){
+        $pListaAtendimentos = array(
+            'usuario'       => $user->getUsuario(),
+            'pagina'        => $pagina,
+            'qtdPorPagina'  => $qtdPorPagina
+        );
+    }
+    // Se for cliente
+    else {
+        $pListaAtendimentos = array(
+            'empresa'       => $user->getUsuario()->getEmpresa(),
+            'cliente'       => $user->getUsuario(),
+            'pagina'        => $pagina,
+            'qtdPorPagina'  => $qtdPorPagina
+        );
+    }
+    
+    $parametros = array();
+    
+    if(!empty($numero) && $numero != '-'){
+        $parametros['numero'] = $numero;
+    }
+    
+    if(!empty($documento) && $documento != ''){
+        $parametros['documento'] = $documento;
+    }
+
+    $atendimentos = $A->getListaAtendimentos($pListaAtendimentos);
+
+    $Paginacao = new Paginacao(array_merge(
+        $atendimentos['paginacao'], 
+        array(
+            'parametros' => $parametros,
+            'rota' => 'consultar_atendimento'
+        )
+    ));
+    
+    $app->render('atendimento/consultar.html.twig', array(
+        'menuPrincipal' => 'consultar_atendimento',
+        'atendimentos'  => $atendimentos['registros'],
+        'user'          => $user,
+        'paginacao'     => $Paginacao,
+        'parametros'    => $parametros
+    ));
+})
+->name('consultar_atendimento');

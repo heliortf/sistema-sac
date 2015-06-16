@@ -20,14 +20,23 @@ class Areas {
 
         $u = $params['usuario'];
 
-        $dql = "select a from Area a WHERE a.empresa = :empresa AND a.id = :id ";
+        $dql = "select a from Area a WHERE a.empresa = :empresa ";
+        
         $pDql = array(
-                    'empresa' => $u->getEmpresa()->getId(),
-                    'id' => $params['id']
+                    'empresa' => $u->getEmpresa()->getId()
                 );
+            
+        if(isset($params['id']) && !empty($params['id'])){
+            $dql .= " AND a.id = :id ";
+            $pDql['id'] = $params['id'];
+        }
         
+        if(isset($params['nome']) && !empty($params['nome'])){
+            $dql .= " AND a.nome = :nome ";
+            $pDql['nome'] = $params['nome'];
+        }
         
-        
+                  
         $query = $em->createQuery($dql);
         $areas = $query->setParameters($pDql)
                         ->getResult();

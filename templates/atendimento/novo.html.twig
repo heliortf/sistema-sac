@@ -27,30 +27,32 @@
                                 <label for="numero" class="col-sm-2 control-label">Tipo:</label>
                                 {% for t in tipos %}
                                     <div class="col-sm-2">
-                                        <input type="radio" name="tipo" id="tipo_solicitacao_{{ t.getId() }}" value="{{ t.getId() }}" /> <label for="tipo_solicitacao_{{ t.getId() }}">{{ t.getNome() }}</label>
+                                        <input type="radio" class="validate[required]" name="tipo" id="tipo_solicitacao_{{ t.getId() }}" value="{{ t.getId() }}" /> <label for="tipo_solicitacao_{{ t.getId() }}">{{ t.getNome() }}</label>
                                     </div>
                                 {% endfor %}
                             </div>
-                            <div class="form-group">
-                                <label for="area" class="col-sm-2 control-label">&Aacute;rea</label>
-                                <div class="col-sm-5">
-                                    <select name="area" class="form-control">
-                                        {% for a in areas %}
-                                            <option value="{{ a.getId() }}">{{ a.getNome() }}</option>
-                                        {% endfor %}
-                                    </select>
+                            {% if user.isCliente() == false %}
+                                <div class="form-group">
+                                    <label for="area" class="col-sm-2 control-label">&Aacute;rea</label>
+                                    <div class="col-sm-5">
+                                        <select name="area" class="form-control">
+                                            {% for a in areas %}
+                                                <option value="{{ a.getId() }}">{{ a.getNome() }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cliente" class="col-sm-2 control-label">Cliente</label>
-                                <div class="col-sm-5">
-                                    <select name="cliente" class="form-control">
-                                        {% for c in clientes %}
-                                            <option value="{{ c.getId() }}">{{ c.getNome() }}</option>
-                                        {% endfor %}
-                                    </select>
+                                <div class="form-group">
+                                    <label for="cliente" class="col-sm-2 control-label">Cliente</label>
+                                    <div class="col-sm-5">
+                                        <select name="cliente" class="form-control">
+                                            {% for c in clientes %}
+                                                <option value="{{ c.getId() }}">{{ c.getNome() }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                             <div class="form-group">
                                 <label for="cliente" class="col-sm-2 control-label">Documento</label>
                                 <div class="col-sm-5">
@@ -60,13 +62,13 @@
                             <div class="form-group">
                                 <label for="cliente" class="col-sm-2 control-label">T&iacute;tulo</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="titulo" id="titulo" placeholder="T&iacute;tulo do atendimento">
+                                    <input type="text" class="form-control validate[required]" name="titulo" id="titulo" placeholder="T&iacute;tulo do atendimento">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="descricao" class="col-sm-2 control-label">Descri&ccedil;&atilde;o</label>
                                 <div class="col-sm-5">
-                                    <textarea class="form-control" name="descricao" id="descricao" rows="10"></textarea>
+                                    <textarea class="form-control validate[required]" name="descricao" id="descricao" rows="10"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -86,5 +88,7 @@
 {% endblock %}
 
 {% block scripts %}
-
+    <script type="text/javascript">
+        jQuery("form").validationEngine();
+    </script>
 {% endblock %}

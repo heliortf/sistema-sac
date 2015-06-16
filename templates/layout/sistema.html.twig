@@ -69,9 +69,11 @@
                                 </li>                                
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Configurações</a>
-                                    </div>
+                                    {% if user.isCliente() == false %}
+                                        <div class="pull-left">
+                                            <a href="#" class="btn btn-default btn-flat">Configurações</a>
+                                        </div>
+                                    {% endif %}
                                     <div class="pull-right">
                                         <a href="{{ urlFor('logout') }}" class="btn btn-default btn-flat">Sair do sistema</a>
                                     </div>
