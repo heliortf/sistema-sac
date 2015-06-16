@@ -85,12 +85,15 @@ class Atendimentos {
         
         $dql = "from Atendimento a WHERE a.empresa = :empresa ";
         
-        if(isset($params['usuario']) && $params['usuario'] instanceof Usuario){
-            $dql .= " AND a.area = :area ";
+        if(isset($params['usuario']) && $params['usuario'] instanceof Usuario){            
             $pDql = array(
-                'empresa'   => isset($params['usuario']) ? $params['usuario']->getEmpresa()->getId() : $params['empresa']->getId(),
-                'area'      => $params['usuario']->getArea()->getId()
+                'empresa'   => isset($params['usuario']) ? $params['usuario']->getEmpresa()->getId() : $params['empresa']->getId()
             );
+            
+            if($params['usuario']->isAdministrador() == false){
+                $dql .= " AND a.area = :area ";
+                $pDql['area'] = $params['usuario']->getArea()->getId();
+            }
         }
         else {
             $dql .= " AND a.cliente = :cliente ";

@@ -70,6 +70,9 @@
                                         <tr>
                                             <th>N&uacute;mero</th>
                                             <th>Cliente</th>                                
+                                        {% if user.isUsuario() and user.getUsuario().isAdministrador() == true %}
+                                            <th>&Aacute;rea</th>
+                                        {% endif %}
                                             <th>Respons&aacute;vel</th>
                                             <th>Doc.</th>
                                             <th>T&iacute;tulo</th>
@@ -83,6 +86,9 @@
                                             <tr>
                                                 <td>{{ a.getId() }}</td>
                                                 <td>{{ a.getCliente().getNome() }}</td>
+                                            {% if user.isUsuario() == true and user.getUsuario().isAdministrador() == true %}
+                                                <td>{{ a.getArea().getNome() }}</td>
+                                            {% endif %}
                                                 <td>{{ a.getAtendente().getNome() }}</td>
                                                 <td></td>
                                                 <td>{{ a.getTitulo() }}</td>
