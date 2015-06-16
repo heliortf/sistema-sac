@@ -59,10 +59,12 @@ class SacACL {
         $atendente          = new Role('atendente');
         $responsavelArea    = new Role('responsavel_area');
         $administrador      = new Role('administrador');
+        $cliente            = new Role('cliente');
         
         $this->acl->addRole($atendente)
                     ->addRole($responsavelArea)
-                    ->addRole($administrador);
+                    ->addRole($administrador)
+                    ->addRole($cliente);
         
         $atendimentoResource = new Resource('atendimento');
         $this->acl->addResource($atendimentoResource);

@@ -155,7 +155,7 @@ $app->get('/atendimentos/:id', function($id) use($app) {
     $Areas = new Areas();
     $listaAreas = $Areas->getListaAreas(array(
         'usuario' => $u->getUsuario(),
-        'pagina' => 0,
+        'pagina' => 1,
         'qtdPorPagina' => 100
     ));
     

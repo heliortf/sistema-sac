@@ -120,7 +120,7 @@ class Usuarios {
             'login'     => $params['login']
         );
         
-        if(isset($params['id']) && !empty($params['id'])){
+        if(isset($params['id']) && !empty($params['id']) && $params['tipo'] == 'usuario'){
             $dql .= " AND u.id <> :id ";
             $pDql['id'] = $params['id'];
         }
@@ -141,7 +141,7 @@ class Usuarios {
 			);
 		
 				
-			if(isset($params['id']) && !empty($params['id'])){
+			if(isset($params['id']) && !empty($params['id']) && $params['tipo'] == 'cliente'){
 				$dql2 .= " AND u.id <> :id ";
 				$pDql2['id'] = $params['id'];
 			}

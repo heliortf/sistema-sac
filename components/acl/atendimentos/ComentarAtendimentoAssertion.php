@@ -102,6 +102,16 @@ class ComentarAtendimentoAssertion implements AssertionInterface {
                         throw new Exception("Status não identificado no atendimento: ".$resource->getStatus()->getNome());
                 }
             }
+            else if($role instanceof Cliente){
+                // Se o atendimento é do cliente
+                if($role->getId() == $resource->getCliente()->getId()){
+                    return false;
+                }
+                // Se o atendimento não é do cliente
+                else {
+                    return false;
+                }
+            }
         }
     }
 

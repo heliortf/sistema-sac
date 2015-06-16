@@ -157,7 +157,8 @@
                             Aguarde.show();
                             Usuario.validarLogin({
                                 'login': jQuery("#login").val(),
-								'id' : {{ cliente.getId() }},
+                                'tipo' : 'cliente',
+                                'id' : {{ cliente.getId() }},
                                 'callback': function (existe) {
                                     Aguarde.hide();
 

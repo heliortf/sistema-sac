@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Tests\ORM\Functional\Ticket\Entity;
 use Symfony\Component\Console\Helper\Table;
+use Zend\Permissions\Acl\Role\RoleInterface;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,7 +22,7 @@ use Symfony\Component\Console\Helper\Table;
  * @Entity
  * @Table(name="tb_cliente")
  */
-class Cliente {
+class Cliente implements RoleInterface {
     
     /**
      *
@@ -334,7 +335,8 @@ class Cliente {
 	}
 	
 	public function setNumero($numero){
-		$this->numero = $numero;
+		$numero = preg_replace("/[^0-9]/", "", $numero);
+        $this->numero = (empty($numero) ? null : $numero);
 	}
 	
 	public function setBairro($bairro){
@@ -350,7 +352,8 @@ class Cliente {
 	}
 	
 	public function setCep($cep){
-		$this->cep = $cep;
+		$cep = preg_replace("/[^0-9]/", "", $cep);
+        $this->cep = (empty($cep) ? null : $cep);
 	}
 	
 	public function getCep(){
@@ -376,4 +379,9 @@ class Cliente {
 	public function getNumero(){
 		return $this->numero;
 	}
+        
+        public function getRoleId() {
+            return 'cliente';
+        }
+
 }

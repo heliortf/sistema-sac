@@ -49,7 +49,7 @@ $app->get('/usuarios/por-area/:areaId', function($areaId) use($app){
 /**
  * Tela de consulta de atendimentos
  */
-$app->get('/admin/usuarios/existe-login/:login/:id', function($login, $id) use($app){    
+$app->get('/admin/usuarios/existe-login/:login/:tipo/:id', function($login, $tipo, $id) use($app){    
     // Usuario logado
     $user = WebUser::getInstance();
     
@@ -58,6 +58,7 @@ $app->get('/admin/usuarios/existe-login/:login/:id', function($login, $id) use($
     $existe = $U->existeLogin(array(
         'usuario'   => $user->getUsuario(),
         'login'     => $login,
+        'tipo'      => $tipo,
         'id'        => ($id == 'no-id' ? '' : $id)
     ));
     
