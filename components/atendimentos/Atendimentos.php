@@ -83,7 +83,7 @@ class Atendimentos {
     public function getListaAtendimentos($params=array()){
         $em = Conexao::getEntityManager();
         
-        $dql = "from Atendimento a WHERE a.empresa = :empresa ";
+        $dql = "from Atendimento a JOIN a.cliente c WHERE a.empresa = :empresa ";
         
         if(isset($params['usuario']) && $params['usuario'] instanceof Usuario){            
             $pDql = array(
@@ -93,6 +93,16 @@ class Atendimentos {
             if($params['usuario']->isAdministrador() == false){
                 $dql .= " AND a.area = :area ";
                 $pDql['area'] = $params['usuario']->getArea()->getId();
+            }
+            
+            if(isset($params['numero']) && !empty($params['numero']) && $params['numero'] != '-'){
+                $dql .= " AND a.id = :numero ";
+                $pDql['numero'] = $params['numero'];
+            }
+            
+            if(isset($params['cliente']) && !empty($params['cliente']) && $params['cliente'] != '-'){
+                $dql .= " AND c.nome LIKE :cliente ";
+                $pDql['cliente'] = "%{$params['cliente']}%";
             }
         }
         else {

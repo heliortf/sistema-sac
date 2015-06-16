@@ -298,7 +298,9 @@ function($pagina=1, $qtdPorPagina=20, $numero='', $documento='', $cliente='') us
         $pListaAtendimentos = array(
             'usuario'       => $user->getUsuario(),
             'pagina'        => $pagina,
-            'qtdPorPagina'  => $qtdPorPagina
+            'qtdPorPagina'  => $qtdPorPagina,
+            'cliente'       => $cliente,
+            'numero'        => $numero
         );
     }
     // Se for cliente
@@ -317,8 +319,12 @@ function($pagina=1, $qtdPorPagina=20, $numero='', $documento='', $cliente='') us
         $parametros['numero'] = $numero;
     }
     
-    if(!empty($documento) && $documento != ''){
+    if(!empty($documento) && $documento != '-'){
         $parametros['documento'] = $documento;
+    }
+    
+    if(!empty($cliente) && $cliente != '-'){
+        $parametros['cliente'] = $cliente;
     }
 
     $atendimentos = $A->getListaAtendimentos($pListaAtendimentos);

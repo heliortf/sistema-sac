@@ -63,7 +63,7 @@
                                         <img src="dist/img/icone-cliente.png" class="img-circle" alt="{{ user.getUsuario().getNome() }}" />
                                     {% endif %}
                                     <p>
-                                        {{ user.getUsuario().getNome() }} - {{ user.getUsuario().getCargo().getLabel() }}
+                                        {{ user.getUsuario().getNome() }}{% if user.isUsuario() %} - {{ user.getUsuario().getCargo().getLabel() }}{% endif %}
                                         <small>{{ user.getUsuario().getEmpresa().getNome() }}</small>
                                     </p>
                                 </li>                                
