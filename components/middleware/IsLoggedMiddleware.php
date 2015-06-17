@@ -24,7 +24,8 @@ class IsLoggedMiddleware extends \Slim\Middleware {
         
         $patternsPermitidos = array(            
             '/login/',            
-            '/logout/'
+            '/logout/',
+            '/autenticar/'
         );
         
         $permitido = false;

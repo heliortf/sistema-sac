@@ -14,10 +14,21 @@ $app->post('/autenticar', function() use($app){
     $login = $app->request->post('login');
     $senha = $app->request->post('senha');
     
+    $E = new Empresas();
+    
+    // Se está na pagina principal e nao informou a empresa..
+    if($app->request->post('empresa', null) == null){
+        $empresa = $E->getAdmin();
+    }
+    else {
+        $empresa = null;
+    }
+    
     $a = new Autenticacao();
     $usuario = $a->autenticar(array(
-        'login' => $login,
-        'senha' => $senha
+        'login'     => $login,
+        'senha'     => $senha,
+        'empresa'   => $empresa
     ));    
     
 //    var_dump($usuario); die();

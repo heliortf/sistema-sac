@@ -15,10 +15,11 @@ class Autenticacao {
         $em = Conexao::getEntityManager();
         
         // Consulta para saber se encontra um usuario
-        $query = $em->createQuery('select u from Usuario u where u.login = ?1 AND u.senha = ?2');
+        $query = $em->createQuery('select u from Usuario u where u.login = ?1 AND u.senha = ?2 AND u.empresa = ?3');
         $query->setParameters(array(
             1 => $params['login'],
-            2 => $params['senha']
+            2 => $params['senha'],
+            3 => $params['empresa']->getId()
         ));                
         
         $usuarios = $query->getResult();
@@ -29,10 +30,11 @@ class Autenticacao {
         // Como não encontrou usuario, tenta encontrar o cliente
         else {            
             // Consulta o cliente
-            $queryCliente = $em->createQuery("SELECT c FROM Cliente c WHERE c.login = ?1 AND c.senha = ?2");
+            $queryCliente = $em->createQuery("SELECT c FROM Cliente c WHERE c.login = ?1 AND c.senha = ?2 AND c.empresa = ?3");
             $queryCliente->setParameters(array(
                 1 => $params['login'],
-                2 => $params['senha']
+                2 => $params['senha'],
+                3 => $params['empresa']->getId()
             ));
             
             $clientes = $queryCliente->getResult();
