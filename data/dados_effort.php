@@ -1,5 +1,6 @@
 <?php
 
+global $em;
 
 // Cadastra a empresa
 $E = new Empresa();

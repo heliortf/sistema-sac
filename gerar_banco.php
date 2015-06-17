@@ -6,6 +6,7 @@ ini_set('max_execution_time', 90);
 require('vendor/autoload.php');
 require('config/autoload.php');
 
+global $em;
 $em = Conexao::getEntityManager();
 
 $tool = new SchemaTool($em);
