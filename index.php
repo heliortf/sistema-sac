@@ -21,9 +21,16 @@ $view->parserExtensions = array(
 );
 
 ini_set('max_execution_time', 60);
-
 ini_set('memory_limit', '128M');
 
+/**
+ * MIDDLEWARE
+ */
+require_once('config/middleware.php');
+
+/**
+ * CONTROLLERS
+ */
 require_once('controllers/site.php');
 require_once('controllers/autenticacao.php');
 require_once('controllers/atendimento.php');

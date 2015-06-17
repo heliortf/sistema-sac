@@ -82,6 +82,7 @@ class Empresa {
         $this->listaStatusAtendimento   = new ArrayCollection();
         $this->listaTipoAtendimento     = new ArrayCollection();
         $this->atendimentos             = new ArrayCollection();
+        $this->setAdmin(false);
     }
     
     /**
@@ -92,6 +93,13 @@ class Empresa {
      * @Column(type="integer", name="empresa_id")
      */
     private $id;
+    
+    /**
+     *
+     * @var boolean
+     * @Column(type="boolean", name="admin")
+     */
+    private $admin;
     
     /**
      *
@@ -336,6 +344,14 @@ class Empresa {
 
     function setAtendimentos(ArrayCollection $atendimentos) {
         $this->atendimentos = $atendimentos;
+    }
+
+    function isAdmin() {
+        return $this->admin;
+    }
+
+    function setAdmin($admin) {
+        $this->admin = $admin;
     }
 
 
