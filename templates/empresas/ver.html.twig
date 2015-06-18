@@ -91,7 +91,80 @@
                             </div>                            
                         </div>
                     </div><!-- /.box-body -->
-                    <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div role="tabpanel">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">                                    
+                                    <li role="presentation" class="active"><a href="#dashboard-empresa" aria-controls="dashboard-empresa" role="tab" data-toggle="tab"><i class="fa fa-dashboard"></i> Dashboard</a></li>                                    
+                                    <li role="presentation"><a href="#solicitacoes-empresa" aria-controls="solicitacoes-empresa" role="tab" data-toggle="tab"><i class="fa fa-ticket"></i> Solicita&ccedil;&otilde;es</a></li>                                                                            
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="dashboard-empresa">
+                                        <div class="row">
+                                            <div class="col-md-10 col-md-offset-1">
+                                                <div class="row quantitativos">
+                                                    <div class="col-lg-3 col-xs-6">
+                                                        <!-- small box -->
+                                                        <div class="small-box bg-aqua">
+                                                            <div class="inner">
+                                                                <h3>12</h3>
+                                                                <p>Atendentes</p>
+                                                            </div>
+                                                            <div class="icon">
+                                                                <i class="ion ion-ios-people"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-xs-6">
+                                                        <!-- small box -->
+                                                        <div class="small-box bg-green">
+                                                            <div class="inner">
+                                                                <h3>3</h3>
+                                                                <p>Respons&aacute;veis</p>
+                                                            </div>
+                                                            <div class="icon">
+                                                                <i class="ion ion-ios-people-outline"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-xs-6 quantitativo-area">
+                                                        <!-- small box -->
+                                                        <div class="small-box bg-yellow">
+                                                            <div class="inner">
+                                                                <h3>3</h3>
+                                                                <p>&Aacute;reas</p>
+                                                            </div>
+                                                            <div class="icon">
+                                                                <i class="fa fa-building"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-xs-6">
+                                                        <!-- small box -->
+                                                        <div class="small-box bg-red">
+                                                            <div class="inner">
+                                                                <h3>1</h3>
+                                                                <p>Administrador</p>
+                                                            </div>
+                                                            <div class="icon">
+                                                                <i class="ion ion-ios-person"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="solicitacoes">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="box-footer">
                         <div class="row">
@@ -112,11 +185,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="js/empresa/ver_empresa.js"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
-            var VA = new VerEmpresa({{ empresa.getId() }});
-            VA.render();
-        });
-    </script>
+    
 {% endblock %}
