@@ -72,6 +72,13 @@ class Empresa {
     private $atendimentos;
     
     /**
+     *
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="Atendimento", mappedBy="clienteEmpresarial", fetch="LAZY")
+     */
+    private $solicitacoes;
+    
+    /**
      * Construtor
      */
     public function __construct(){
@@ -82,6 +89,7 @@ class Empresa {
         $this->listaStatusAtendimento   = new ArrayCollection();
         $this->listaTipoAtendimento     = new ArrayCollection();
         $this->atendimentos             = new ArrayCollection();
+        $this->solicitacoes             = new ArrayCollection();
         $this->setAdmin(false);
     }
     
@@ -354,5 +362,11 @@ class Empresa {
         $this->admin = $admin;
     }
 
+    function getSolicitacoes() {
+        return $this->solicitacoes;
+    }
 
+    function setSolicitacoes(ArrayCollection $solicitacoes) {
+        $this->solicitacoes = $solicitacoes;
+    }
 }
