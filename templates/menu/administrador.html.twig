@@ -37,6 +37,16 @@
             <li><a href="{{ urlFor('importar_clientes') }}"><i class="fa fa-database"></i> Importar clientes</a></li>
         </ul>
     </li>
+{% else %}
+    <li class="treeview {% if menuPrincipal == 'cadastro_cliente' %}active{% endif %}">
+        <a href="#">
+            <i class="fa fa-briefcase"></i> <span>Empresas</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ urlFor('lista_empresas') }}"><i class="fa fa-search"></i> Consultar</a></li>
+            <li><a href="{{ urlFor('novo_empresa') }}"><i class="fa fa-plus"></i> Registrar</a></li>            
+        </ul>
+    </li>
 {% endif %}
 <li class="treeview">
     <a href="#">
