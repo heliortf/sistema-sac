@@ -158,10 +158,34 @@ $app->get('/admin/empresas/:id', function($id) use($app){
     $U = new Empresas();
     $empresa = $U->getEmpresa(array( 'id' => $id ));
     
+    $tipoUsuarios = array(
+        'atendente'         => 0,
+        'administrador'     => 0,
+        'responsavel_area'  => 0
+    );
+    
+    $usuarios = $empresa->getUsuarios();
+    foreach($usuarios as $usuario){
+        $tipoUsuarios[$usuario->getCargo()->getNome()]++;
+    }
+    
+    $qtdAreas = count($empresa->getAreas());
+    
+    $A = new Atendimentos();
+    $atendimentos = $A->getListaAtendimentos(array(
+        'usuario'               => $u->getUsuario(),
+        'clienteEmpresarial'    => $empresa,
+        'pagina'                => 1,
+        'qtdPorPagina'          => 100
+    ));
+    
     $app->render('empresas/ver.html.twig', array(
         'menuPrincipal' => 'cadastro_empresa',
         'empresa'       => $empresa,
-        'user'          => $u
+        'user'          => $u,
+        'tipoUsuarios'  => $tipoUsuarios,
+        'qtdAreas'      => $qtdAreas,
+        'atendimentos'  => $atendimentos['registros']
     ));
 })
 ->name('ver_empresa');

@@ -104,6 +104,11 @@ class Atendimentos {
                 $dql .= " AND c.nome LIKE :cliente ";
                 $pDql['cliente'] = "%{$params['cliente']}%";
             }
+            
+            if(isset($params['clienteEmpresarial']) && !empty($params['clienteEmpresarial'])){
+                $dql .= " AND a.clienteEmpresarial = :clienteEmpresarial ";
+                $pDql['clienteEmpresarial'] = $params['clienteEmpresarial']->getId();
+            }
         }
         else {
             $dql .= " AND a.cliente = :cliente ";
