@@ -1,5 +1,18 @@
 <?php
 
+$app->get('/admin/configuracoes/dados-empresa', function() use($app){
+    
+    $u = WebUser::getInstance();
+    
+    $app->render('admin/dados_empresa.html.twig', array(
+        'menuPrincipal' => 'configuracoes',
+        'user'          => $u,
+        'empresa'       => $u->getUsuario()->getEmpresa()
+    ));
+})
+->name('dados_empresa');
+
+
 $app->get('/admin/empresas/enviar-logo', function() use($app){
     
 });
