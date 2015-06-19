@@ -6,11 +6,12 @@
         }
     ],
     "require" : {
-        "slim/slim": "dev-master",
-        "doctrine/orm": "2.4.*@dev",
-        "symfony/class-loader": "3.0.*@dev",        
-        "slim/views": "dev-master",
-        "slim/twig-view": "dev-master",
-        "zendframework/zend-permissions-acl" : "dev-master"
+        "slim/slim"                             : "dev-master",
+        "slim/views"                            : "dev-master",
+        "slim/twig-view"                        : "dev-master",
+        "doctrine/orm"                          : "2.4.*@dev",
+        "symfony/class-loader"                  : "^2.7", 
+        "zendframework/zend-permissions-acl"    : "dev-master",
+        "abeautifulsite/simpleimage"            : "2.5.5"
     }
 }

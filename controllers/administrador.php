@@ -18,6 +18,15 @@ $app->post('/do-search', function() use($app){
 })
 ->name('buscar');
 
+$app->get('/admin/configuracoes', function() use($app){
+    $user = WebUser::getInstance();
+    
+    $app->render('admin/configuracoes.html.twig', array(
+        'user' => $user
+    ));
+})
+->name('configuracoes');
+
 /**
  * Tela de consulta de atendimentos
  */

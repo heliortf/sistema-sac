@@ -1,5 +1,8 @@
 <?php
 
+$app->get('/admin/empresas/enviar-logo', function() use($app){
+    
+});
 
 /**
  * Tela de novo empresa
