@@ -62,3 +62,4 @@ $app->get('/logout', function() use($app){
     $app->redirectTo('home');
 })
 ->name('logout');
+

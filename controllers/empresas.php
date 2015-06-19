@@ -1,5 +1,20 @@
 <?php
 
+$app->get('/:permalink', function($permalink) use($app){
+    
+    $E = new Empresas();
+    $Empresa = $E->getLista(array(
+        'permalink'     => $permalink,
+        'pagina'        => 1,
+        'qtdPorPagina'  => 1
+    ));
+    
+    $app->render('empresas/login.html.twig', array(
+        'empresa' => $Empresa
+    ));
+})
+->name('login_empresa');
+
 $app->get('/admin/configuracoes/dados-empresa', function() use($app){
     
     $u = WebUser::getInstance();

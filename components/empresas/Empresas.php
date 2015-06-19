@@ -56,6 +56,11 @@ class Empresas {
             $dql .= " AND u.nomeFantasia LIKE :nome ";
             $pDql['nome'] = $params['nome'];
         }
+        
+        if(isset($params['permalink']) && !empty($params['permalink'])){
+            $dql .= " AND u.permalink = :permalink ";
+            $pDql['permalink'] = $params['permalink'];
+        }
 
         $inicio = ($params['pagina'] - 1) * $params['qtdPorPagina'];
 
