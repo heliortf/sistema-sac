@@ -6,6 +6,8 @@ ini_set('max_execution_time', 90);
 require('vendor/autoload.php');
 require('config/autoload.php');
 
+date_default_timezone_set('America/Sao_Paulo');
+
 global $em;
 $em = Conexao::getEntityManager();
 
