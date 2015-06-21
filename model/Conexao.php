@@ -45,7 +45,8 @@ class Conexao {
                 'driver'    => 'pdo_mysql',
                 'user'      => Config::$db['dbuser'],
                 'password'  => Config::$db['dbpassword'],
-                'dbname'    => Config::$db['dbname']
+                'dbname'    => Config::$db['dbname'],
+                'host'      => Config::$db['host']
             ), $config);
         }
         return self::$em;
