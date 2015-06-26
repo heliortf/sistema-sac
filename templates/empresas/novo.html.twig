@@ -1,12 +1,12 @@
 {% extends "layout/sistema.html.twig" %}
-{% block titulo %}Registrar Usu&aacute;rio{% endblock %}
+{% block titulo %}Registrar Empresa{% endblock %}
 {% block conteudo %}
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>Registrar Usu&aacute;rio</h1>
+        <h1>Registrar Empresa</h1>
         <ol class="breadcrumb">
-            <li><a href="{{ urlFor('lista_usuarios') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="{{ urlFor('novo_usuario') }}">Registrar Usu&aacute;rio</a></li>
+            <li><a href="{{ urlFor('lista_empresas') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="{{ urlFor('novo_empresa') }}">Registrar Empresa</a></li>
         </ol>
     </section>        
     <!-- Main content -->
@@ -30,79 +30,72 @@
                         </div>
                         <div class="box-body">                        
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Nome:</label>                                
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required]" name="nome" id="nome" value="" placeholder="Nome completo" />
+                                <label for="nome" class="col-sm-2 control-label">Nome Fantasia:</label>                                
+                                <div class="col-sm-7">
+                                    <input type="text" name="nome_fantasia" class="form-control validate[required]" value="{{ empresa.getNomeFantasia() }}" placeholder="Nome fantasia" />
                                 </div>
                             </div>							
                             <div class="form-group">
-                                <label for="area" class="col-sm-2 control-label">&Aacute;rea:</label>
-                                <div class="col-sm-5">
-                                    <select name="area" class="form-control">
-                                        {% for a in areas %}
-                                            <option value="{{ a.getId() }}">{{ a.getNome() }}</option>
-                                        {% endfor %}
-                                    </select>
+                                <label for="area" class="col-sm-2 control-label">Raz&atilde;o Social:</label>
+                                <div class="col-sm-3">                                    
+                                    <input type="text" name="razao_social" class="form-control validate[required]" value="{{ empresa.getRazaoSocial() }}" placeholder="Raz&atilde;o Social" />
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="area" class="col-sm-2 control-label">Cargo:</label>
-                                <div class="col-sm-5">
-                                    <select name="cargo" class="form-control">
-                                        {% for c in cargos %}
-                                            <option value="{{ c.getId() }}">{{ c.getLabel() }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">E-mail:</label>
-                                <div class="col-sm-5">
-                                    <input type="email" class="form-control validate[custom[email], required]" name="email" id="email" value="" placeholder="E-mail" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">CPF:</label>
+                                <label for="area" class="col-sm-1 control-label">CNPJ:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control validate[required, minSize[14], maxSize[14]]" name="cpf" id="cpf" value="" placeholder="CPF" />
+                                    <input type="text" name="cnpj" class="form-control validate[required]" value="{{ empresa.getCnpj() }}" placeholder="00.000.000/0000-00" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Endere&ccedil;o:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="endereco" class="form-control validate[required]" value="{{ empresa.getEndereco() }}" placeholder="Endereço" />
+                                </div>
+                                <label for="nome" class="col-sm-1 control-label">Bairro:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="bairro" class="form-control validate[required]" value="{{ empresa.getBairro() }}" placeholder="Bairro" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Cidade:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="cidade" class="form-control validate[required]" value="{{ empresa.getCidade() }}" placeholder="Cidade" />
+                                </div>
+                                <label for="nome" class="col-sm-1 control-label">Estado:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="estado" class="form-control validate[required]" value="{{ empresa.getEstado() }}" placeholder="Estado" />
+                                </div>
+                            </div>  
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">CEP:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="ce" class="form-control validate[required]" value="{{ empresa.getCep() }}" placeholder="CEP" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Telefone:</label>
                                 <div class="col-sm-1">
-                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_telefone" id="ddd_telefone" value="" placeholder="DDD" />
+                                    <input type="text" name="ddd_telefone" class="form-control validate[required]" value="{{ empresa.getDddTelefone() }}" placeholder="DDD" />                                    
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="telefone" id="telefone" value="" placeholder="Telefone" />
+                                    <input type="text" name="telefone" class="form-control validate[required]" value="{{ empresa.getDddTelefone() }}" placeholder="Telefone" />
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Celular:</label>
+                                <label for="nome" class="col-sm-1 control-label">Celular:</label>
                                 <div class="col-sm-1">
-                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_celular" id="ddd_celular" value="" placeholder="DDD" />
+                                    <input type="text" name="ddd_celular" class="form-control" value="{{ empresa.getDddCelular() }}" placeholder="DDD" />                                    
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="celular" id="celular" value="" placeholder="Celular" />
+                                    <input type="text" name="celular" class="form-control" value="{{ empresa.getDddCelular() }}" placeholder="Celular" />                                    
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="cliente" class="col-sm-2 control-label">Login:</label>
+                                <label for="cliente" class="col-sm-2 control-label">E-mail:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="login" id="login" placeholder="Login do usuario">
+                                    <input type="text" name="ddd_telefone" class="form-control validate[required]" value="{{ empresa.getEmail() }}" placeholder="E-mail" />
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="senha" class="col-sm-2 control-label">Senha:</label>
-                                <div class="col-sm-3">
-                                    <input type="password" class="form-control validate[required, minSize[5]]" name="senha" id="senha" placeholder="Digite a senha" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirme_senha" class="col-sm-2 control-label">Confirme a senha:</label>
-                                <div class="col-sm-3">
-                                    <input type="password" class="form-control validate[required, minSize[5]]" name="confirme_senha" id="confirme_senha" placeholder="Digite a senha novamente" />
-                                </div>
-                            </div>                            
+                            </div> 
                         </div><!-- .box-body -->
                         <div class="box-footer">
                             <div class="row">

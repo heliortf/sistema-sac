@@ -151,31 +151,14 @@ $app->post('/admin/empresas/atualizar', function() use($app){
 
 $app->get('/admin/empresas/:id/editar', function($id) use($app){    
 
-    $u = WebUser::getInstance();
+    $u = WebUser::getInstance();    
     
-    
-    $U = new Usuarios();
-    $empresa = $U->getUsuario(array(
-        'empresa'   => $u->getUsuario(),
-        'id'        => $id
-    ));
-    
-    
-    $A = new Areas();
-    $areas = $A->getListaAreas(array(
-        'empresa' => $u->getUsuario()
-    ));
-    
-    $C = new Cargos();
-    $cargos = $C->getListaCargos(array(
-        'empresa' => $u->getUsuario()
-    ));
+    $U = new Empresas();
+    $empresa = $U->getEmpresa(array( 'id' => $id ));       
     
     $app->render('empresas/editar.html.twig', array(
         'menuPrincipal' => 'cadastro_empresa',
         'empresa'       => $empresa,
-        'areas'         => $areas['registros'],
-        'cargos'        => $cargos['registros'],
         'user'          => $u
     ));
 })
