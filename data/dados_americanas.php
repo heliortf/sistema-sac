@@ -4,13 +4,14 @@ global $em;
 
 // Cadastra a empresa
 $E = new Empresa();
-$E->setPermalink("lojasamericanas");
+$E->setPermalink("lojas-americanas");
 $E->setNomeFantasia("Americanas.com");
 $E->setRazaoSocial("Lojas Americanas");
-$E->setCnpj(07699789000109);
+$E->setCnpj(07699789000129);
 $E->setEmail("faleconosco@americanas.com.br");
 $E->setTelefone(27687236);
 $E->setDddTelefone(21);
+$E->setCep(26041145);
 $E->setEstado("Rio de Janeiro");
 $E->setCidade("Nova Iguaçu");
 $E->setBairro("Centro");

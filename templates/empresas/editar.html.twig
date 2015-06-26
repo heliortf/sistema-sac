@@ -1,29 +1,28 @@
 {% extends "layout/sistema.html.twig" %}
-{% block titulo %}Editar Usu&aacute;rio{% endblock %}
+{% block titulo %}Editar Empresa{% endblock %}
 {% block conteudo %}
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>Editar Usu&aacute;rio</h1>
+        <h1>Editar Empresa</h1>
         <ol class="breadcrumb">
-            <li><a href="{{ urlFor('lista_usuarios') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="{{ urlFor('novo_usuario') }}">Editar Usu&aacute;rio</a></li>
+            <li><a href="{{ urlFor('lista_empresas') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="{{ urlFor('editar_empresa', { id : empresa.getId() }) }}">Editar Empresa</a></li>
         </ol>
     </section>        
     <!-- Main content -->
     <section class="content">
-        <div class="row registrar-usuario">
+        <div class="row registrar-empresa">
             <div class="col-md-12">
                 <div class="box">
-                    <form method="post" action="{{ urlFor('atualizar_usuario') }}" class="form form-horizontal" id="form_editar_usuario">
-                        <input type="hidden" name="id" value="{{ usuario.getId() }}" />
+                    <form method="post" action="{{ urlFor('atualizar_empresa') }}" class="form form-horizontal" id="form_editar_empresa">
                         <div class="box-header with-border">                        
                             <div class="row">
                                 <div class="col-md-3">
                                     <h3 class="box-title">Formul&aacute;rio</h3>
-                                </div>   
-                                <div class="col-md-5 pull-right text-right">
+                                </div>                       
+                                <div class="col-sm-5 pull-right text-right">
                                     <button type="submit" name="btn_salvar" class="btn btn-primary">Salvar</button>
-                                    <a href="{{ urlFor('lista_usuarios') }}">
+                                    <a href="{{ urlFor('lista_empresas') }}">
                                         <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
                                     </a>
                                 </div>
@@ -31,79 +30,79 @@
                         </div>
                         <div class="box-body">                        
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Nome:</label>                                
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required]" name="nome" id="nome" value="{{ usuario.getNome() }}" placeholder="Nome completo" />
+                                <label for="nome" class="col-sm-2 control-label">Nome Fantasia:</label>                                
+                                <div class="col-sm-7">
+                                    <input type="text" name="nome_fantasia" class="form-control validate[required]" value="{{ empresa.getNomeFantasia() }}" placeholder="Nome fantasia" />
                                 </div>
                             </div>							
                             <div class="form-group">
-                                <label for="area" class="col-sm-2 control-label">&Aacute;rea:</label>
-                                <div class="col-sm-5">
-                                    <select name="area" class="form-control">
-                                        {% for a in areas %}
-                                            <option value="{{ a.getId() }}" {% if usuario.getArea().getId() == a.getId() %}selected{% endif %}>{{ a.getNome() }}</option>
-                                        {% endfor %}
-                                    </select>
+                                <label for="area" class="col-sm-2 control-label">Raz&atilde;o Social:</label>
+                                <div class="col-sm-3">                                    
+                                    <input type="text" name="razao_social" class="form-control validate[required]" value="{{ empresa.getRazaoSocial() }}" placeholder="Raz&atilde;o Social" />
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="area" class="col-sm-2 control-label">Cargo:</label>
-                                <div class="col-sm-5">
-                                    <select name="cargo" class="form-control">
-                                        {% for c in cargos %}
-                                            <option value="{{ c.getId() }}" {% if usuario.getCargo().getId() == c.getId() %}selected{% endif %}>{{ c.getLabel() }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">E-mail:</label>
-                                <div class="col-sm-5">
-                                    <input type="email" class="form-control validate[custom[email]]" name="email" id="email" value="{{ usuario.getEmail() }}" placeholder="E-mail" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">CPF:</label>
+                                <label for="area" class="col-sm-1 control-label">CNPJ:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control validate[required, minSize[14], maxSize[14]]" name="cpf" id="cpf" value="{{ usuario.getCpf() }}" placeholder="CPF" />
+                                    <input type="text" name="cnpj" class="form-control validate[required]" value="{{ empresa.getCnpj() }}" placeholder="00.000.000/0000-00" />
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">URL Login:</label>                                
+                                <div class="col-sm-4">
+                                    <input type="text" name="permalink" class="form-control validate[required]" value="{{ empresa.getPermalink() }}" placeholder="URL Login" />
+                                </div>
+                            </div>
+                            <div class="form-group"></div>
+                            <div class="form-group"></div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">CEP:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="cep" class="form-control validate[required]" value="{{ empresa.getCep() }}" placeholder="00000-000" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Endere&ccedil;o:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="endereco" class="form-control validate[required]" value="{{ empresa.getEndereco() }}" placeholder="Endereço" />
+                                </div>
+                                <label for="nome" class="col-sm-1 control-label">Bairro:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="bairro" class="form-control validate[required]" value="{{ empresa.getBairro() }}" placeholder="Bairro" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-2 control-label">Cidade:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="cidade" class="form-control validate[required]" value="{{ empresa.getCidade() }}" placeholder="Cidade" />
+                                </div>
+                                <label for="nome" class="col-sm-1 control-label">Estado:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="estado" class="form-control validate[required]" value="{{ empresa.getEstado() }}" placeholder="Estado" />
+                                </div>
+                            </div>  
+                            <div class="form-group"></div>
+                            <div class="form-group"></div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Telefone:</label>
                                 <div class="col-sm-1">
-                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_telefone" id="ddd_telefone" value="{{ usuario.getDddTelefone() }}" placeholder="DDD" />
+                                    <input type="text" name="ddd_telefone" class="form-control validate[required]" value="{{ empresa.getDddTelefone() }}" placeholder="DDD" />                                    
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="telefone" id="telefone" value="{{ usuario.getTelefone() }}" placeholder="Telefone" />
+                                    <input type="text" name="telefone" class="form-control validate[required]" value="{{ empresa.getDddTelefone() }}" placeholder="Telefone" />
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Celular:</label>
+                                <label for="nome" class="col-sm-1 control-label">Celular:</label>
                                 <div class="col-sm-1">
-                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_celular" id="ddd_celular" value="{{ usuario.getDddCelular() }}" placeholder="DDD" />
+                                    <input type="text" name="ddd_celular" class="form-control" value="{{ empresa.getDddCelular() }}" placeholder="DDD" />                                    
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="celular" id="celular" value="{{ usuario.getCelular() }}" placeholder="Celular" />
+                                    <input type="text" name="celular" class="form-control" value="{{ empresa.getDddCelular() }}" placeholder="Celular" />                                    
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="cliente" class="col-sm-2 control-label">Login:</label>
+                                <label for="cliente" class="col-sm-2 control-label">E-mail:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="login" id="login" placeholder="Login do usuario" value="{{ usuario.getLogin() }}"/>
+                                    <input type="text" name="ddd_telefone" class="form-control validate[required]" value="{{ empresa.getEmail() }}" placeholder="E-mail" />
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="senha" class="col-sm-2 control-label">Senha:</label>
-                                <div class="col-sm-3">
-                                    <input type="password" class="form-control validate[required, minSize[5]]" name="senha" id="senha" placeholder="Digite a senha" value="{{ usuario.getSenha() }}"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirme_senha" class="col-sm-2 control-label">Confirme a senha:</label>
-                                <div class="col-sm-3">
-                                    <input type="password" class="form-control validate[required, minSize[5]]" name="confirme_senha" id="confirme_senha" placeholder="Digite a senha novamente" value="{{ usuario.getSenha() }}" />
-                                </div>
-                            </div>                                                    
+                            </div> 
                         </div><!-- .box-body -->
                         <div class="box-footer">
                             <div class="row">
@@ -126,20 +125,19 @@
     <script type="text/javascript" src="js/usuario/usuario.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function(){
-            jQuery("#form_editar_usuario").validationEngine();
+            jQuery("#form_novo_usuario").validationEngine();
             jQuery("#cpf").setMask('cpf');
             jQuery("#ddd_telefone, #ddd_celular").setMask("99");
             jQuery("#telefone, #celular").setMask("9999-99999");
             
             
             
-            jQuery("#form_editar_usuario").on("submit", function(){
+            jQuery("#form_novo_usuario").on("submit", function(){
                 if(jQuery(this).validationEngine('validate')){
                     if(jQuery("#senha").val() == jQuery("#confirme_senha").val()){
                         Aguarde.show();
                         Usuario.validarLogin({
-                            'login'     : jQuery("#login").val(),
-                            'id'        : {{ usuario.getId() }},
+                            'login'     : jQuery("#login").val(),                            
                             'callback'  : function(existe){
                                 Aguarde.hide();
                                 
@@ -147,7 +145,7 @@
                                     jQuery("#login").validationEngine('showPrompt', 'Login já existente. Por favor, escolha outro', 'error', 'topRight', true);
                                 }
                                 else {
-                                    jQuery("#form_editar_usuario").unbind('submit').submit();
+                                    jQuery("#form_novo_usuario").unbind('submit').submit();
                                 }
                             }
                         });

@@ -140,6 +140,13 @@ class Empresa {
     /**
      *
      * @var string
+     * @Column(type="string", name="cep", length=8, nullable=true)
+     */
+    private $cep;
+    
+    /**
+     *
+     * @var string
      * @Column(type="string", name="endereco", length=255, nullable=true)
      */
     private $endereco;
@@ -237,7 +244,11 @@ class Empresa {
     function getEstado() {
         return $this->estado;
     }
-
+    
+    function getCep() {
+        return $this->cep;
+    }
+    
     function getTelefone() {
         return $this->telefone;
     }
@@ -298,6 +309,10 @@ class Empresa {
         $this->estado = $estado;
     }
 
+    function setCep($cep) {
+        $this->cep = $cep;
+    }
+        
     function setTelefone($telefone) {
         $this->telefone = $telefone;
     }
