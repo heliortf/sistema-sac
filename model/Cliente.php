@@ -352,8 +352,8 @@ class Cliente implements RoleInterface {
 	}
 	
 	public function setCep($cep){
-		$cep = preg_replace("/[^0-9]/", "", $cep);
-        $this->cep = (empty($cep) ? null : $cep);
+            $cep = preg_replace("/[^0-9]/", "", $cep);
+            $this->cep = (empty($cep) ? null : $cep);
 	}
 	
 	public function getCep(){

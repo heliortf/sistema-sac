@@ -18,5 +18,12 @@ class Config {
 //        'host'          => 'mysql01.helioequipamentos.hospedagemdesites.ws',
 //        'port'          => '3306'
     );
+    
+    public static $uploadPath = '';
 }
+
+/**
+ * Caminho de uploads
+ */
+Config::$uploadPath = dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR;
 

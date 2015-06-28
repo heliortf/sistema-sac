@@ -36,17 +36,17 @@
                                     <input type="text" class="form-control validate[required]" name="nome" id="nome" value="{{ cliente.getNome() }}" placeholder="Nome completo" />
                                 </div>
                             </div>
-							<div class="form-group">
+                            <div class="form-group">
                                 <label for="endereco" class="col-sm-2 control-label">Endere&ccedil;o:</label>                                
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control validate[maxSize[255]]" name="endereco" id="endereco" value="{{ cliente.getEndereco() }}" placeholder="Endere&ccedil;o" />
                                 </div>
-								<div class="col-sm-2">
+                                <div class="col-sm-2">
                                     <input type="text" class="form-control validate[maxSize[8]]" name="numero" id="numero" value="{{ cliente.getNumero() }}" placeholder="N&uacute;mero" />
                                 </div>
                             </div>
-							<div class="form-group">
-								<label for="cep" class="col-sm-2 control-label">Cep:</label>                                
+                            <div class="form-group">
+                                <label for="cep" class="col-sm-2 control-label">Cep:</label>                                
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control validate[minSize[9],maxSize[9]]" name="cep" id="cep" value="{{ cliente.getCep() }}" placeholder="26000-000" />
                                 </div>
@@ -55,18 +55,18 @@
                                     <input type="text" class="form-control validate[maxSize[120]]" name="bairro" id="bairro" value="{{ cliente.getBairro() }}" placeholder="Bairro" />
                                 </div>								
                             </div>
-							<div class="form-group">
-								<label for="cidade" class="col-sm-2 control-label">Cidade:</label>                                									
-								<div class="col-sm-3">
-									<input type="text" class="form-control validate[maxSize[100]]" name="cidade" id="cidade" value="{{ cliente.getCidade() }}" placeholder="Cidade" />									
-								</div>
+                            <div class="form-group">
+                                <label for="cidade" class="col-sm-2 control-label">Cidade:</label>                                									
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control validate[maxSize[100]]" name="cidade" id="cidade" value="{{ cliente.getCidade() }}" placeholder="Cidade" />									
+                                </div>
                                 <label for="estado" class="col-sm-1 control-label">Estado:</label>                                
                                 <div class="col-sm-3">
-									<select name="estado" class="form-control">
-									{% for sigla,nome in estados %}
-										<option value="{{ sigla }}" {% if sigla == cliente.getEstado() %}selected{% endif %}>{{ nome }}</option>
-									{% endfor %}
-									</select>
+                                    <select name="estado" class="form-control">
+                                        {% for sigla,nome in estados %}
+                                            <option value="{{ sigla }}" {% if sigla == cliente.getEstado() %}selected{% endif %}>{{ nome }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -97,7 +97,7 @@
                                     <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="celular" id="celular" value="{{ cliente.getCelular() }}" placeholder="Celular" />
                                 </div>
                             </div>
-							<div class="form-group">
+                            <div class="form-group">
                                 <label for="email" class="col-sm-2 control-label">E-mail:</label>                                
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control validate[custom[email]]" name="email" id="email" value="{{ cliente.getEmail() }}" placeholder="E-mail" />
@@ -143,8 +143,8 @@
     <script type="text/javascript">
         jQuery(document).ready(function () {
             jQuery("#form_editar_cliente").validationEngine();
-			jQuery("#numero").setMask('99999999');
-			jQuery("#cep").setMask('cep');
+            jQuery("#numero").setMask('99999999');
+            jQuery("#cep").setMask('cep');
             jQuery("#cpf").setMask('cpf');
             jQuery("#cnpj").setMask('cnpj');
             jQuery("#ddd_telefone, #ddd_celular").setMask("99");
@@ -157,18 +157,18 @@
                             Aguarde.show();
                             Usuario.validarLogin({
                                 'login': jQuery("#login").val(),
-                                'tipo' : 'cliente',
-                                'id' : {{ cliente.getId() }},
-                                'callback': function (existe) {
-                                    Aguarde.hide();
+                                'tipo': 'cliente',
+                                'id' :{{ cliente.getId() }},
+                                        'callback': function (existe) {
+                                            Aguarde.hide();
 
-                                    if (existe === true) {
-                                        jQuery("#login").validationEngine('showPrompt', 'Login já existente. Por favor, escolha outro', 'error', 'topRight', true);
-                                    }
-                                    else {
-                                        jQuery("#form_editar_cliente").unbind('submit').submit();
-                                    }
-                                }
+                                            if (existe === true) {
+                                                jQuery("#login").validationEngine('showPrompt', 'Login já existente. Por favor, escolha outro', 'error', 'topRight', true);
+                                            }
+                                            else {
+                                                jQuery("#form_editar_cliente").unbind('submit').submit();
+                                            }
+                                        }
                             });
 
                             return false;

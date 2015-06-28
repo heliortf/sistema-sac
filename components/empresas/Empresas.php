@@ -94,4 +94,16 @@ class Empresas {
         );
     }
     
+    /**
+     * Salva uma empresa no banco de dados
+     * 
+     * @param Empresa $empresa
+     * @return Empresa
+     */
+    public function salvar(Empresa $empresa){
+        $em = Conexao::getEntityManager();
+        $em->persist($empresa);
+        $em->flush();
+        return $empresa;
+    }
 }

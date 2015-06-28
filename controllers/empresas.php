@@ -29,7 +29,7 @@ $app->get('/admin/configuracoes/dados-empresa', function() use($app){
 
 
 $app->post('/admin/empresas/enviar-logo', function() use($app){
-    die("To aquii!");
+    $H = new UploadHandler();
 })
 ->name("enviar_logo_empresa");
 
@@ -99,47 +99,33 @@ $app->post('/admin/empresas/atualizar', function() use($app){
 
     $u = WebUser::getInstance();    
 	
-    // Consulta a area
-    $A = new Areas();
-    $Area = $A->getArea(array(
-        'empresa' => $u->getUsuario(),
-        'id' => $app->request->post('area')
-    ));
-
-    // Consulta o cargo
-    $C = new Cargos();
-    $Cargo = $C->getCargo(array(
-        'empresa' => $u->getUsuario(),
-        'id' => $app->request->post('cargo')
-    ));
+    $E = new Empresas();
+    $Empresa = $E->getEmpresa(array('id' => $app->request->post('id')));
     
-    // Classe que persiste o empresa
-    $U = new Usuarios();
-    $Usuario = $U->getUsuario(array(
-        'empresa'   => $u->getUsuario(),
-        'id'        => $app->request->post('id')
-    ));
-    
-    if($Usuario instanceof Usuario){
-        $Usuario->setEmpresa($u->getUsuario()->getEmpresa());
-        $Usuario->setArea($Area);
-        $Usuario->setCargo($Cargo);
-        $Usuario->setNome($app->request->post('nome'));
-        $Usuario->setEmail($app->request->post('email'));
-        $Usuario->setCPF($app->request->post('cpf'));
-        $Usuario->setLogin($app->request->post('login'));
-        $Usuario->setSenha($app->request->post('senha'));
-        $Usuario->setDddTelefone($app->request->post('ddd_telefone'));
-        $Usuario->setTelefone($app->request->post('telefone'));    
-        $Usuario->setDddCelular($app->request->post('ddd_celular'));
-        $Usuario->setCelular($app->request->post('celular'));        
-
-        $U->salvar($Usuario);
+    if($Empresa instanceof Empresa){                
+        $Empresa->setNomeFantasia($app->request->post('nome_fantasia'));
+        $Empresa->setRazaoSocial($app->request->post('razao_social'));
+        $Empresa->setCnpj($app->request->post('cnpj'));
+        $Empresa->setCep($app->request->post('cep'));
+        $Empresa->setEndereco($app->request->post('endereco'));
+        $Empresa->setBairro($app->request->post('bairro'));
+        $Empresa->setCidade($app->request->post('cidade'));
+        $Empresa->setEstado($app->request->post('estado'));        
+        $Empresa->setDddTelefone($app->request->post('ddd_telefone'));
+        $Empresa->setTelefone($app->request->post('telefone'));            
         
-        $app->flash('sucesso', 'Usuario atualizado com sucesso!');
+        if($app->request->post('nome_arquivo') != '' && $app->request->post('mimetype') != ''){            
+            $arquivo = Config::$uploadPath.$app->request->post('nome_arquivo');
+            if(file_exists($arquivo)){                                
+                $Empresa->setLogo($app->request->post('nome_arquivo'));                
+            }        
+        }
+        
+        $E->salvar($Empresa);        
+        $app->flash('sucesso', 'Empresa atualizado com sucesso!');
     
         $app->redirectTo('ver_empresa', array(
-            'id' => $Usuario->getId()
+            'id' => $Empresa->getId()
         ));
     }
     else {

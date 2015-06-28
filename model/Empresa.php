@@ -196,7 +196,7 @@ class Empresa {
     /**
      *
      * @var string
-     * @Column(type="string", name="logo", nullable=true)
+     * @Column(type="string", length=255, name="logo", nullable=true)
      */
     protected $logo;
     
@@ -282,7 +282,8 @@ class Empresa {
     }
 
     function setCnpj($cnpj) {
-        $this->cnpj = $cnpj;
+        $cnpj = preg_replace("/[^0-9]/", "", $cnpj);
+        $this->cnpj = (empty($cnpj) ? null : $cnpj);        
     }
 
     function setRazaoSocial($razaoSocial) {
@@ -310,15 +311,18 @@ class Empresa {
     }
 
     function setCep($cep) {
-        $this->cep = $cep;
+        $cep = preg_replace("/[^0-9]/", "", $cep);
+        $this->cep = (empty($cep) ? null : $cep);
     }
         
     function setTelefone($telefone) {
-        $this->telefone = $telefone;
+        $telefone = preg_replace("/[^0-9]/", "", $telefone);
+        $this->telefone = (empty($telefone) ? null : $telefone);
     }
 
     function setDddTelefone($dddTelefone) {
-        $this->dddTelefone = $dddTelefone;
+        $dddTelefone = preg_replace("/[^0-9]/", "", $dddTelefone);
+        $this->dddTelefone = (empty($dddTelefone) ? null : $dddTelefone);        
     }
 
     function setEmail($email) {

@@ -14,7 +14,11 @@
         <div class="row editar-empresa">
             <div class="col-md-12">
                 <div class="box">
-                    <form method="post" action="{{ urlFor('atualizar_empresa') }}" class="form form-horizontal" id="form_editar_empresa">
+                    <form method="post" action="{{ urlFor('atualizar_empresa') }}" class="form form-horizontal" id="form_editar_empresa" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="{{ empresa.getId() }}" />
+                        <input type="hidden" name="nome_arquivo" id="nome_arquivo" class="form-control" value="" />                                    
+                        <input type="hidden" name="mimetype" id="mimetype" class="form-control" value="" />                                    
+                                    
                         <div class="box-header with-border">                        
                             <div class="row">
                                 <div class="col-md-3">
@@ -34,17 +38,26 @@
                                 <div class="col-sm-4">
                                     <img src="" class="img-responsive" />
                                 </div>
-                            </div>							
+                            </div>	
+                            <div class="form-group barra-progresso hidden">
+                                <div class="col-sm-3 col-sm-offset-2">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                            0% Completo
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="logotipo" class="col-sm-2 control-label">Logotipo:</label>                                
-                                <div class="col-sm-4 input-imagem">
-                                    <input type="file" name="logotipo" id="logotipo" class="form-control"  data-url="{{ urlFor('enviar_logo_empresa') }}" />                                    
+                                <div class="col-sm-4 input-imagem">                                    
+                                    <input type="file" name="files" id="logotipo" class="form-control"  data-url="{{ urlFor('enviar_logo_empresa') }}" />                                    
                                 </div>
                                 <div class="col-sm-2 hidden opcoes-imagem">
                                     <button type="button" name="btn_remover_imagem" id="btn_remover_imagem" class="btn btn-danger">
                                         <i class="fa fa-ban"></i> Remover
                                     </button>
-                                </div>
+                                </div>                                
                             </div>							
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Nome Fantasia:</label>                                
@@ -59,7 +72,7 @@
                                 </div>
                                 <label for="area" class="col-sm-1 control-label">CNPJ:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="cnpj" class="form-control validate[required]" value="{{ empresa.getCnpj() }}" placeholder="00.000.000/0000-00" />
+                                    <input type="text" name="cnpj" class="form-control validate[required, minSize[18],maxSize[18]]" value="{{ empresa.getCnpj() }}" placeholder="00.000.000/0000-00" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -104,20 +117,13 @@
                                     <input type="text" name="ddd_telefone" class="form-control validate[required]" value="{{ empresa.getDddTelefone() }}" placeholder="DDD" />                                    
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" name="telefone" class="form-control validate[required]" value="{{ empresa.getDddTelefone() }}" placeholder="Telefone" />
-                                </div>
-                                <label for="nome" class="col-sm-1 control-label">Celular:</label>
-                                <div class="col-sm-1">
-                                    <input type="text" name="ddd_celular" class="form-control" value="{{ empresa.getDddCelular() }}" placeholder="DDD" />                                    
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" name="celular" class="form-control" value="{{ empresa.getDddCelular() }}" placeholder="Celular" />                                    
-                                </div>
+                                    <input type="text" name="telefone" class="form-control validate[required]" value="{{ empresa.getTelefone() }}" placeholder="Telefone" />
+                                </div>                                
                             </div>
                             <div class="form-group">
                                 <label for="cliente" class="col-sm-2 control-label">E-mail:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="ddd_telefone" class="form-control validate[required]" value="{{ empresa.getEmail() }}" placeholder="E-mail" />
+                                    <input type="text" name="ddd_telefone" class="form-control validate[required, custom[email]]" value="{{ empresa.getEmail() }}" placeholder="E-mail" />
                                 </div>
                             </div> 
                         </div><!-- .box-body -->
@@ -143,67 +149,74 @@
     <script type="text/javascript" src="js/lib/jquery-file-upload/js/jquery.fileupload.js"></script>
     <script type="text/javascript" src="js/lib/jquery-file-upload/js/load-image.all.js"></script>
     <script type="text/javascript" src="js/lib/jquery-file-upload/js/jquery.fileupload-process.js"></script>
-    <script type="text/javascript" src="js/lib/jquery-file-upload/js/jquery.fileupload-image.js"></script>    
+    <script type="text/javascript" src="js/lib/jquery-file-upload/js/jquery.fileupload-image.js"></script>        
     <script type="text/javascript">
-        jQuery(document).ready(function(){
+        jQuery(document).ready(function () {
             jQuery("#form_novo_usuario").validationEngine();
             jQuery("#cpf").setMask('cpf');
             jQuery("#ddd_telefone, #ddd_celular").setMask("99");
             jQuery("#telefone, #celular").setMask("9999-99999");
-            
+
             jQuery("#logotipo").fileupload({
-                add : function(e, data){
-                    
-                    console.log(data);
+                add: function (e, data) {
+
                     // Se é uma imagem
-                    if(data.files[0].type.indexOf("image") > -1){
-                        loadImage(data.files[0], function(img){              
+                    if (data.files[0].type.indexOf("image") > -1) {
+                        jQuery('.barra-progresso').removeClass('hidden');
+                        jQuery('.barra-progresso .progress-bar').css('width', '0%');
+            
+                        loadImage(data.files[0], function (img) {
                             jQuery(img)
                                     .removeAttr('width')
                                     .removeAttr('height')
                                     .addClass('img-responsive');
                             
+                            jQuery("#mimetype").val(data.files[0].type);
                             jQuery(".preview-logotipo").removeClass("hidden");
                             jQuery(".opcoes-imagem").removeClass("hidden");
                             jQuery(".input-imagem").addClass("hidden");
                             jQuery(".preview-logotipo img").replaceWith(img);//attr('src', jQuery(img).attr('src'));
                         });
+
+                        data.submit();
                     }
                     else {
                         alert("Selecione somente imagens");
                     }
+                },
+                progressall: function(e, data){
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    jQuery('.barra-progresso .progress-bar').css(
+                        'width',
+                        progress + '%'
+                    );
+                    jQuery('.barra-progresso .progress-bar').text(progress + '% completo');
+                    if(progress == 100){
+                        jQuery(".barra-progresso .progress-bar").addClass("progress-bar-success");
+                    }                    
+                },
+                done : function(e, data){
+                    try {
+                        var r = jQuery.parseJSON(data.result);
+                        jQuery("#nome_arquivo").val(r['files'][0]['name']);
+                    }
+                    catch(e){
+                        
+                    }
+                    console.log(data);
                 }
             });
-            
-            jQuery("#btn_remover_imagem").click(function(){
-                jQuery("#logotipo")
+
+            jQuery("#btn_remover_imagem").click(function () {
+                jQuery(".opcoes-imagem").addClass("hidden");
+                jQuery(".preview-logotipo").addClass("hidden");
+                jQuery(".barra-progresso").addClass("hidden");
+                jQuery(".input-imagem").removeClass("hidden");                
             });
-            
-            jQuery("#form_novo_usuario").on("submit", function(){
-                if(jQuery(this).validationEngine('validate')){
-                    if(jQuery("#senha").val() == jQuery("#confirme_senha").val()){
-                        Aguarde.show();
-                        Usuario.validarLogin({
-                            'login'     : jQuery("#login").val(),                            
-                            'callback'  : function(existe){
-                                Aguarde.hide();
-                                
-                                if(existe === true){
-                                    jQuery("#login").validationEngine('showPrompt', 'Login já existente. Por favor, escolha outro', 'error', 'topRight', true);
-                                }
-                                else {
-                                    jQuery("#form_novo_usuario").unbind('submit').submit();
-                                }
-                            }
-                        });
-                        
-                        return false;
-                    }
-                    else {
-                        jQuery("#senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
-                        jQuery("#confirme_senha").validationEngine('showPrompt', 'As senhas não conferem', 'error', 'topRight', true);
-                        return false;
-                    }
+
+            jQuery("#form_editar_empresa").on("submit", function () {
+                if (jQuery(this).validationEngine('validate')) {
+
                 }
             });
         });

@@ -17,6 +17,7 @@ class SACClassLoader {
     
     function __construct() {
         $this->classes['Config'] = dirname(__FILE__).DIRECTORY_SEPARATOR."config.php";
+        $this->classes['UploadHandler'] = dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'jquery-file-upload'.DIRECTORY_SEPARATOR.'server'.DIRECTORY_SEPARATOR.'php'.DIRECTORY_SEPARATOR.'UploadHandler.php';
     }
 
     
