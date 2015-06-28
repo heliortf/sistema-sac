@@ -11,7 +11,7 @@
     </section>        
     <!-- Main content -->
     <section class="content">
-        <div class="row registrar-empresa">
+        <div class="row editar-empresa">
             <div class="col-md-12">
                 <div class="box">
                     <form method="post" action="{{ urlFor('atualizar_empresa') }}" class="form form-horizontal" id="form_editar_empresa">
@@ -29,6 +29,23 @@
                             </div>
                         </div>
                         <div class="box-body">                        
+                            <div class="form-group hidden preview-logotipo">
+                                <label for="logotipo" class="col-sm-2 control-label">&nbsp;</label>
+                                <div class="col-sm-4">
+                                    <img src="" class="img-responsive" />
+                                </div>
+                            </div>							
+                            <div class="form-group">
+                                <label for="logotipo" class="col-sm-2 control-label">Logotipo:</label>                                
+                                <div class="col-sm-4 input-imagem">
+                                    <input type="file" name="logotipo" id="logotipo" class="form-control"  data-url="{{ urlFor('enviar_logo_empresa') }}" />                                    
+                                </div>
+                                <div class="col-sm-2 hidden opcoes-imagem">
+                                    <button type="button" name="btn_remover_imagem" id="btn_remover_imagem" class="btn btn-danger">
+                                        <i class="fa fa-ban"></i> Remover
+                                    </button>
+                                </div>
+                            </div>							
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Nome Fantasia:</label>                                
                                 <div class="col-sm-7">
@@ -122,7 +139,11 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="js/usuario/usuario.js"></script>
+    <script type="text/javascript" src="js/lib/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="js/lib/jquery-file-upload/js/jquery.fileupload.js"></script>
+    <script type="text/javascript" src="js/lib/jquery-file-upload/js/load-image.all.js"></script>
+    <script type="text/javascript" src="js/lib/jquery-file-upload/js/jquery.fileupload-process.js"></script>
+    <script type="text/javascript" src="js/lib/jquery-file-upload/js/jquery.fileupload-image.js"></script>    
     <script type="text/javascript">
         jQuery(document).ready(function(){
             jQuery("#form_novo_usuario").validationEngine();
@@ -130,7 +151,33 @@
             jQuery("#ddd_telefone, #ddd_celular").setMask("99");
             jQuery("#telefone, #celular").setMask("9999-99999");
             
+            jQuery("#logotipo").fileupload({
+                add : function(e, data){
+                    
+                    console.log(data);
+                    // Se é uma imagem
+                    if(data.files[0].type.indexOf("image") > -1){
+                        loadImage(data.files[0], function(img){              
+                            jQuery(img)
+                                    .removeAttr('width')
+                                    .removeAttr('height')
+                                    .addClass('img-responsive');
+                            
+                            jQuery(".preview-logotipo").removeClass("hidden");
+                            jQuery(".opcoes-imagem").removeClass("hidden");
+                            jQuery(".input-imagem").addClass("hidden");
+                            jQuery(".preview-logotipo img").replaceWith(img);//attr('src', jQuery(img).attr('src'));
+                        });
+                    }
+                    else {
+                        alert("Selecione somente imagens");
+                    }
+                }
+            });
             
+            jQuery("#btn_remover_imagem").click(function(){
+                jQuery("#logotipo")
+            });
             
             jQuery("#form_novo_usuario").on("submit", function(){
                 if(jQuery(this).validationEngine('validate')){

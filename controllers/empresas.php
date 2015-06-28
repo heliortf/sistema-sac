@@ -28,9 +28,10 @@ $app->get('/admin/configuracoes/dados-empresa', function() use($app){
 ->name('dados_empresa');
 
 
-$app->get('/admin/empresas/enviar-logo', function() use($app){
-    
-});
+$app->post('/admin/empresas/enviar-logo', function() use($app){
+    die("To aquii!");
+})
+->name("enviar_logo_empresa");
 
 /**
  * Tela de novo empresa
