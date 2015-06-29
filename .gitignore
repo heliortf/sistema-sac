@@ -2,7 +2,5 @@
 /composer.lock
 /nbproject/private/
 /cache/
-/files/*.png
-/files/*.jpg
-/files/thumbnail/*.jpg
-/files/thumbnail/*.bmp
+/files/*
+/files/thumbnail/*
