@@ -326,7 +326,7 @@ function($pagina=1, $qtdPorPagina=20, $numero='', $documento='', $cliente='') us
     if(!empty($cliente) && $cliente != '-'){
         $parametros['cliente'] = $cliente;
     }
-
+    
     $atendimentos = $A->getListaAtendimentos($pListaAtendimentos);
 
     $Paginacao = new Paginacao(array_merge(
