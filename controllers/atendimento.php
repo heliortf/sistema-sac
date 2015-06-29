@@ -328,7 +328,7 @@ function($pagina=1, $qtdPorPagina=20, $numero='', $documento='', $cliente='') us
     }
     
     $atendimentos = $A->getListaAtendimentos($pListaAtendimentos);
-
+    
     $Paginacao = new Paginacao(array_merge(
         $atendimentos['paginacao'], 
         array(

@@ -40,7 +40,7 @@ class Atendimento implements ResourceInterface {
      *
      * @var Empresa
      * @ManyToOne(targetEntity="Empresa", inversedBy="solicitacoes")
-     * @JoinColumn(name="tb_empresa_empresa_id", referencedColumnName="empresa_id", nullable=true)
+     * @JoinColumn(name="tb_empresa_cliente_empresarial_id", referencedColumnName="empresa_id", nullable=true)
      */
     private $clienteEmpresarial;
 

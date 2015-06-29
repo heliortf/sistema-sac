@@ -155,7 +155,7 @@ class Atendimentos {
             $pDql['dataFim'] = $params['dataFim'];
         }
         
-        $inicio = ($params['pagina'] - 1) * $params['qtdPorPagina'];
+        $inicio = ($params['pagina'] - 1) * $params['qtdPorPagina'];        
         
         $query = $em->createQuery("select a $dql");
         $atendimentos = $query->setParameters($pDql)

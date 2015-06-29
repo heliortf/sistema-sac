@@ -130,3 +130,74 @@ $em->persist($Status2);
 $em->persist($Status3);
 $em->persist($Status4);
 $em->flush();
+
+
+/**
+ * Cria os clientes da americanas
+ */
+$C = new Cliente();
+$C->setEmpresa($E);
+$C->setNome("José da Silva Souza");
+$C->setCpf(11156598716);
+$C->setCelular(998778956);
+$C->setDddCelular(21);
+$C->setTelefone(26598856);
+$C->setDddTelefone(21);
+$C->setEmail("jose.silva.souza@gmail.com");
+$C->setLogin("cliente");
+$C->setSenha("12345");
+$C->setDataCriacao(new DateTime());
+
+$em->persist($C);
+
+$C2 = new Cliente();
+$C2->setEmpresa($E);
+$C2->setNome("Josias Ferreira");
+$C2->setCpf(12342123451);
+$C2->setCelular(998778956);
+$C2->setDddCelular(21);
+$C2->setTelefone(26598856);
+$C2->setDddTelefone(21);
+$C2->setEmail("josiasf@gmail.com");
+$C2->setLogin("cliente2");
+$C2->setSenha("12345");
+$C2->setDataCriacao(new DateTime());
+
+$em->persist($C2);
+$em->flush();
+
+
+/**
+ * Cria os atendimentos
+ */
+$TipoA1 = new TipoAtendimento();
+$TipoA1->setNome("Solicitação");
+
+$TipoA2 = new TipoAtendimento();
+$TipoA2->setNome("Sugestão");
+
+$TipoA3 = new TipoAtendimento();
+$TipoA3->setNome("Elogio");
+
+$em->persist($TipoA1);
+$em->persist($TipoA2);
+$em->persist($TipoA3);
+$em->flush();
+
+
+$AT = new Atendimento();
+$AT->setEmpresa($E);
+$AT->setCliente($C);
+$AT->setArea($A);
+$AT->setAtendente($U);
+$AT->setCriadoPor($U->getNome());
+$AT->setStatus($Status1);
+$AT->setTipo($TipoA1);
+$AT->setDataCriacao(new DateTime());
+$AT->setTitulo("Cliente gostaria de receber 2ª via do boleto");
+$AT->setDescricao("O cliente gostaria de receber a 2ª via por e-mail");
+
+$em->persist($AT);
+$em->flush();
+
+echo $AT->getEmpresa()->getNomeFantasia()."<br/>";

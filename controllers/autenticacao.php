@@ -48,7 +48,7 @@ $app->post('/autenticar', function() use($app){
             $app->redirectTo('home');
         }
         else {
-            $app->redirectTo('login_empresa', array('permalink' => $empresa->getPermalink()));
+            $app->redirectTo('consultar_atendimento');
         }
     }
     else {
