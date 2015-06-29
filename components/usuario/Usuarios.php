@@ -59,6 +59,8 @@ class Usuarios {
             $dql .= " AND u.nome LIKE :nome ";
             $pDql['nome'] = $params['nome'];
         }
+        
+        $dql .= " ORDER BY u.nome ";
 
         $inicio = ($params['pagina'] - 1) * $params['qtdPorPagina'];
 

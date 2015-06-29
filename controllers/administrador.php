@@ -355,10 +355,19 @@ $app->get('/admin/areas/:id', function($id) use($app){
         'id'        => $id
     ));
     
+    $Usuarios = new Usuarios();
+    $usuarios = $Usuarios->getLista(array(
+        'usuario'       => $u->getUsuario(),
+        'area'          => $id,
+        'pagina'        => 1,
+        'qtdPorPagina'  => 100
+    ));
+    
     $app->render('areas/ver.html.twig', array(
         'menuPrincipal' => 'cadastro_area',
         'area'          => $area,
-        'user'          => $u
+        'user'          => $u,
+        'usuarios'      => $usuarios['registros']
     ));
 })
 ->name('ver_area');

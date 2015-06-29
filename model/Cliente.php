@@ -279,10 +279,12 @@ class Cliente implements RoleInterface {
     }
 
     function setCnpj($cnpj) {
+        $cnpj = preg_replace("/[^0-9]/", "", $cnpj);
         $this->cnpj = $cnpj;
     }
 
     function setCpf($cpf) {
+        $cpf = preg_replace("/[^0-9]/", "", $cpf);
         $this->cpf = $cpf;
     }
 

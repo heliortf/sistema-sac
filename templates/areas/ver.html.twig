@@ -35,10 +35,51 @@
                                 <label for="nome" class="col-sm-2 control-label">Nome:</label>                                
                                 <div class="col-sm-5">
                                     <p class="form-control-static">{{ area.getNome() }}</p>
-                                </div>
-                            </div>							                            
+                                </div>                                
+                            </div>	
+                            <div class="row">
+                                
+                            </div>
                         </div>
                     </div><!-- /.box-body -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div role="tabpanel">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">                                    
+                                    <li role="presentation" class="active"><a href="#usuarios" aria-controls="dashboard-empresa" role="tab" data-toggle="tab"><i class="fa fa-users"></i> Usu&aacute;rios</a></li>                                                                        
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="usuarios">
+                                        <div class="row">
+                                            <div class="col-md-10 col-md-offset-1">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>                                                            
+                                                            <th>Nome</th>
+                                                            <th>Cargo</th>
+                                                            <th>&Aacute;rea</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for u in usuarios %}
+                                                        <tr>
+                                                            <td>{{ u.getNome() }}</td>
+                                                            <td>{{ u.getCargo().getLabel() }}</td>
+                                                            <td>{{ u.getArea().getNome() }}</td>                                                            
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="box-footer">
                         <div class="row">
                             <div class="col-sm-5 pull-right text-right">
