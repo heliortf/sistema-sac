@@ -53,7 +53,7 @@ $app->post('/atendimentos/salvar', function() use($app) {
         $cliente = $C->getCliente(array(
             'id'        => $app->request->post('cliente'),
             'usuario'   => $u->getUsuario()
-        ));
+        ));        
     }
     else {
         $cliente = $u->getUsuario();

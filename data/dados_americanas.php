@@ -107,3 +107,26 @@ $U3->setTelefone(27685432);
 
 $em->persist($U3);
 $em->flush();
+
+
+$Status1 = new StatusAtendimento();
+$Status1->setEmpresa($E);
+$Status1->setNome(StatusAtendimento::STATUS_ABERTO);
+
+$Status2 = new StatusAtendimento();
+$Status2->setEmpresa($E);
+$Status2->setNome(StatusAtendimento::STATUS_ANALISE_AREA);
+
+$Status3 = new StatusAtendimento();
+$Status3->setEmpresa($E);
+$Status3->setNome(StatusAtendimento::STATUS_CONCLUIDO_NAO_AVALIADO);
+
+$Status4 = new StatusAtendimento();
+$Status4->setEmpresa($E);
+$Status4->setNome(StatusAtendimento::STATUS_CONCLUIDO_E_AVALIADO);
+
+$em->persist($Status1);
+$em->persist($Status2);
+$em->persist($Status3);
+$em->persist($Status4);
+$em->flush();

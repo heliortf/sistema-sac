@@ -23,7 +23,8 @@ class Clientes {
             'empresa' => $u->getEmpresa()->getId(),
             'id' => $params['id']
         ))->getResult();
-
+        
+        echo "Qtd = ".count($clientes);
         if (count($clientes) == 1) {
             return $clientes[0];
         } else {
