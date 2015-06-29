@@ -21,13 +21,44 @@
                             </div>                                                        
                         </div>
                     </div>
-                    <div class="box-body">
+                    <div class="box-body">                        
                         <div class="row">
-                            <div class="col-md-10 col-md-offset-1 filtro-consultar-atendimento">
-                                
+                            <div class="col-md-10 col-md-offset-1 lista-relatorios">
+                                <div class="row">                                    
+                                    <div class="col-md-4">
+                                        <div class="col-md-10 col-md-offset-1 panel panel-default opcao">
+                                            <a href="{{ urlFor('relatorio_avaliacao_funcionarios') }}">
+                                                <div class="panel-body">
+                                                    <i class="fa fa-users"></i>
+                                                    <span class="texto">Relat&oacute;rio de Avalia&ccedil;&atilde;o de Funcion&aacute;rios</span>
+                                                </div>                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col-md-10 col-md-offset-1 panel panel-default opcao">
+                                            <a href="{{ urlFor('relatorio_satisfacao_clientes') }}">
+                                                <div class="panel-body">
+                                                    <i class="fa fa-male"></i>
+                                                    <span class="texto">Relat&oacute;rio de Satisfa&ccedil;&atilde;o de Clientes</span>
+                                                </div>                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col-md-10 col-md-offset-1 panel panel-default opcao">
+                                            <a href="{{ urlFor('dados_empresa') }}">
+                                                <div class="panel-body">
+                                                    <i class="fa fa-check"></i>
+                                                    <span class="texto">Relat&oacute;rio de Atendimentos Resolvidos</span>
+                                                </div>                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div><!-- /.box-body -->                    
+                    </div><!-- /.box-body -->                
                 </div>
             </div>
         </div>   <!-- /.row -->

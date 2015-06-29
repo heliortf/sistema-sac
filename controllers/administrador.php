@@ -44,6 +44,48 @@ $app->get('/admin/relatorios', function() use($app){
 ->name('relatorios_gerenciais_admin');
 
 /**
+ * Tela de consulta de atendimentos
+ */
+$app->get('/admin/relatorios/avaliacao-funcionarios', function() use($app){    
+    
+    $user = WebUser::getInstance();
+        
+//    echo "<pre>"; print_r($atendimentos); echo "</pre>";
+    
+    $app->render('relatorios/avaliacao_funcionarios.html.twig', array(
+        'menuPrincipal' => 'relatorios_gerenciais',
+        'user' => $user,
+        'paginacao' => array(
+            'inicio' => 0,
+            'fim' => 3,
+            'qtdRegistros' => 3
+        )
+    ));
+})
+->name('relatorio_avaliacao_funcionarios');
+
+/**
+ * Tela de consulta de atendimentos
+ */
+$app->get('/admin/relatorios/satisfacao-clientes', function() use($app){    
+    
+    $user = WebUser::getInstance();
+        
+//    echo "<pre>"; print_r($atendimentos); echo "</pre>";
+    
+    $app->render('relatorios/satisfacao_clientes.html.twig', array(
+        'menuPrincipal' => 'relatorios_gerenciais',
+        'user' => $user,
+        'paginacao' => array(
+            'inicio' => 0,
+            'fim' => 3,
+            'qtdRegistros' => 3
+        )
+    ));
+})
+->name('relatorio_satisfacao_clientes');
+
+/**
  * Tela de novo usuario
  */
 $app->get('/admin/usuarios/novo', function() use($app){    
@@ -507,6 +549,43 @@ $app->get('/admin/clientes/importar', function() use($app){
     ));
 })
 ->name('importar_clientes');
+
+$app->get('/admin/clientes/confirmar-importacao', function() use($app){    
+
+    $u = WebUser::getInstance();    
+	
+    $app->render('clientes/confirmar-importacao.html.twig', array(
+        'menuPrincipal' => 'cadastro_cliente',        
+        'user'          => $u
+    ));
+})
+->name('confirmar_importacao_clientes');
+
+
+
+$app->get('/admin/clientes/sucesso-importacao', function() use($app){    
+
+    $u = WebUser::getInstance();    
+	
+    $app->render('clientes/importacao-sucesso.html.twig', array(
+        'menuPrincipal' => 'cadastro_cliente',        
+        'user'          => $u
+    ));
+})
+->name('sucesso_importacao_clientes');
+
+
+$app->get('/admin/clientes/erro-importacao', function() use($app){    
+
+    $u = WebUser::getInstance();    
+	
+    $app->render('clientes/importacao-erro.html.twig', array(
+        'menuPrincipal' => 'cadastro_cliente',        
+        'user'          => $u
+    ));
+})
+->name('erro_importacao_clientes');
+
 
 
 $app->post('/admin/clientes/atualizar', function() use($app){    
