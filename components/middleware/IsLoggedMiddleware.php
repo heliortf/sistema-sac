@@ -40,7 +40,9 @@ class IsLoggedMiddleware extends \Slim\Middleware {
             $Usuario = WebUser::getInstance();
             
             if($Usuario->isLogado() == false){
-                $this->app->redirectTo('logout');
+                if($this->app->router->getCurrentRoute()->getName() != 'login_empresa'){
+                    $this->app->redirectTo('logout');
+                }
             }
         }
     }

@@ -21,7 +21,7 @@ $app->post('/autenticar', function() use($app){
         $empresa = $E->getAdmin();
     }
     else {
-        $empresa = null;
+        $empresa = $E->getEmpresa(array('id' => $app->request->post('empresa')));
     }
     
     $a = new Autenticacao();
@@ -36,7 +36,7 @@ $app->post('/autenticar', function() use($app){
     if($usuario instanceof Usuario){
         $_SESSION['usuario'] = $usuario->getId();
         $_SESSION['tipo_usuario'] = 'usuario';
-        $app->flash('sucesso', 'Bem vindo, '.$usuario->getNome());
+        $app->flash('sucesso', 'Bem vindo, '.$usuario->getNome());        
         $app->redirectTo('home');
     }
     // Se logar como cliente
@@ -44,11 +44,22 @@ $app->post('/autenticar', function() use($app){
         $_SESSION['usuario'] = $usuario->getId();
         $_SESSION['tipo_usuario'] = 'cliente';
         $app->flash('sucesso', 'Bem vindo, '.$usuario->getNome());
-        $app->redirectTo('home');
+        if($empresa->isAdmin()){
+            $app->redirectTo('home');
+        }
+        else {
+            $app->redirectTo('login_empresa', array('permalink' => $empresa->getPermalink()));
+        }
     }
     else {
-            $app->flash('erro', "Usuário e/ou senha inválidos");
+        $app->flash('erro', "Usuário e/ou senha inválidos");
+        
+        if($empresa->isAdmin()){
             $app->redirectTo('home');
+        }
+        else {
+            $app->redirectTo('login_empresa', array('permalink' => $empresa->getPermalink()));
+        }
     }
 })
 ->name('autenticar');
@@ -58,8 +69,15 @@ $app->post('/autenticar', function() use($app){
  * Realiza o processo de saída do sistema
  */
 $app->get('/logout', function() use($app){
+    $u = WebUser::getInstance();
     session_destroy();    
-    $app->redirectTo('home');
+    
+    if($u->getUsuario()->getEmpresa()->isAdmin()){        
+        $app->redirectTo('home');
+    }
+    else {
+        $app->redirectTo('login_empresa', array('permalink' => $u->getUsuario()->getEmpresa()->getPermalink() ));
+    }
 })
 ->name('logout');
 

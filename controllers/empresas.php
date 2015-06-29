@@ -7,10 +7,10 @@ $app->get('/:permalink', function($permalink) use($app){
         'permalink'     => $permalink,
         'pagina'        => 1,
         'qtdPorPagina'  => 1
-    ));
+    ));        
     
     $app->render('empresas/login.html.twig', array(
-        'empresa' => $Empresa
+        'empresa' => $Empresa['registros'][0]
     ));
 })
 ->name('login_empresa');
@@ -118,7 +118,7 @@ $app->post('/admin/empresas/atualizar', function() use($app){
             $arquivo = Config::$uploadPath.$app->request->post('nome_arquivo');
             if(file_exists($arquivo)){                                
                 $Empresa->setLogo($app->request->post('nome_arquivo'));                
-            }        
+            }
         }
         
         $E->salvar($Empresa);        

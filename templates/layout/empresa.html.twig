@@ -14,8 +14,7 @@
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.4-dist/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.4-dist/css/bootstrap-theme.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css" />        
-        <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />    
+        <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css" />                
         <link rel="stylesheet" type="text/css" href="css/empresa.css" />
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -27,30 +26,18 @@
     </head>
     <body>
         <div class="container">
-            <form class="form form-horizontal form-login" method="post" action="{{ urlFor('autenticar') }}">        
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Entrar no sistema</h4>
-                        </div>
-                        <div class="modal-body">          
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Login:</label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="login" class="form-control" id="login" value="" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Senha:</label>
-                                <div class="col-sm-9">
-                                    <input type="password" name="senha" class="form-control" id="senha" value="" />
-                                </div>
-                            </div>                  
-                        </div>
-                        <div class="modal-footer">        
-                            <button type="submit" class="btn btn-primary">Entrar</button>
-                        </div>
-                    </form>
-        </div>
-    </body>
-
+        {% block conteudo %}{% endblock %}
+    </div>
+    <script type="text/javascript" src="js/lib/jquery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="css/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            setTimeout(function () {
+                jQuery(".alert").fadeOut();
+            }, 2500);
+        });
+    </script>
+    {% include "layout/flash.html.twig" %}
+    {% include "layout/aguarde.html.twig" %}
+</body>
 </html>

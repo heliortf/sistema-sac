@@ -1,0 +1,36 @@
+{% extends "layout/empresa.html.twig" %}
+{% block conteudo %}
+    <div class="row login-empresa">
+        <div class="col-md-6 col-md-offset-3">            
+            <form class="form form-horizontal form-login" method="post" action="{{ urlFor('autenticar') }}">        
+                <input type="hidden" name="empresa" value="{{ empresa.getId() }}" />
+                <div class="modal-header">                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <img src="files/{{ empresa.getLogo() }}" class="img-responsive" />
+                            </div>
+                        </div>
+                    </div>            
+                </div>
+                <div class="modal-body">          
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Login:</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="login" class="form-control" id="login" value="" placeholder="Login" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Senha:</label>
+                        <div class="col-sm-9">
+                            <input type="password" name="senha" class="form-control" id="senha" value="" placeholder="Senha" />
+                        </div>
+                    </div>                  
+                </div>
+                <div class="modal-footer">        
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
