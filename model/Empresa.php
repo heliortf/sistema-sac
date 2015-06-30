@@ -378,7 +378,7 @@ class Empresa {
     }
 
     function setAdmin($admin) {
-        $this->admin = $admin;
+        $this->admin = (boolean) $admin;
     }
 
     function getSolicitacoes() {

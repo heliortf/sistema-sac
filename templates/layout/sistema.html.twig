@@ -69,7 +69,7 @@
                                 </li>                                
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
-                                    {% if user.isCliente() == false %}
+                                    {% if user.isCliente() == false and user.getUsuario().isAdministrador() == true %}
                                         <div class="pull-left">
                                             <a href="{{ urlFor('configuracoes') }}" class="btn btn-default btn-flat">Configura&ccedil;&otilde;es</a>
                                         </div>
