@@ -5,6 +5,8 @@ session_start();
 require_once("vendor/autoload.php");
 require_once("config/autoload.php");
 
+date_default_timezone_set('America/Sao_Paulo');
+
 global $app;
 
 $app = new \Slim\Slim(array(
