@@ -12,6 +12,7 @@
         "doctrine/orm"                          : "2.4.*@dev",
         "symfony/class-loader"                  : "^2.7", 
         "zendframework/zend-permissions-acl"    : "dev-master",
-        "abeautifulsite/simpleimage"            : "2.5.5"
+        "abeautifulsite/simpleimage"            : "2.5.5",
+        "phpmailer/phpmailer"                   : "v5.2.10"
     }
 }

@@ -20,10 +20,22 @@ class Config {
     );
     
     public static $uploadPath = '';
+    
+    /**
+     * Caminho do template do e-mail
+     * 
+     * @var string
+     */
+    public static $emailTemplatePath = '';
 }
 
 /**
  * Caminho de uploads
  */
 Config::$uploadPath = dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR;
+
+/**
+ * Caminho do template de e-mail
+ */
+Config::$emailTemplatePath = dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'emailtemplate'.DIRECTORY_SEPARATOR.'notificacao-atendimento.html';
 
