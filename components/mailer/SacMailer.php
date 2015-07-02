@@ -57,7 +57,15 @@ class SacMailer {
         return $this->mailer->send();
     }
     
-    public function enviarEmailTemplate($params=array()){
+    /**
+     * Envia um e-mail a partir do template original da effort
+     * 
+     * @param array $params
+     *          string $url_logotipo
+     *          string $mensagem
+     *          string $subject
+     */
+    private function enviarEmailTemplate($params=array()){
         
         $template = file_get_contents(Config::$emailTemplatePath);
         
@@ -82,6 +90,7 @@ class SacMailer {
      * @param array $params
      *          Cliente $cliente
      *          Atendimento $atendimento
+     *          string $url_logotipo
      */
     public function enviarEmailInicioAtendimento($params=array()){
         
@@ -96,8 +105,9 @@ class SacMailer {
         $s .= '<b>SAC - '.$this->empresa->getNomeFantasia().'</b>';
         
         $this->enviarEmailTemplate(array(
-            'subject'   => "Atendimento registrado",
-            'mensagem'  => $s
+            'subject'       => "Atendimento registrado",
+            'mensagem'      => $s,
+            'url_logotipo'  => $params['url_logotipo']
         ));
     }
 }
