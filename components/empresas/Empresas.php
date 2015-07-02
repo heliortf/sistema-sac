@@ -25,6 +25,7 @@ class Empresas {
      * Retorna uma empresa a partir de determinados parametros
      * 
      * @param array $params
+     * @return Empresa
      */
     public function getEmpresa($params=array()){
         $em = Conexao::getEntityManager();
