@@ -11,8 +11,8 @@
         "slim/twig-view"                        : "dev-master",
         "doctrine/orm"                          : "2.4.*@dev",
         "symfony/class-loader"                  : "^2.7", 
-        "zendframework/zend-permissions-acl"    : "dev-master",
-        "abeautifulsite/simpleimage"            : "2.5.5",
-        "phpmailer/phpmailer"                   : "v5.2.10"
+        "zendframework/zend-permissions-acl"    : "dev-master",        
+        "phpmailer/phpmailer"                   : "v5.2.10",
+        "parsecsv/php-parsecsv"                 : "0.4.5"
     }
 }

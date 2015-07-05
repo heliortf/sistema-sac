@@ -212,6 +212,7 @@ $app->post('/admin/usuarios/atualizar', function() use($app){
 })
 ->name('atualizar_usuario');
 
+
 $app->get('/admin/usuarios/:id/editar', function($id) use($app){    
 
     $u = WebUser::getInstance();
@@ -243,6 +244,7 @@ $app->get('/admin/usuarios/:id/editar', function($id) use($app){
     ));
 })
 ->name('editar_usuario');
+
 
 $app->get('/admin/usuarios/:id', function($id) use($app){    
 
@@ -307,6 +309,7 @@ $app->get('/admin/usuarios(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina=
 })
 ->name('lista_usuarios');
 
+
 /**
  * Tela de nova area
  */
@@ -319,6 +322,7 @@ $app->get('/admin/areas/nova', function() use($app){
     ));
 })
 ->name('nova_area');
+
 
 $app->post('/admin/areas/salvar', function() use($app){    
 
@@ -339,6 +343,7 @@ $app->post('/admin/areas/salvar', function() use($app){
     ));
 })
 ->name('salvar_area');
+
 
 $app->post('/admin/areas/atualizar', function() use($app){    
 
@@ -367,6 +372,7 @@ $app->post('/admin/areas/atualizar', function() use($app){
 })
 ->name('atualizar_area');
 
+
 $app->get('/admin/areas/:id/editar', function($id) use($app){    
 
     $u = WebUser::getInstance();
@@ -385,6 +391,7 @@ $app->get('/admin/areas/:id/editar', function($id) use($app){
     ));
 })
 ->name('editar_area');
+
 
 $app->get('/admin/areas/:id', function($id) use($app){    
 
@@ -413,6 +420,7 @@ $app->get('/admin/areas/:id', function($id) use($app){
     ));
 })
 ->name('ver_area');
+
 
 /**
 * Listagem de áreas
@@ -458,6 +466,7 @@ $app->get('/admin/areas(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina=1, 
 })
 ->name('lista_areas');
 
+
 /**
  * Tela de nova cliente
  */
@@ -473,6 +482,7 @@ $app->get('/admin/clientes/novo', function() use($app){
     ));
 })
 ->name('novo_cliente');
+
 
 $app->post('/admin/clientes/salvar', function() use($app){    
 
@@ -509,6 +519,7 @@ $app->post('/admin/clientes/salvar', function() use($app){
     ));
 })
 ->name('salvar_cliente');
+
 
 $app->post('/admin/clientes/excluir', function() use($app){    
 
@@ -550,14 +561,31 @@ $app->get('/admin/clientes/importar', function() use($app){
 })
 ->name('importar_clientes');
 
-$app->get('/admin/clientes/confirmar-importacao', function() use($app){    
+$app->post('/admin/clientes/confirmar-importacao', function() use($app){    
 
-    $u = WebUser::getInstance();    
-	
-    $app->render('clientes/confirmar-importacao.html.twig', array(
-        'menuPrincipal' => 'cadastro_cliente',        
-        'user'          => $u
-    ));
+    if(!empty($_FILES['files']['name'])){        
+        $arquivo_csv = Config::$uploadCSVPath.'csv_'.rand(100000, 999999).'.csv';
+        $moveu = move_uploaded_file($_FILES['files']['tmp_name'], $arquivo_csv);
+
+        $csv = new parseCSV();
+        
+        if($moveu){        
+            $u = WebUser::getInstance();    
+
+            $app->render('clientes/confirmar-importacao.html.twig', array(
+                'menuPrincipal' => 'cadastro_cliente',        
+                'user'          => $u
+            ));
+        }
+        else {
+            $app->flash('erro', 'Não foi possível enviar o arquivo CSV');
+            $app->redirectTo('importar_clientes');
+        }
+    }
+    else {
+        $app->flash('erro', 'Escolha um arquivo CSV');
+        $app->redirectTo('importar_clientes');
+    }
 })
 ->name('confirmar_importacao_clientes');
 

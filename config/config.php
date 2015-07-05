@@ -21,6 +21,8 @@ class Config {
     
     public static $uploadPath = '';
     
+    public static $uploadCSVPath = '';
+    
     /**
      * Caminho do template do e-mail
      * 
@@ -33,6 +35,11 @@ class Config {
  * Caminho de uploads
  */
 Config::$uploadPath = dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR;
+
+/**
+ * Caminho de uploads
+ */
+Config::$uploadCSVPath = dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR;
 
 /**
  * Caminho do template de e-mail
