@@ -21,7 +21,8 @@ $classes = array(
     $em->getClassMetadata('StatusAtendimento'),
     $em->getClassMetadata('TipoAtendimento'),
     $em->getClassMetadata('Atendimento'),
-	$em->getClassMetadata('ComentarioAtendimento'),	
+    $em->getClassMetadata('ComentarioAtendimento'),	
+    $em->getClassMetadata('DocumentoCliente')
 );
 $tool->dropSchema($classes);
 $tool->createSchema($classes);

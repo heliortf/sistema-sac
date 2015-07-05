@@ -75,8 +75,16 @@ class Empresa {
      *
      * @var ArrayCollection
      * @OneToMany(targetEntity="Atendimento", mappedBy="clienteEmpresarial", fetch="LAZY")
+     * /
+    private $solicitacoes;*/
+    
+    /**
+     *
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="DocumentoCliente", mappedBy="empresa", fetch="LAZY")
      */
-    private $solicitacoes;
+    private $documentos;
+    
     
     /**
      * Construtor
@@ -90,6 +98,7 @@ class Empresa {
         $this->listaTipoAtendimento     = new ArrayCollection();
         $this->atendimentos             = new ArrayCollection();
         $this->solicitacoes             = new ArrayCollection();
+        $this->documentos               = new ArrayCollection();
         $this->setAdmin(false);
     }
     

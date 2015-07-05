@@ -41,8 +41,8 @@ class Atendimento implements ResourceInterface {
      * @var Empresa
      * @ManyToOne(targetEntity="Empresa", inversedBy="solicitacoes")
      * @JoinColumn(name="tb_empresa_cliente_empresarial_id", referencedColumnName="empresa_id", nullable=true)
-     */
-    private $clienteEmpresarial;
+     * /
+    private $clienteEmpresarial;*/
 
     /**
      * Area onde o atendimento está
@@ -309,19 +309,19 @@ class Atendimento implements ResourceInterface {
      * Retorna o "Cliente-Empresa" da effort
      * 
      * @return Empresa
-     */
+     * /
     function getClienteEmpresarial() {
         return $this->clienteEmpresarial;
-    }
+    }*/
 
     /**
      * Define o "Cliente-Empresa". Utilizado somente pela Effort
      * 
      * @param Empresa $clienteEmpresarial
-     */
+     * /
     function setClienteEmpresarial(Empresa $clienteEmpresarial) {
         $this->clienteEmpresarial = $clienteEmpresarial;
-    }
+    }*/
 
 
 }
