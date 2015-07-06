@@ -590,7 +590,11 @@ $app->post('/admin/clientes/confirmar-importacao', function() use($app){
         );
         
         $camposCombinaveis = array(
-            'nome', 'endereco', 'login', 'senha'
+            'nome', 'endereco'
+        );
+        
+        $camposObrigatorios = array(
+            'nome'
         );
         
         if($moveu){        
@@ -600,6 +604,7 @@ $app->post('/admin/clientes/confirmar-importacao', function() use($app){
                 'camposCSV'         => $camposCSV,
                 'camposImportacao'  => $camposImportacao,
                 'camposCombinaveis' => $camposCombinaveis,
+                'camposObrigatorios'    => $camposObrigatorios,
                 'menuPrincipal'     => 'cadastro_cliente',        
                 'user'              => $u
             ));

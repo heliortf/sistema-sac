@@ -30,7 +30,7 @@
                             <span id="helpBlock" class="help-block">O CSV foi lido com sucesso. Escolha como os campos serão importados</span><br/>
                             {% for campo,label in camposImportacao %}
                                 <div class="form-group">
-                                    <label class="col-sm-1">{{ label }}:</label>
+                                    <label class="col-sm-1">{{ label }}{% if campo in camposObrigatorios %}<i class="text-warning">*</i>{% endif %}:</label>
                                     <div class="col-sm-3">
                                         <select name="{{ campo }}[]" class="form-control campo-importacao">
                                             <option value="">-- Selecione --</option>
