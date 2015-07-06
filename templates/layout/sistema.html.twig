@@ -142,6 +142,7 @@
         setTimeout(function () {
             jQuery(".alert:not(.nao-some)").fadeOut();
         }, 2500);
+        jQuery('[data-toggle="popover"]').popover();
     });
 </script>
 {% include "layout/flash.html.twig" %}

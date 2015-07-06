@@ -28,94 +28,34 @@
                     <div class="box-body">
                         <form class="form form-horizontal" method="post" action="">
                             <span id="helpBlock" class="help-block">O CSV foi lido com sucesso. Escolha como os campos serão importados</span><br/>
-                            <div class="form-group">
-                                <label class="col-sm-2">Nome:</label>
-                                <div class="col-sm-3">
-                                    <select name="nome" class="form-control">
-                                        <option value="">Campo CSV: nome</option>
-                                    </select>
+                            {% for campo,label in camposImportacao %}
+                                <div class="form-group">
+                                    <label class="col-sm-1">{{ label }}:</label>
+                                    <div class="col-sm-3">
+                                        <select name="{{ campo }}[]" class="form-control campo-importacao">
+                                            <option value="">-- Selecione --</option>
+                                            {% for campoCSV in camposCSV %}
+                                                <option value="{{ campoCSV }}">Campo CSV: {{ campoCSV }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    {% if camposCSV|length > 1 and campo in camposCombinaveis %}
+                                        <div class="col-sm-1 hidden">
+                                            <div class="row">
+                                                <button type="button" name="btn_remove" class="btn btn-danger botao-remover hidden">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                                <button type="button" name="btn_add" class="btn btn-primary botao-combinar" 
+                                                        data-container="body" 
+                                                        data-toggle="popover" 
+                                                        data-placement="right"
+                                                        data-content="Se precisar, combine com outros campos do CSV"
+                                                        ><i class="fa fa-wrench"></i></button>
+                                            </div>
+                                        </div>
+                                    {% endif %}
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2">CPF:</label>
-                                <div class="col-sm-3">
-                                    <select name="nome" class="form-control">
-                                        <option value="">Campo CSV: cpf</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2">CNPJ:</label>
-                                <div class="col-sm-3">
-                                    <select name="nome" class="form-control">
-                                        <option value="">Campo CSV: cnpj</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2">Endere&ccedil;o:</label>
-                                <div class="col-sm-3">
-                                    <select name="nome" class="form-control">
-                                        <option value="">Campo CSV: Rua</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2">Bairro:</label>
-                                <div class="col-sm-3">
-                                    <select name="nome" class="form-control">
-                                        <option value="">Campo CSV: bairro</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2">Cidade:</label>
-                                <div class="col-sm-3">
-                                    <select name="nome" class="form-control">
-                                        <option value="">Campo CSV: cidade</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2">Estado:</label>
-                                <div class="col-sm-3">
-                                    <select name="nome" class="form-control">
-                                        <option value="">Campo CSV: UF</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2">CEP:</label>
-                                <div class="col-sm-3">
-                                    <select name="nome" class="form-control">
-                                        <option value="">-- Nenhum --</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2">E-mail:</label>
-                                <div class="col-sm-3">
-                                    <select name="nome" class="form-control">
-                                        <option value="">-- Nenhum --</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2">Login:</label>
-                                <div class="col-sm-3">
-                                    <select name="nome" class="form-control">
-                                        <option value="">-- Nenhum --</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2">Senha:</label>
-                                <div class="col-sm-3">
-                                    <select name="nome" class="form-control">
-                                        <option value="">-- Nenhum --</option>
-                                    </select>
-                                </div>
-                            </div>
+                            {% endfor %}                            
                         </form>
                     </div><!-- /.box-body -->
                     <div class="box-footer clearfix">
@@ -134,9 +74,53 @@
 {% block scripts %}
     <script type="text/javascript">
         $(document).ready(function(){
-            $("select[name=qtd_por_pagina]").on("change", function(){
-                jQuery("form input[name='p[qtdPorPagina]']:hidden").val(jQuery(this).val());
-                jQuery("form").submit();
+            $(".campo-importacao").mouseover(function(){
+                var divBotao = $(this).parent("div").next("div");
+                if(!$(divBotao).hasClass('hidden')){
+                    divBotao.find("button").popover('show');
+                }
+            })
+            .mouseout(function(){
+                var divBotao = $(this).parent("div").next("div");
+                if(!$(divBotao).hasClass('hidden')){
+                    divBotao.find("button").popover('hide');
+                }
+            })
+            .change(function(){
+                var divBotao = $(this).parent("div").next("div");
+                if($(this).val() == ""){
+                    divBotao.addClass("hidden");
+                }
+                else {
+                    divBotao.removeClass("hidden");
+                }
+            });         
+            
+            $(".botao-combinar").click(function(){                
+                var divSelect = $(this).parent("div").parent("div").prev("div");                
+                divSelect.after(divSelect.clone());
+                $(this).popover('hide');
+                $(this).siblings(".botao-remover").removeClass("hidden");
+                
+                var divLinha = $(this).parent("div").parent("div").parent("div.form-group");
+                var qtdSelects = divLinha.find("select").length;
+                
+                if(qtdSelects == 3){
+                    $(this).addClass("hidden");
+                }
+            });
+            
+            $(".botao-remover").click(function(){
+                var divLinha = $(this).parent("div").parent("div").parent("div.form-group");
+                var qtdSelects = divLinha.find("select").length;
+                
+                if(qtdSelects > 1){
+                    $(this).parent("div").parent("div").prev("div").remove();
+                    if(qtdSelects == 2){
+                        $(this).addClass("hidden");
+                    }
+                }
+                divLinha.find(".botao-combinar").removeClass("hidden");
             });
         });
     </script>

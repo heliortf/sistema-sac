@@ -568,13 +568,40 @@ $app->post('/admin/clientes/confirmar-importacao', function() use($app){
         $moveu = move_uploaded_file($_FILES['files']['tmp_name'], $arquivo_csv);
 
         $csv = new parseCSV();
+        $csv->delimiter = ",";
+        $csv->input_encoding = "UTF-8";        
+        $csv->parse($arquivo_csv);
+        
+        @unlink($arquivo_csv);
+        
+        $camposCSV = $csv->titles;
+        $camposImportacao = array(
+            'nome'      => 'Nome',
+            'cpf'       => 'CPF',
+            'cnpj'      => 'CNPJ',
+            'endereco'  => 'Endereço',
+            'bairro'    => 'Bairro',
+            'cidade'    => 'Cidade',
+            'estado'    => 'Estado',
+            'cep'       => 'CEP',
+            'email'     => 'E-mail',
+            'login'     => 'Login',
+            'senha'     => 'Senha'
+        );
+        
+        $camposCombinaveis = array(
+            'nome', 'endereco', 'login', 'senha'
+        );
         
         if($moveu){        
             $u = WebUser::getInstance();    
 
             $app->render('clientes/confirmar-importacao.html.twig', array(
-                'menuPrincipal' => 'cadastro_cliente',        
-                'user'          => $u
+                'camposCSV'         => $camposCSV,
+                'camposImportacao'  => $camposImportacao,
+                'camposCombinaveis' => $camposCombinaveis,
+                'menuPrincipal'     => 'cadastro_cliente',        
+                'user'              => $u
             ));
         }
         else {
