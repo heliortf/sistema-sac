@@ -338,5 +338,5 @@ class Atendimento implements ResourceInterface {
         $this->clienteEmpresarial = $clienteEmpresarial;
     }*/
 
-
+    
 }
