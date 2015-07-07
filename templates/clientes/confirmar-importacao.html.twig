@@ -20,13 +20,14 @@
                                 <h3 class="box-title">Confirmar Importa&ccedil;&atilde;o CSV</h3>
                             </div>                      
                             <div class="col-sm-6 pull-right text-right">
-                                <button type="button" class="btn btn-primary">Importar</button>
+                                <button type="button" class="btn btn-primary btn-importar">Importar</button>
                                 <button type="button" class="btn btn-default">Voltar</button>
                             </div>
                         </div>
                     </div>
                     <div class="box-body">
-                        <form class="form form-horizontal" method="post" action="">
+                        <form class="form form-horizontal form-confirmar-importacao" method="post" action="">
+                            <input type="hidden" name="arquivo_csv" value="{{ arquivoCSV }}" />
                             <span id="helpBlock" class="help-block">O CSV foi lido com sucesso. Escolha como os campos serão importados</span><br/>
                             {% for campo,label in camposImportacao %}
                                 <div class="form-group">
@@ -61,7 +62,7 @@
                     <div class="box-footer clearfix">
                         <div class="row">
                             <div class="col-sm-6 pull-right text-right">
-                                <button type="button" class="btn btn-primary">Importar</button>
+                                <button type="button" class="btn btn-primary btn-importar">Importar</button>
                                 <button type="button" class="btn btn-default">Voltar</button>
                             </div>
                         </div>
@@ -73,7 +74,28 @@
 {% endblock %}
 {% block scripts %}
     <script type="text/javascript">
+        $("select[name='nome[]']:first").attr('id', 'primeiro_nome');
+        $.validationEngine.defaults.autoHidePrompt = true;
+        
+        function validar(){
+            
+            var primeiroCampoNome = $("select[name='nome[]']:first").val();            
+            
+            if(primeiroCampoNome == ""){
+                $("select[name='nome[]']").validationEngine('showPrompt', '*Campo obrigatório', 'error', 'topRight', true);
+                return false;
+            }
+            
+            return true;
+        }
+        
         $(document).ready(function(){
+            $(".btn-importar").click(function(){
+                if(validar()){
+                    $(".form-confirmar-importacao").submit();
+                }
+            });
+            
             $(".campo-importacao").mouseover(function(){
                 var divBotao = $(this).parent("div").next("div");
                 if(!$(divBotao).hasClass('hidden')){

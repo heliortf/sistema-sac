@@ -572,8 +572,6 @@ $app->post('/admin/clientes/confirmar-importacao', function() use($app){
         $csv->input_encoding = "UTF-8";        
         $csv->parse($arquivo_csv);
         
-        @unlink($arquivo_csv);
-        
         $camposCSV = $csv->titles;
         $camposImportacao = array(
             'nome'      => 'Nome',
@@ -601,6 +599,7 @@ $app->post('/admin/clientes/confirmar-importacao', function() use($app){
             $u = WebUser::getInstance();    
 
             $app->render('clientes/confirmar-importacao.html.twig', array(
+                'arquivoCSV'        => $arquivo_csv,
                 'camposCSV'         => $camposCSV,
                 'camposImportacao'  => $camposImportacao,
                 'camposCombinaveis' => $camposCombinaveis,
@@ -620,6 +619,11 @@ $app->post('/admin/clientes/confirmar-importacao', function() use($app){
     }
 })
 ->name('confirmar_importacao_clientes');
+
+$app->post('/admin/clientes/realizar-importacao', function() use($app){
+    
+})
+->name('realizar_importacao_clientes');
 
 
 
