@@ -23,40 +23,41 @@
                     </div>
                     <div class="box-body">                        
                         <div class="row">
-                            <div class="col-md-10 col-md-offset-1 ver-relatorio">
-                                <div class="row">                                                             
-                                    <table class="table table-bordered" style="margin-top: 30px;">
-                                        <thead>
+                            <div class="col-md-12 ver-relatorio">                                                                                             
+                                <table class="table table-bordered" style="margin-top: 30px;">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>T&iacute;tulo</th>
+                                            <th>Cliente</th>
+                                            <th>Tipo</th>
+                                            <th>Status</th>                                                
+                                            <th>&Aacute;rea</th>
+                                            <th>Nome Funcion&aacute;rio</th>                                                                                                
+                                            <th>Data Cria&ccedil;&atilde;o</th>
+                                            <th>Data Conclus&atilde;o</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for atendimento in atendimentos %}
                                             <tr>
-                                                <th>ID</th>
-                                                <th>T&iacute;tulo</th>
-                                                <th>Cliente</th>
-                                                <th>Tipo</th>
-                                                <th>Status</th>                                                
-                                                <th>&Aacute;rea</th>
-                                                <th>Nome Funcion&aacute;rio</th>                                                                                                
-                                                <th>Data Cria&ccedil;&atilde;o</th>
-                                                <th>Data Conclus&atilde;o</th>
+                                                <td>{{ atendimento.getId() }}</td>
+                                                <td>{{ atendimento.getTitulo() }}</td>                                                    
+                                                <td>{{ atendimento.getCliente().getNome() }}</td>
+                                                <td>{{ atendimento.getTipo().getNome() }}</td>
+                                                <td style="white-space: nowrap;">{{ atendimento.getStatus().getNome() }}</td>                                                    
+                                                <td>{{ atendimento.getArea().getNome() }}</td>
+                                                <td>{{ atendimento.getAtendente().getNome() }}</td>
+                                                <td>{{ atendimento.getDataCriacao().format("d/m/Y") }}</td>
+                                                <td>{{ atendimento.getDataConclusao().format("d/m/Y") }}</td>                                                    
+                                            </tr>                                            
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="9">Nenhum resultado encontrado</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for atendimento in atendimentos %}
-                                                <tr>
-                                                    <td>{{ atendimento.getId() }}</td>
-                                                    <td>{{ atendimento.getTitulo() }}</td>                                                    
-                                                    <td>{{ atendimento.getCliente().getNome() }}</td>
-                                                    <td>{{ atendimento.getTipo().getNome() }}</td>
-                                                    <td>{{ atendimento.getStatus().getNome() }}</td>                                                    
-                                                    <td>{{ atendimento.getArea().getNome() }}</td>
-                                                    <td>{{ atendimento.getAtendente().getNome() }}</td>
-                                                    <td>{{ atendimento.getDataCriacao().format("d/m/Y") }}</td>
-                                                    <td>{{ atendimento.getDataConclusao().format("d/m/Y") }}</td>                                                    
-                                                </tr>                                            
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                    {% include "paginacao/informativo.html.twig" %}
-                                </div>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>                                
                             </div>
                         </div>
                     </div><!-- /.box-body -->                

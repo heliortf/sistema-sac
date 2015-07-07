@@ -46,6 +46,31 @@ $app->get('/admin/relatorios', function() use($app) {
 /**
  * Tela de consulta de atendimentos
  */
+$app->get('/admin/relatorios/atendimentos-resolvidos', function() use($app) {
+
+            $user = WebUser::getInstance();
+            $R = new Relatorios();
+            
+            $atendimentos = $R->getAtendimentosResolvidos(array(
+                'empresa' => $user->getUsuario()->getEmpresa()
+            ));
+
+            $app->render('relatorios/atendimentos_resolvidos.html.twig', array(
+                'menuPrincipal' => 'relatorios_gerenciais',
+                'atendimentos' => $atendimentos,
+                'user' => $user,
+                'paginacao' => array(
+                    'inicio' => 0,
+                    'fim' => 3,
+                    'qtdRegistros' => 3
+                )
+            ));
+        })
+        ->name('relatorio_atendimentos_resolvidos');
+        
+/**
+ * Tela de consulta de atendimentos
+ */
 $app->get('/admin/relatorios/avaliacao-funcionarios', function() use($app) {
 
             $user = WebUser::getInstance();
