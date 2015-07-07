@@ -201,19 +201,19 @@
                                                 <div role="tabpanel" class="tab-pane active" id="avaliar">
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <form method="post" action="{{ urlFor('avaliar_atendimento') }}">
+                                                            <form method="post" action="{{ urlFor('avaliar_atendimento', { atendimentoId : atendimento.getId() }) }}" class="form form-horizontal form-avaliar">
                                                                 <h3>Como voc&ecirc; avalia este atendimento?</h3><br/>
                                                                 <div class="row">
-                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="0" /> P&eacute;ssimo</div>
-                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="1" /> Ruim</div>
-                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="2" /> Regular</div>
-                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="3" /> Bom</div>
-                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="4" /> &Oacute;timo</div>
+                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="0" class="validate[required]"/> P&eacute;ssimo</div>
+                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="1" class="validate[required]"/> Ruim</div>
+                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="2" class="validate[required]"/> Regular</div>
+                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="3" class="validate[required]"/> Bom</div>
+                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="4" class="validate[required]"/> &Oacute;timo</div>
                                                                 </div>
                                                                 
                                                                 <div class="row" style="margin-top: 50px;">
                                                                     <div class="col-md-3">
-                                                                        <button type="button" name="btn-avaliar" class="btn btn-primary">Avaliar</button>
+                                                                        <button type="submit" name="btn-avaliar" class="btn btn-primary">Avaliar</button>
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -239,6 +239,8 @@
         jQuery(document).ready(function () {
             var VA = new VerAtendimento({{ atendimento.getId() }});
             VA.render();
+            
+            jQuery(".form-avaliar").validationEngine()
         });
     </script>
 {% endblock %}

@@ -125,6 +125,13 @@ class Atendimento implements ResourceInterface {
     private $conclusao;
     
     /**
+     *
+     * @var int
+     * @Column(type="integer", name="avaliacao", length=1, nullable=true)
+     */
+    private $avaliacao;
+    
+    /**
      * Data de criação do atendimento
      * 
      * @var string
@@ -295,6 +302,14 @@ class Atendimento implements ResourceInterface {
         $this->conclusao = $conclusao;
     }
 
+    function getAvaliacao() {
+        return $this->avaliacao;
+    }
+
+    function setAvaliacao($avaliacao) {
+        $this->avaliacao = $avaliacao;
+    }
+        
     /**
      * Retorna a ID do atendimento como identificação de recurso
      * para o Zend ACL

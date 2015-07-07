@@ -285,6 +285,37 @@ $app->post('/atendimentos/:atendimentoId/cadastrar-conclusao', function($atendim
 ->name('cadastrar_conclusao_atendimento');
 
 
+$app->post('/atendimentos/:atendimentoId/cadastrar-avaliacao', function($atendimentoId) use($app) {
+    $u = WebUser::getInstance();
+    
+    $A = new Atendimentos();
+
+    // Consulta o atendimento
+    $atendimento = $A->getAtendimento(array(
+        'usuario'   => $u->getUsuario(),
+        'id'        => $atendimentoId
+    ));
+    
+    $status = $A->getStatus(array(
+        'usuario'   => $u->getUsuario(),        
+        'nome'      => StatusAtendimento::STATUS_CONCLUIDO_E_AVALIADO
+    ));
+    
+    // Define a conclusão
+    $atendimento->setStatus($status);
+    $atendimento->setConclusao($app->request->post('conclusao'));
+    $atendimento->setDataAlteracao(new DateTime());
+    $atendimento->setDataConclusao(new DateTime());
+
+    $A->atualizar($atendimento);
+
+    $app->flash('sucesso', 'Atendimento concluído com sucesso!');
+
+    $app->redirectTo('ver_atendimento', array('id' => $atendimentoId));
+})
+->name('avaliar_atendimento');
+
+
 /**
  * Tela de consulta de atendimentos
  */
