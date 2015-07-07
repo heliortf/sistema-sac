@@ -620,19 +620,68 @@ $app->post('/admin/clientes/confirmar-importacao', function() use($app){
 })
 ->name('confirmar_importacao_clientes');
 
+
 $app->post('/admin/clientes/realizar-importacao', function() use($app){
+    echo "<pre>"; print_r($_POST); echo "</pre>";
+    $u = WebUser::getInstance();
     
+    $arquivo = $app->request->post('arquivo_csv');
+    
+    $p = new parseCSV();
+    $p->delimiter = ",";
+    $p->input_encoding = "UTF-8";
+    $p->parse($arquivo);
+    
+    $getValorCSV = function($dados, $campos){
+        $valores = array();
+        foreach($campos as $campoCSV){
+            if(!empty($campoCSV)){
+                $valores[] = $dados[$campoCSV];
+            }
+        }
+        
+        return count($valores) > 0 ? implode(" ", $valores) : "";
+    };
+        
+    $em = Conexao::getEntityManager();
+    
+    foreach($p->data as $cliente){
+        $C = new Cliente();
+        $C->setEmpresa($u->getUsuario()->getEmpresa());
+        $C->setNome($getValorCSV($cliente, $app->request->post('nome')));
+        $C->setEndereco($getValorCSV($cliente, $app->request->post('endereco')));
+        $C->setBairro($getValorCSV($cliente, $app->request->post('bairro')));
+        $C->setCidade($getValorCSV($cliente, $app->request->post('cidade')));
+        $C->setEstado($getValorCSV($cliente, $app->request->post('estado')));
+        $C->setCep($getValorCSV($cliente, $app->request->post('cep')));
+        $C->setCpf($getValorCSV($cliente, $app->request->post('cpf')));
+        $C->setCnpj($getValorCSV($cliente, $app->request->post('cnpj')));
+        $C->setDataCriacao(new DateTime());
+        $C->setEmail($getValorCSV($cliente, $app->request->post('email')));
+        $C->setLogin($getValorCSV($cliente, $app->request->post('login')));
+        $C->setSenha($getValorCSV($cliente, $app->request->post('senha')));
+        
+        $em->persist($C);
+    }
+    
+    $em->flush();    
+    
+    @unlink($arquivo);
+    
+    $app->flash('sucesso', 'Clientes importados com sucesso!');
+    $app->redirectTo('sucesso_importacao_clientes');
 })
 ->name('realizar_importacao_clientes');
 
 
 
-$app->get('/admin/clientes/sucesso-importacao', function() use($app){    
+$app->get('/admin/clientes/sucesso-importacao/:qtd', function($qtd) use($app){    
 
     $u = WebUser::getInstance();    
 	
     $app->render('clientes/importacao-sucesso.html.twig', array(
         'menuPrincipal' => 'cadastro_cliente',        
+        'qtd'           => $qtd,
         'user'          => $u
     ));
 })

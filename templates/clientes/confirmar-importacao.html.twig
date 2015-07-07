@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        <form class="form form-horizontal form-confirmar-importacao" method="post" action="">
+                        <form class="form form-horizontal form-confirmar-importacao" method="post" action="{{ urlFor('realizar_importacao_clientes') }}">
                             <input type="hidden" name="arquivo_csv" value="{{ arquivoCSV }}" />
                             <span id="helpBlock" class="help-block">O CSV foi lido com sucesso. Escolha como os campos serão importados</span><br/>
                             {% for campo,label in camposImportacao %}
