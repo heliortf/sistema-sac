@@ -596,7 +596,6 @@ $app->post('/admin/clientes/confirmar-importacao', function() use($app){
         );
         
         $camposDigitaveis = array(
-            'endereco', 'bairro', 'cidade', 'estado', 'cep', 'senha'
         );
         
         if($moveu){        
