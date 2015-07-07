@@ -595,17 +595,22 @@ $app->post('/admin/clientes/confirmar-importacao', function() use($app){
             'nome'
         );
         
+        $camposDigitaveis = array(
+            'endereco', 'bairro', 'cidade', 'estado', 'cep', 'senha'
+        );
+        
         if($moveu){        
             $u = WebUser::getInstance();    
 
             $app->render('clientes/confirmar-importacao.html.twig', array(
-                'arquivoCSV'        => $arquivo_csv,
-                'camposCSV'         => $camposCSV,
-                'camposImportacao'  => $camposImportacao,
-                'camposCombinaveis' => $camposCombinaveis,
+                'arquivoCSV'            => $arquivo_csv,
+                'camposCSV'             => $camposCSV,
+                'camposImportacao'      => $camposImportacao,
+                'camposCombinaveis'     => $camposCombinaveis,
                 'camposObrigatorios'    => $camposObrigatorios,
-                'menuPrincipal'     => 'cadastro_cliente',        
-                'user'              => $u
+                'camposDigitaveis'      => $camposDigitaveis,
+                'menuPrincipal'         => 'cadastro_cliente',        
+                'user'                  => $u
             ));
         }
         else {

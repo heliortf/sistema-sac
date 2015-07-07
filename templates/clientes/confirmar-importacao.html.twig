@@ -33,12 +33,27 @@
                                 <div class="form-group">
                                     <label class="col-sm-1">{{ label }}{% if campo in camposObrigatorios %}<i class="text-warning">*</i>{% endif %}:</label>
                                     <div class="col-sm-3">
-                                        <select name="{{ campo }}[]" class="form-control campo-importacao">
-                                            <option value="">-- Selecione --</option>
-                                            {% for campoCSV in camposCSV %}
-                                                <option value="{{ campoCSV }}">Campo CSV: {{ campoCSV }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <select name="{{ campo }}[]" class="form-control campo-importacao">
+                                                    <option value="">-- Selecione --</option>
+                                                    {% for campoCSV in camposCSV %}
+                                                        <option value="{{ campoCSV }}">Campo CSV: {{ campoCSV }}</option>
+                                                    {% endfor %}
+                                                    {% if campo in camposDigitaveis %}
+                                                        <option value="digitar">** Digitar **</option>
+                                                    {% endif %}
+                                                </select>                                            
+                                            </div>
+                                        </div>
+                                        <div class="row hidden">
+                                            <div class="col-md-10">
+                                                <input type="text" name="input_{{ campo }}[]" class="form-control campo-importacao" value="" placeholder="Digite aqui" />
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" name="voltar_select" class="btn btn-primary btn-voltar-select"><i class="fa fa-reply"></i></button>
+                                            </div>
+                                        </div>
                                     </div>
                                     {% if camposCSV|length > 1 and campo in camposCombinaveis %}
                                         <div class="col-sm-1 hidden">
@@ -109,12 +124,23 @@
                 }
             })
             .change(function(){
-                var divBotao = $(this).parent("div").next("div");
-                if($(this).val() == ""){
-                    divBotao.addClass("hidden");
-                }
-                else {
-                    divBotao.removeClass("hidden");
+                var divBotao = $(this).parent("div").parent("div").parent("div").next("div");
+                switch($(this).val()){
+                    case "":
+                        divBotao.addClass("hidden");
+                        break;
+                    case "digitar":
+                        var divSelect = $(this).parent("div").parent("div");
+                        var divInput = divSelect.next("div");
+                        var divBotao = divInput.parent("div").next("div");
+                        divInput.removeClass("hidden");
+                        divSelect.addClass("hidden");
+                        divBotao.addClass("hidden");
+                        divSelect.find("select").val("");
+                        break;
+                    default:
+                        divBotao.removeClass("hidden");
+                        break;
                 }
             });         
             
@@ -143,6 +169,15 @@
                     }
                 }
                 divLinha.find(".botao-combinar").removeClass("hidden");
+            });
+            
+            $(".btn-voltar-select").click(function(){
+                var divInput = $(this).parent("div").parent("div");
+                var divSelect = $(this).parent("div").parent("div").prev("div");
+                
+                divInput.addClass("hidden");
+                divSelect.removeClass("hidden");
+                $(this).val("");
             });
         });
     </script>
