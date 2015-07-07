@@ -128,7 +128,8 @@ $app->get('/atendimentos/:id', function($id) use($app) {
     $permissoes = array(
         'atendimento_comentar'      => $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::ATENDIMENTO_COMENTAR),
         'atendimento_encaminhar'    => $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::ATENDIMENTO_ENCAMINHAR),
-        'atendimento_concluir'      => $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::ATENDIMENTO_CONCLUIR)
+        'atendimento_concluir'      => $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::ATENDIMENTO_CONCLUIR),
+        'atendimento_avaliar'       => $ACL->isAllowed($u->getUsuario(), $atendimento, SacACL::ATENDIMENTO_AVALIAR)
     );
     
     $app->render('atendimento/ver.html.twig', array(

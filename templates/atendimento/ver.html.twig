@@ -129,6 +129,9 @@
                                             {% if permissoes.atendimento_concluir == true %}
                                                 <li role="presentation"><a href="#concluir" aria-controls="concluir" role="tab" data-toggle="tab"><i class="fa fa-check-circle-o"></i> Concluir</a></li>
                                             {% endif %}
+                                            {% if permissoes.atendimento_avaliar == true %}
+                                                <li role="presentation" class="active"><a href="#avaliar" aria-controls="avaliar" role="tab" data-toggle="tab"><i class="fa fa-check"></i> Avaliar</a></li>
+                                            {% endif %}
                                         </ul>
 
                                         <!-- Tab panes -->
@@ -192,6 +195,30 @@
                                                             </div>
                                                         </div>
                                                     </form>
+                                                </div>
+                                            {% endif %}
+                                            {% if permissoes.atendimento_avaliar == true %}
+                                                <div role="tabpanel" class="tab-pane active" id="avaliar">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <form method="post" action="{{ urlFor('avaliar_atendimento') }}">
+                                                                <h3>Como voc&ecirc; avalia este atendimento?</h3><br/>
+                                                                <div class="row">
+                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="0" /> P&eacute;ssimo</div>
+                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="1" /> Ruim</div>
+                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="2" /> Regular</div>
+                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="3" /> Bom</div>
+                                                                    <div class="col-md-2"><input type="radio" name="avaliar" value="4" /> &Oacute;timo</div>
+                                                                </div>
+                                                                
+                                                                <div class="row" style="margin-top: 50px;">
+                                                                    <div class="col-md-3">
+                                                                        <button type="button" name="btn-avaliar" class="btn btn-primary">Avaliar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             {% endif %}
                                         </div>

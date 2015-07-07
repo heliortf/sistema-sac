@@ -16,6 +16,7 @@ class SacACL {
     const ATENDIMENTO_COMENTAR      = 'atendimento.comentar';
     const ATENDIMENTO_ENCAMINHAR    = 'atendimento.encaminhar';
     const ATENDIMENTO_CONCLUIR      = 'atendimento.concluir';
+    const ATENDIMENTO_AVALIAR       = 'atendimento.avaliar';
     
     /**
      *
@@ -72,6 +73,7 @@ class SacACL {
         $this->acl->allow(null, null, self::ATENDIMENTO_COMENTAR, new ComentarAtendimentoAssertion());
         $this->acl->allow(null, null, self::ATENDIMENTO_ENCAMINHAR, new EncaminharAtendimentoAssertion());
         $this->acl->allow(null, null, self::ATENDIMENTO_CONCLUIR, new ConcluirAtendimentoAssertion());
+        $this->acl->allow(null, null, self::ATENDIMENTO_AVALIAR, new AvaliarAtendimentoAssertion());
     }
     
     /**
