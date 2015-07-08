@@ -112,7 +112,7 @@ $app->post('/admin/empresas/atualizar', function() use($app){
         $Empresa->setCidade($app->request->post('cidade'));
         $Empresa->setEstado($app->request->post('estado'));        
         $Empresa->setDddTelefone($app->request->post('ddd_telefone'));
-        $Empresa->setTelefone($app->request->post('telefone'));            
+        $Empresa->setTelefone($app->request->post('telefone'));     
         
         if($app->request->post('nome_arquivo') != '' && $app->request->post('mimetype') != ''){            
             $arquivo = Config::$uploadPath.$app->request->post('nome_arquivo');
@@ -122,14 +122,14 @@ $app->post('/admin/empresas/atualizar', function() use($app){
         }
         
         $E->salvar($Empresa);        
-        $app->flash('sucesso', 'Empresa atualizado com sucesso!');
+        $app->flash('sucesso', 'Empresa atualizada com sucesso!');
     
         $app->redirectTo('ver_empresa', array(
             'id' => $Empresa->getId()
         ));
     }
     else {
-        $app->flash('erro', 'Usuário não encontrado');
+        $app->flash('erro', 'Empresa não encontrada');
         
         $app->redirectTo('lista_empresas');
     }
@@ -172,21 +172,12 @@ $app->get('/admin/empresas/:id', function($id) use($app){
     
     $qtdAreas = count($empresa->getAreas());
     
-    $A = new Atendimentos();
-    $atendimentos = $A->getListaAtendimentos(array(
-        'usuario'               => $u->getUsuario(),
-        'clienteEmpresarial'    => $empresa,
-        'pagina'                => 1,
-        'qtdPorPagina'          => 100
-    ));
-    
     $app->render('empresas/ver.html.twig', array(
         'menuPrincipal' => 'cadastro_empresa',
         'empresa'       => $empresa,
         'user'          => $u,
         'tipoUsuarios'  => $tipoUsuarios,
-        'qtdAreas'      => $qtdAreas,
-        'atendimentos'  => $atendimentos['registros']
+        'qtdAreas'      => $qtdAreas
     ));
 })
 ->name('ver_empresa');

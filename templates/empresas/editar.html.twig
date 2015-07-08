@@ -72,13 +72,13 @@
                                 </div>
                                 <label for="area" class="col-sm-1 control-label">CNPJ:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="cnpj" class="form-control validate[required, minSize[18],maxSize[18]]" value="{{ empresa.getCnpj() }}" placeholder="00.000.000/0000-00" />
+                                    <input type="text" name="cnpj" id="cnpj" class="form-control validate[required, minSize[18],maxSize[18]]" value="{{ empresa.getCnpj() }}" placeholder="00.000.000/0000-00" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">URL Login:</label>                                
                                 <div class="col-sm-4">
-                                    <input type="text" name="permalink" class="form-control validate[required]" value="{{ empresa.getPermalink() }}" placeholder="URL Login" />
+                                    <input type="text" name="permalink" id="permalink" class="form-control validate[required]" value="{{ empresa.getPermalink() }}" placeholder="URL Login" />
                                 </div>
                             </div>
                             <div class="form-group"></div>
@@ -86,7 +86,7 @@
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">CEP:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="cep" class="form-control validate[required]" value="{{ empresa.getCep() }}" placeholder="00000-000" />
+                                    <input type="text" name="cep" id="cep" class="form-control validate[required]" value="{{ empresa.getCep() }}" placeholder="00000-000" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -114,16 +114,16 @@
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Telefone:</label>
                                 <div class="col-sm-1">
-                                    <input type="text" name="ddd_telefone" class="form-control validate[required]" value="{{ empresa.getDddTelefone() }}" placeholder="DDD" />                                    
+                                    <input type="text" name="ddd_telefone" id="ddd_telefone" class="form-control validate[required]" value="{{ empresa.getDddTelefone() }}" placeholder="DDD" />                                    
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" name="telefone" class="form-control validate[required]" value="{{ empresa.getTelefone() }}" placeholder="Telefone" />
+                                    <input type="text" name="telefone" id="telefone" class="form-control validate[required]" value="{{ empresa.getTelefone() }}" placeholder="Telefone" />
                                 </div>                                
                             </div>
                             <div class="form-group">
                                 <label for="cliente" class="col-sm-2 control-label">E-mail:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="ddd_telefone" class="form-control validate[required, custom[email]]" value="{{ empresa.getEmail() }}" placeholder="E-mail" />
+                                    <input type="text" name="email" class="form-control validate[required, custom[email]]" value="{{ empresa.getEmail() }}" placeholder="E-mail" />
                                 </div>
                             </div> 
                         </div><!-- .box-body -->
@@ -152,8 +152,11 @@
     <script type="text/javascript" src="js/lib/jquery-file-upload/js/jquery.fileupload-image.js"></script>        
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            jQuery("#form_novo_usuario").validationEngine();
+            jQuery("#form_editar_empresa").validationEngine();
             jQuery("#cpf").setMask('cpf');
+            jQuery("#cnpj").setMask('cnpj');
+            jQuery("#cep").setMask('cep');
+            
             jQuery("#ddd_telefone, #ddd_celular").setMask("99");
             jQuery("#telefone, #celular").setMask("9999-99999");
 
@@ -212,12 +215,6 @@
                 jQuery(".preview-logotipo").addClass("hidden");
                 jQuery(".barra-progresso").addClass("hidden");
                 jQuery(".input-imagem").removeClass("hidden");                
-            });
-
-            jQuery("#form_editar_empresa").on("submit", function () {
-                if (jQuery(this).validationEngine('validate')) {
-
-                }
             });
         });
     </script>
