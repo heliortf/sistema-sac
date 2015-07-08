@@ -304,6 +304,7 @@ $app->post('/atendimentos/:atendimentoId/cadastrar-avaliacao', function($atendim
     // Define a conclusão
     $atendimento->setStatus($status);
     $atendimento->setConclusao($app->request->post('conclusao'));
+    $atendimento->setAvaliacao($app->request->post('avaliar'));
     $atendimento->setDataAlteracao(new DateTime());
     $atendimento->setDataConclusao(new DateTime());
 
