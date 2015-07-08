@@ -30,32 +30,25 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Cliente</th>                                                
-                                                <th>M&eacute;dia de Avalia&ccedil;&atilde;o (0 &agrave;5)</th>
+                                                <th>M&eacute;dia de Avalia&ccedil;&atilde;o (0 &agrave; 5)</th>
                                                 <th>Data &Uacute;ltimo Atendimento</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Jos&eacute; Pinheiro</td>                                                
-                                                <td>3.5</td>
-                                                <td>26/06/2015</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Ana Maria</td>                                                
-                                                <td>4.5</td>
-                                                <td>01/02/2015</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Sofia Borges</td>                                                
-                                                <td>1</td>
-                                                <td>02/12/2014</td>
-                                            </tr>
+                                            {% for cliente in clientes %}
+                                                <tr>
+                                                    <td>{{ cliente.id }}</td>
+                                                    <td>{{ cliente.nome }}</td>                                                
+                                                    <td>{{ cliente.media_avaliacao|number_format(1) }}</td>
+                                                    <td>{{ cliente.dataCriacao|date("d/m/Y H:i") }}</td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="4">Nenhum registro encontrado</td>
+                                                </tr>
+                                            {% endfor %}
                                         </tbody>
                                     </table>
-                                    {% include "paginacao/informativo.html.twig" %}
                                 </div>
                             </div>
                         </div>

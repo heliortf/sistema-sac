@@ -97,10 +97,15 @@ $app->get('/admin/relatorios/satisfacao-clientes', function() use($app) {
             $user = WebUser::getInstance();
 
 //    echo "<pre>"; print_r($atendimentos); echo "</pre>";
-
+            $R = new Relatorios();
+            $clientes = $R->getSatisfacaoClientes(array(
+                'empresa' => $user->getUsuario()->getEmpresa()
+            ));            
+            
             $app->render('relatorios/satisfacao_clientes.html.twig', array(
                 'menuPrincipal' => 'relatorios_gerenciais',
                 'user' => $user,
+                'clientes'  => $clientes,
                 'paginacao' => array(
                     'inicio' => 0,
                     'fim' => 3,
