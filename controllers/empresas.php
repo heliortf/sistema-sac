@@ -66,6 +66,7 @@ $app->post('/admin/empresas/salvar', function() use($app){
     $Empresa->setBairro($app->request->post('bairro'));
     $Empresa->setCidade($app->request->post('cidade'));
     $Empresa->setEstado($app->request->post('estado'));        
+    $Empresa->setEmail($app->request->post('email'));
     $Empresa->setDddTelefone($app->request->post('ddd_telefone'));
     $Empresa->setTelefone($app->request->post('telefone'));     
 
@@ -142,6 +143,7 @@ $app->post('/admin/empresas/atualizar', function() use($app){
         $Empresa->setBairro($app->request->post('bairro'));
         $Empresa->setCidade($app->request->post('cidade'));
         $Empresa->setEstado($app->request->post('estado'));        
+        $Empresa->setEmail($app->request->post('email'));
         $Empresa->setDddTelefone($app->request->post('ddd_telefone'));
         $Empresa->setTelefone($app->request->post('telefone'));     
         
@@ -154,6 +156,20 @@ $app->post('/admin/empresas/atualizar', function() use($app){
         
         $E->salvar($Empresa);        
         $app->flash('sucesso', 'Empresa atualizada com sucesso!');
+        
+        $U = new Usuarios();
+        $Usuario = $U->getUsuario(array('id' => $app->request->post('usuarioid')));
+        
+        if($Usuario instanceof Usuario){
+            
+            $Usuario->setNome($app->request->post('nome_responsavel'));
+            $Usuario->setCpf($app->request->post('cpf'));
+            $Usuario->setEmail($app->request->post('email_responsavel'));
+            $Usuario->setSenha($app->request->post('senha'));
+            $Usuario->setLogin($app->request->post('login'));
+            
+            $U->salvar($Usuario);
+        }
     
         $app->redirectTo('ver_empresa', array(
             'id' => $Empresa->getId()

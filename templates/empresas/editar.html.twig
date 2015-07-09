@@ -16,6 +16,7 @@
                 <div class="box">
                     <form method="post" action="{{ urlFor('atualizar_empresa') }}" class="form form-horizontal" id="form_editar_empresa" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="{{ empresa.getId() }}" />
+                        <input type="hidden" name="usuarioid" value="{{ empresa.getResponsavel() }}" />
                         <input type="hidden" name="nome_arquivo" id="nome_arquivo" class="form-control" value="" />                                    
                         <input type="hidden" name="mimetype" id="mimetype" class="form-control" value="" />                                    
                                     
