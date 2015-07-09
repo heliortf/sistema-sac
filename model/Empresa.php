@@ -401,7 +401,7 @@ class Empresa {
     function getResponsavel(){
         $usuarios = $this->getUsuarios();
         foreach($usuarios as $u){
-            if($u->isAdministrador()){
+            if($u->isAdministrador() == true){
                 return $u;
             }
         }

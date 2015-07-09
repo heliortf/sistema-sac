@@ -109,7 +109,7 @@ $app->post('/admin/empresas/salvar', function() use($app){
     $U = new Usuarios();
     
     $Usuario = new Usuario();
-    $Usuario->setNome($app->request->post('nome'));
+    $Usuario->setNome($app->request->post('nome_responsavel'));
     $Usuario->setCpf($app->request->post('cpf'));
     $Usuario->setEmail($app->request->post('email_responsavel'));
     $Usuario->setSenha($app->request->post('senha'));
