@@ -17,16 +17,16 @@
         <li><a href="{{ urlFor('novo_usuario') }}"><i class="fa fa-plus"></i> Registrar</a></li>
     </ul>
 </li>
-<li class="treeview {% if menuPrincipal == 'cadastro_area' %}active{% endif %}">
-    <a href="#">
-        <i class="fa fa-building-o"></i> <span>&Aacute;reas</span> <i class="fa fa-angle-left pull-right"></i>
-    </a>
-    <ul class="treeview-menu">
-        <li><a href="{{ urlFor('lista_areas') }}"><i class="fa fa-search"></i> Consultar</a></li>
-        <li><a href="{{ urlFor('nova_area') }}"><i class="fa fa-plus"></i> Registrar</a></li>
-    </ul>
-</li>
 {% if user.getUsuario().getEmpresa().isAdmin() == false %}
+    <li class="treeview {% if menuPrincipal == 'cadastro_area' %}active{% endif %}">
+        <a href="#">
+            <i class="fa fa-building-o"></i> <span>&Aacute;reas</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ urlFor('lista_areas') }}"><i class="fa fa-search"></i> Consultar</a></li>
+            <li><a href="{{ urlFor('nova_area') }}"><i class="fa fa-plus"></i> Registrar</a></li>
+        </ul>
+    </li>
     <li class="treeview {% if menuPrincipal == 'cadastro_cliente' %}active{% endif %}">
         <a href="#">
             <i class="fa fa-male"></i> <span>Clientes</span> <i class="fa fa-angle-left pull-right"></i>
@@ -62,5 +62,5 @@
 <li class="treeview">
     <a href="{{ urlFor('configuracoes') }}">
         <i class="fa fa-gears"></i> <span>Configura&ccedil;&otilde;es</span></i>
-    </a>
+</a>
 </li>
