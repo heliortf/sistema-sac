@@ -397,4 +397,13 @@ class Empresa {
     function setSolicitacoes(ArrayCollection $solicitacoes) {
         $this->solicitacoes = $solicitacoes;
     }
+    
+    function getResponsavel(){
+        $usuarios = $this->getUsuarios();
+        foreach($usuarios as $u){
+            if($u->isAdministrador()){
+                return $u;
+            }
+        }
+    }
 }

@@ -52,45 +52,76 @@ $app->get('/admin/empresas/novo', function() use($app){
 
 $app->post('/admin/empresas/salvar', function() use($app){    
 
-    $u = WebUser::getInstance();    
-	
-    // Consulta a area
-    $A = new Areas();
-    $Area = $A->getArea(array(
-        'empresa' => $u->getUsuario(),
-        'id' => $app->request->post('area')
-    ));
-
-    // Consulta o cargo
-    $C = new Cargos();
-    $Cargo = $C->getCargo(array(
-        'empresa' => $u->getUsuario(),
-        'id' => $app->request->post('cargo')
-    ));
+    $u = WebUser::getInstance();    	
     
-    // Classe que persiste o empresa
+    $E = new Empresas();    
+                  
+    $Empresa = new Empresa();
+    $Empresa->setNomeFantasia($app->request->post('nome_fantasia'));
+    $Empresa->setRazaoSocial($app->request->post('razao_social'));
+    $Empresa->setPermalink($app->request->post('permalink'));
+    $Empresa->setCnpj($app->request->post('cnpj'));
+    $Empresa->setCep($app->request->post('cep'));
+    $Empresa->setEndereco($app->request->post('endereco'));
+    $Empresa->setBairro($app->request->post('bairro'));
+    $Empresa->setCidade($app->request->post('cidade'));
+    $Empresa->setEstado($app->request->post('estado'));        
+    $Empresa->setDddTelefone($app->request->post('ddd_telefone'));
+    $Empresa->setTelefone($app->request->post('telefone'));     
+
+    $E->salvar($Empresa);        
+    
+    
+    $em = Conexao::getEntityManager();
+
+    // Cadastra o cargo
+    $C = new Cargo();
+    $C->setNome(Cargo::ATENDENTE);
+    $C->setEmpresa($Empresa);
+
+    $C2 = new Cargo();
+    $C2->setNome(Cargo::ADMINISTRADOR);
+    $C2->setEmpresa($Empresa);
+
+    $C3 = new Cargo();
+    $C3->setNome(Cargo::RESPONSAVEL_AREA);
+    $C3->setEmpresa($Empresa);
+
+    $em->persist($C);
+    $em->persist($C2);
+    $em->persist($C3);
+    $em->flush();
+
+    // Cadastra a área
+    $A = new Area();
+    $A->setEmpresa($Empresa);
+    $A->setNome("Suporte");
+
+    $A2 = new Area();
+    $A2->setEmpresa($Empresa);
+    $A2->setNome("Diretoria");
+
+    $em->persist($A);
+    $em->persist($A2);
+    $em->flush();
+    
+    
     $U = new Usuarios();
     
-    // Usuario
     $Usuario = new Usuario();
-    $Usuario->setEmpresa($u->getUsuario()->getEmpresa());
-    $Usuario->setArea($Area);
-    $Usuario->setCargo($Cargo);
     $Usuario->setNome($app->request->post('nome'));
-    $Usuario->setEmail($app->request->post('email'));
-    $Usuario->setCPF($app->request->post('cpf'));
-    $Usuario->setLogin($app->request->post('login'));
+    $Usuario->setCpf($app->request->post('cpf'));
+    $Usuario->setEmail($app->request->post('email_responsavel'));
     $Usuario->setSenha($app->request->post('senha'));
-    $Usuario->setDddTelefone($app->request->post('ddd_telefone'));
-    $Usuario->setTelefone($app->request->post('telefone'));    
-    $Usuario->setDddCelular($app->request->post('ddd_celular'));
-    $Usuario->setCelular($app->request->post('celular'));
+    $Usuario->setLogin($app->request->post('login'));
+    $Usuario->setEmpresa($Empresa);
+    $Usuario->setCargo($C2);
+    $Usuario->setArea($A2);
     
     $U->salvar($Usuario);
     
-    $app->redirectTo('ver_empresa', array(
-        'id' => $Usuario->getId()
-    ));
+    $app->flash('sucesso', 'Empresa registrada com sucesso!');
+    $app->redirectTo('ver_empresa', array( 'id' => $Empresa->getId() ));
 })
 ->name('salvar_empresa');
 
