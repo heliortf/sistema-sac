@@ -15,14 +15,21 @@ class Usuarios {
     public function getUsuario($params = array()) {
         $em = Conexao::getEntityManager();
 
-        $u = $params['usuario'];
-
-        $dql = "select a from Usuario a WHERE a.empresa = :empresa AND a.id = :id ";
+        $dql = "select a from Usuario a WHERE a.id = :id ";
+        $pDql = array('id' => $params['id']);
+        
+        if(isset($params['usuario'])){
+            $dql .= " AND a.empresa = :empresa ";
+            $pDql['empresa'] = $params['usuario']->getEmpresa()->getId();
+        }
+        
+        if(isset($params['empresa'])){
+            $dql .= " AND a.empresa = :empresa";
+            $pDql['empresa'] = $params['empresa']->getId();
+        }
+        
         $query = $em->createQuery($dql);
-        $usuarios = $query->setParameters(array(
-            'empresa' => $u->getEmpresa()->getId(),
-            'id' => $params['id']
-        ))->getResult();
+        $usuarios = $query->setParameters($pDql)->getResult();
 
         if (count($usuarios) == 1) {
             return $usuarios[0];

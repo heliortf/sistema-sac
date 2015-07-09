@@ -158,7 +158,9 @@ $app->post('/admin/empresas/atualizar', function() use($app){
         $app->flash('sucesso', 'Empresa atualizada com sucesso!');
         
         $U = new Usuarios();
-        $Usuario = $U->getUsuario(array('id' => $app->request->post('usuarioid')));
+        $Usuario = $U->getUsuario(array(
+            'id' => $app->request->post('usuarioid')            
+        ));
         
         if($Usuario instanceof Usuario){
             
