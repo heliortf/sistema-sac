@@ -8,6 +8,34 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class Relatorios {
     
+    function getAcessoDiarioSite(Empresa $empresa){
+        $em = Conexao::getEntityManager();
+        
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('qtd', 'qtd_acessos')
+            ->addScalarResult('dia', 'dia');            
+        
+        $sql = "SELECT                     
+                    COUNT(a.acesso_id) as qtd, 
+                    DATE_FORMAT(DATE(a.dataAcesso), '%d/%m/%Y') as dia
+                FROM 
+                    tb_acessos a 
+                    INNER JOIN tb_empresa e
+                    ON e.empresa_id = a.tb_empresa_empresa_id
+                WHERE 
+                    e.empresa_id = ? AND
+                    a.dataAcesso > DATE_SUB(NOW(), INTERVAL 10 DAY)
+                GROUP BY
+                    a.tb_empresa_empresa_id, DATE(a.dataAcesso)
+                ORDER BY a.dataAcesso DESC";
+        
+        $acessos = $em->createNativeQuery($sql, $rsm)
+                            ->setParameter(1, $empresa->getId())
+                            ->getResult();
+        
+        return $acessos;
+    }
+    
     function getAcessoSemanalSite(Empresa $empresa){
         $em = Conexao::getEntityManager();
         

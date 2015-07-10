@@ -393,5 +393,8 @@ class Cliente implements RoleInterface {
         public function getRoleId() {
             return 'cliente';
         }
-
+        
+        function getDocumentos() {
+            return $this->documentos;
+        }
 }

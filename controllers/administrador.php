@@ -1299,9 +1299,13 @@ $app->get('/admin/dashboard', function() use($app) {
                 ));
             }
             else {
+                $R = new Relatorios();
+                $acessos = $R->getAcessoDiarioSite($u->getUsuario()->getEmpresa());
+                
                 $app->render('admin/dashboard_effort.html.twig', array(
                     'menuPrincipal' => 'dashboard',
-                    'user' => $u
+                    'user' => $u,
+                    'acessos' => $acessos
                 ));
             }
         })
