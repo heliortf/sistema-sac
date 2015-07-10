@@ -813,7 +813,7 @@ $app->get('/admin/clientes/:id', function($id) use($app) {
         })
         ->name('ver_cliente')
         ->conditions(array('id' => '[0-9]{1,}'));
-;
+
 
 /**
  * Listagem de áreas
@@ -859,8 +859,79 @@ $app->get('/admin/clientes(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina 
         ->name('lista_clientes');
 
 
+
 /**
- * Listagem de áreas
+ * Tela de nova cliente
+ */
+$app->get('/admin/pedidos/novo', function() use($app) {
+            $u = WebUser::getInstance();
+            
+            $C = new Clientes();
+            $clientes = $C->getListaClientes(array(
+                'usuario'       => $u,
+                'pagina'        => 1,
+                'qtdPorPagina'  => 400
+            ));
+
+            $app->render('pedidos/novo.html.twig', array(
+                'menuPrincipal' => 'cadastro_pedidos',
+                'user'          => $u,
+                'clientes'      => $clientes['registros']
+            ));
+        })
+        ->name('novo_pedido');
+
+
+$app->post('/admin/pedidos/salvar', function() use($app) {
+
+            $u = WebUser::getInstance();
+
+            // Classe que persiste o usuario
+            $C = new Clientes();
+            $cliente = $C->getCliente(array(
+                'id'        => $app->request->post('cliente'),
+                'usuario'   => $u
+            ));
+            
+            $P = new Pedidos();
+            
+            $Pedido = new DocumentoCliente();
+            $Pedido->setCliente($cliente);
+            $Pedido->setEmpresa($u->getUsuario()->getEmpresa());
+            $Pedido->setTitulo($app->request->post('titulo'));
+
+
+            $P->salvar($Pedido);
+
+            $app->redirectTo('ver_pedido', array(
+                'id' => $Pedido->getId()
+            ));
+        })
+        ->name('salvar_pedido');
+
+        
+$app->get('/admin/pedidos/:id', function($id) use($app) {
+
+            $u = WebUser::getInstance();
+
+
+            $P = new Pedidos();
+            $pedido = $P->getPedido(array(
+                'usuario'   => $u->getUsuario(),
+                'id'        => $id
+            ));
+
+            $app->render('pedidos/ver.html.twig', array(
+                'menuPrincipal' => 'cadastro_pedido',
+                'pedido' => $pedido,
+                'user' => $u
+            ));
+        })
+        ->name('ver_cliente')
+        ->conditions(array('id' => '[0-9]{1,}'));
+        
+/**
+ * Listagem de pedidos
  */
 $app->get('/admin/pedidos(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina = 1, $qtdPorPagina = 20, $nome = '') use($app) {
             $u = WebUser::getInstance();

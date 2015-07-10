@@ -1,20 +1,20 @@
 {% extends "layout/sistema.html.twig" %}
-{% block titulo %}Novo Cliente{% endblock %}
+{% block titulo %}Novo Pedido{% endblock %}
 {% block conteudo %}
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>Novo Cliente</h1>
+        <h1>Novo Pedido</h1>
         <ol class="breadcrumb">
-            <li><a href="{{ urlFor('lista_clientes') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="{{ urlFor('editar_cliente', { id : cliente.getId() }) }}">Novo Cliente</a></li>
+            <li><a href="{{ urlFor('lista_pedidos') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="{{ urlFor('novo_pedido', { id : pedido.getId() }) }}">Novo Pedido</a></li>
         </ol>
     </section>        
     <!-- Main content -->
     <section class="content">
-        <div class="row registrar-cliente">
+        <div class="row registrar-pedido">
             <div class="col-md-12">
                 <div class="box">
-                    <form method="post" action="{{ urlFor('salvar_cliente') }}" class="form form-horizontal" id="form_novo_cliente">
+                    <form method="post" action="{{ urlFor('salvar_pedido') }}" class="form form-horizontal" id="form_novo_pedido">
                         <div class="box-header with-border">                        
                             <div class="row">
                                 <div class="col-md-3">
@@ -22,7 +22,7 @@
                                 </div>   
                                 <div class="col-md-5 pull-right text-right">
                                     <button type="submit" name="btn_salvar" class="btn btn-primary">Salvar</button>
-                                    <a href="{{ urlFor('lista_clientes') }}">
+                                    <a href="{{ urlFor('lista_pedidos') }}">
                                         <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
                                     </a>
                                 </div>
@@ -30,102 +30,27 @@
                         </div>
                         <div class="box-body">                        
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Nome:</label>                                
+                                <label for="nome" class="col-sm-2 control-label">T&iacute;tulo:</label>                                
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control validate[required]" name="nome" id="nome" value="" placeholder="Nome completo" />
+                                    <input type="text" class="form-control validate[required]" name="titulo" id="titulo" value="" placeholder="T&iacute;tulo do Pedido" />
                                 </div>
-                            </div>
-							<div class="form-group">
-                                <label for="endereco" class="col-sm-2 control-label">Endere&ccedil;o:</label>                                
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[maxSize[255]]" name="endereco" id="endereco" value="" placeholder="Endereço" />
-                                </div>
-								<div class="col-sm-2">
-                                    <input type="text" class="form-control validate[maxSize[8]]" name="numero" id="numero" value="" placeholder="N&uacute;mero" />
-                                </div>
-                            </div>
-							<div class="form-group">
-								<label for="nome" class="col-sm-2 control-label">Cep:</label>                                
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control validate[minSize[9],maxSize[9]]" name="cep" id="cep" value="" placeholder="26000-000" />
-                                </div>
-                                <label for="nome" class="col-sm-1 control-label">Bairro:</label>                                
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control validate[maxSize[120]]" name="bairro" id="bairro" value="" placeholder="Bairro" />
-                                </div>								
-                            </div>
-							<div class="form-group">
-								<label for="nome" class="col-sm-2 control-label">Cidade:</label>                                									
-								<div class="col-sm-3">
-									<input type="text" class="form-control validate[maxSize[100]]" name="cidade" id="cidade" value="" placeholder="Cidade" />									
-								</div>
-                                <label for="nome" class="col-sm-1 control-label">Estado:</label>                                
-                                <div class="col-sm-3">
-									<select name="estado" class="form-control">
-									{% for sigla,nome in estados %}
-										<option value="{{ sigla }}" {% if sigla == 'RJ' %}selected{% endif %}>{{ nome }}</option>
-									{% endfor %}
-									</select>
-                                </div>
-                            </div>
+                            </div>							                     							                            
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">CPF:</label>                                
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control validate[minSize[14],maxSize[14]]" name="cpf" id="cpf" value="" placeholder="CPF" />
+                                <label for="nome" class="col-sm-2 control-label">Cliente:</label>                                
+                                <div class="col-sm-7">
+                                    <select class="form-control validate[required]" name="cliente" id="cliente">
+                                        {% for cliente in clientes %}
+                                            <option value="{{ cliente.getId() }}">{{ cliente.getNome() }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
-                                <label for="nome" class="col-sm-1 control-label">CNPJ:</label>                                
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control validate[minSize[18],maxSize[18]]" name="cnpj" id="cnpj" value="" placeholder="CNPJ" />
-                                </div>
-                            </div>										                            
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Telefone:</label>                                                                
-                                <div class="col-sm-1">
-                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_telefone" id="ddd_telefone" value="" placeholder="DDD" />
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="telefone" id="telefone" value="" placeholder="Telefone" />
-                                </div>                                
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Celular:</label>                                
-                                <div class="col-sm-1">
-                                    <input type="text" class="form-control validate[minSize[2], maxSize[2]]" name="ddd_celular" id="ddd_celular" value="" placeholder="DDD" />
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control validate[minSize[9], maxSize[10]]" name="celular" id="celular" value="" placeholder="Celular" />
-                                </div>
-                            </div>
-							<div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">E-mail:</label>                                
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[custom[email]]" name="email" id="email" value="" placeholder="E-mail" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Login:</label>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control validate[required, minSize[5], maxSize[20]]" name="login" id="login" value="" placeholder="Login" />
-                                </div>
-                            </div>    
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Senha:</label>                                
-                                <div class="col-sm-5">
-                                    <input type="password" class="form-control validate[required, minSize[5], maxSize[20]]" name="senha" id="senha" value="" placeholder="Senha" />
-                                </div>
-                            </div>    
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Confirme a senha:</label>                                
-                                <div class="col-sm-5">
-                                    <input type="password" class="form-control validate[required, minSize[5], maxSize[20]]" name="confirme_senha" id="confirme_senha" value="" placeholder="Confirme a senha" />
-                                </div>
-                            </div>                            							                            
+                            </div>							                     							                            
                         </div><!-- .box-body -->
                         <div class="box-footer">
                             <div class="row">
                                 <div class="col-sm-5 pull-right text-right">
                                     <button type="submit" name="btn_salvar" class="btn btn-primary">Salvar</button>
-                                    <a href="{{ urlFor('lista_clientes') }}">
+                                    <a href="{{ urlFor('lista_pedidos') }}">
                                         <button type="button" name="btn_voltar" class="btn btn-default">Voltar</button>
                                     </a>
                                 </div>  
@@ -141,7 +66,7 @@
     <script type="text/javascript" src="js/usuario/usuario.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            jQuery("#form_novo_cliente").validationEngine();
+            jQuery("#form_novo_pedido").validationEngine();
 			jQuery("#numero").setMask('99999999');
 			jQuery("#cep").setMask('cep');
             jQuery("#cpf").setMask('cpf');
@@ -149,14 +74,14 @@
             jQuery("#ddd_telefone, #ddd_celular").setMask("99");
             jQuery("#telefone, #celular").setMask("9999-99999");
 
-            jQuery("#form_novo_cliente").on("submit", function () {
+            jQuery("#form_novo_pedido").on("submit", function () {
                 if (jQuery(this).validationEngine('validate')) {
                     if (jQuery("#senha").val().length > 0 || jQuery("#confirme_senha").val().length > 0) {
                         if (jQuery("#senha").val() == jQuery("#confirme_senha").val()) {
                             Aguarde.show();
                             Usuario.validarLogin({
                                 'login': jQuery("#login").val(),
-                                'tipo' : 'cliente',
+                                'tipo' : 'pedido',
                                 'callback': function (existe) {
                                     Aguarde.hide();
 
@@ -164,7 +89,7 @@
                                         jQuery("#login").validationEngine('showPrompt', 'Login já existente. Por favor, escolha outro', 'error', 'topRight', true);
                                     }
                                     else {
-                                        jQuery("#form_novo_cliente").unbind('submit').submit();
+                                        jQuery("#form_novo_pedido").unbind('submit').submit();
                                     }
                                 }
                             });
