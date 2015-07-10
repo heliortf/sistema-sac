@@ -161,8 +161,10 @@ class Relatorios {
     function getSatisfacaoClientes($params = array()) {
         $em = Conexao::getEntityManager();
         $clientes = $em->createQuery("SELECT c.id, c.nome, avg(a.avaliacao) as media_avaliacao, a.dataCriacao 
-                          FROM Atendimento a JOIN a.cliente c 
-                          WHERE a.empresa = :empresa
+                          FROM 
+                            Atendimento a JOIN a.cliente c 
+                          WHERE a.empresa = :empresa 
+                          HAVING media_avaliacao > 0
                           ORDER BY media_avaliacao DESC")
                 ->setParameter('empresa', $params['empresa']->getId())
                 ->getScalarResult();
