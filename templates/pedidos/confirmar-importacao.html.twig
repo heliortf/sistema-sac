@@ -1,0 +1,189 @@
+{% extends "layout/sistema.html.twig" %}
+{% block titulo %}Importar Pedidos{% endblock %}
+{% block conteudo %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Importar Pedidos</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Importar Pedidos</a></li>
+        </ol>
+    </section>        
+    <!-- Main content -->
+    <section class="content">
+        <div class="row importar-pedido">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3 class="box-title">Confirmar Importa&ccedil;&atilde;o CSV</h3>
+                            </div>                      
+                            <div class="col-sm-6 pull-right text-right">
+                                <button type="button" class="btn btn-primary btn-importar">Importar</button>
+                                <button type="button" class="btn btn-default">Voltar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <form class="form form-horizontal form-confirmar-importacao" method="post" action="{{ urlFor('realizar_importacao_pedidos') }}">
+                            <input type="hidden" name="arquivo_csv" value="{{ arquivoCSV }}" />
+                            <span id="helpBlock" class="help-block">O CSV foi lido com sucesso. Escolha como os campos serão importados</span><br/>
+                            {% for campo,label in camposImportacao %}
+                                <div class="form-group">
+                                    <label class="col-sm-2">{{ label }}{% if campo in camposObrigatorios %}<i class="text-warning">*</i>{% endif %}:</label>
+                                    <div class="col-sm-3">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <select name="{{ campo }}[]" class="form-control campo-importacao">
+                                                    <option value="">-- Selecione --</option>
+                                                    {% for campoCSV in camposCSV %}
+                                                        <option value="{{ campoCSV }}">Campo CSV: {{ campoCSV }}</option>
+                                                    {% endfor %}
+                                                    {% if campo in camposDigitaveis %}
+                                                        <option value="digitar">** Digitar **</option>
+                                                    {% endif %}
+                                                </select>                                            
+                                            </div>
+                                        </div>
+                                        <div class="row hidden">
+                                            <div class="col-md-10">
+                                                <input type="text" name="input_{{ campo }}[]" class="form-control campo-importacao" value="" placeholder="Digite aqui" />
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" name="voltar_select" class="btn btn-primary btn-voltar-select"><i class="fa fa-reply"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if camposCSV|length > 1 and campo in camposCombinaveis %}
+                                        <div class="col-sm-1 hidden">
+                                            <div class="row">
+                                                <button type="button" name="btn_remove" class="btn btn-danger botao-remover hidden">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                                <button type="button" name="btn_add" class="btn btn-primary botao-combinar" 
+                                                        data-container="body" 
+                                                        data-toggle="popover" 
+                                                        data-placement="right"
+                                                        data-content="Se precisar, combine com outros campos do CSV"
+                                                        ><i class="fa fa-wrench"></i></button>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}                            
+                        </form>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <div class="row">
+                            <div class="col-sm-6 pull-right text-right">
+                                <button type="button" class="btn btn-primary btn-importar">Importar</button>
+                                <button type="button" class="btn btn-default">Voltar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   <!-- /.row -->
+    </section><!-- /.content -->            
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        $("select[name='nome[]']:first").attr('id', 'primeiro_nome');
+        $.validationEngine.defaults.autoHidePrompt = true;
+        
+        function validar(){
+            
+            var primeiroCampoNome = $("select[name='nome[]']:first").val();            
+            
+            if(primeiroCampoNome == ""){
+                $("select[name='nome[]']").validationEngine('showPrompt', '*Campo obrigatório', 'error', 'topRight', true);
+                return false;
+            }
+            
+            return true;
+        }
+        
+        $(document).ready(function(){
+            $(".btn-importar").click(function(){
+                if(validar()){
+                    $(".form-confirmar-importacao").submit();
+                }
+            });
+            
+            $(".campo-importacao").mouseover(function(){
+                var divBotao = $(this).parent("div").parent("div").parent("div").next("div");
+                if(!$(divBotao).hasClass('hidden')){
+                    divBotao.find("button").popover('show');
+                }
+            })
+            .mouseout(function(){
+                var divBotao = $(this).parent("div").parent("div").parent("div").next("div");
+                if(!$(divBotao).hasClass('hidden')){
+                    divBotao.find("button").popover('hide');
+                }
+            })
+            .change(function(){
+                var divBotao = $(this).parent("div").parent("div").parent("div").next("div");
+                console.log(divBotao);
+                switch($(this).val()){
+                    case "":
+                        divBotao.addClass("hidden");
+                        break;
+                    case "digitar":
+                        var divSelect = $(this).parent("div").parent("div");
+                        var divInput = divSelect.next("div");
+                        var divBotao = divInput.parent("div").next("div");
+                        divInput.removeClass("hidden");
+                        divSelect.addClass("hidden");
+                        divBotao.addClass("hidden");
+                        divSelect.find("select").val("");
+                        break;
+                    default:                        
+                        divBotao.removeClass("hidden");
+                        break;
+                }
+            });         
+            
+            $(".botao-combinar").click(function(){                
+                var divSelect = $(this).parent("div").parent("div").prev("div");                
+                divSelect.after(divSelect.clone());
+                
+                var nome = divSelect.find("select").attr('name');
+                
+                
+                $(this).popover('hide');
+                $(this).siblings(".botao-remover").removeClass("hidden");
+                
+                var divLinha = $(this).parent("div").parent("div").parent("div.form-group");
+                var qtdSelects = divLinha.find("select").length;
+                
+                if(qtdSelects == 3){
+                    $(this).addClass("hidden");
+                }
+            });
+            
+            $(".botao-remover").click(function(){
+                var divLinha = $(this).parent("div").parent("div").parent("div.form-group");
+                var qtdSelects = divLinha.find("select").length;
+                
+                if(qtdSelects > 1){
+                    $(this).parent("div").parent("div").prev("div").remove();
+                    if(qtdSelects == 2){
+                        $(this).addClass("hidden");
+                    }
+                }
+                divLinha.find(".botao-combinar").removeClass("hidden");
+            });
+            
+            $(".btn-voltar-select").click(function(){
+                var divInput = $(this).parent("div").parent("div");
+                var divSelect = $(this).parent("div").parent("div").prev("div");
+                
+                divInput.addClass("hidden");
+                divSelect.removeClass("hidden");
+                $(this).val("");
+            });
+        });
+    </script>
+{% endblock %}

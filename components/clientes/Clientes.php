@@ -17,12 +17,23 @@ class Clientes {
         
         $u = $params['usuario'];
 
-        $dql = "select a from Cliente a WHERE a.empresa = :empresa AND a.id = :id ";
+        $dql = "select a from Cliente a WHERE a.empresa = :empresa ";
+        $pDql = array(
+            'empresa' => $u->getEmpresa()->getId()
+        );
+        
+        if(isset($params['id']) && $params['id'] != ''){
+            $dql .= " AND a.id = :id ";
+            $pDql['id'] = $params['id'];
+        }
+        
+        if(isset($params['cpf']) && $params['cpf'] != ''){
+            $dql .= " AND a.cpf = :cpf ";
+            $pDql['cpf'] = $params['cpf'];
+        }
+        
         $query = $em->createQuery($dql);
-        $clientes = $query->setParameters(array(
-            'empresa' => $u->getEmpresa()->getId(),
-            'id' => $params['id']
-        ))->getResult();        
+        $clientes = $query->setParameters($pDql)->getResult();        
         
         if (count($clientes) == 1) {
             return $clientes[0];

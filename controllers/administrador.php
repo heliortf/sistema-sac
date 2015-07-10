@@ -1044,16 +1044,16 @@ $app->post('/admin/pedidos/confirmar-importacao', function() use($app) {
 
                 $camposCSV = $csv->titles;
                 $camposImportacao = array(
-                    'titulo' => 'Título',
+                    'titulo' => 'Título Documento',
                     'cliente' => 'CPF'
                 );
 
                 $camposCombinaveis = array(
-                    'nome', 'endereco'
+                    'titulo'
                 );
 
                 $camposObrigatorios = array(
-                    'nome'
+                    'titulo', 'cliente'
                 );
 
                 $camposDigitaveis = array(
@@ -1084,7 +1084,7 @@ $app->post('/admin/pedidos/confirmar-importacao', function() use($app) {
         ->name('confirmar_importacao_pedidos');
 
 
-$app->post('/admin/pedidos/realizar-importacao', function() use($app) {
+$app->post('/admin/pedidos/importacao/realizar-importacao', function() use($app) {
             $u = WebUser::getInstance();
 
             $arquivo = $app->request->post('arquivo_csv');
@@ -1106,29 +1106,41 @@ $app->post('/admin/pedidos/realizar-importacao', function() use($app) {
             };
 
             $em = Conexao::getEntityManager();
+            
+            $Pedidos = new Pedidos();
+            $Clientes = new Clientes();
+            
+            $clientesNaoEncontrados = array();
+            $qtdClientesEncontrados = 0;
 
-            foreach ($p->data as $cliente) {
-                $C = new Cliente();
-                $C->setEmpresa($u->getUsuario()->getEmpresa());
-                $C->setNome($getValorCSV($cliente, $app->request->post('nome')));
-                $C->setEndereco($getValorCSV($cliente, $app->request->post('endereco')));
-                $C->setBairro($getValorCSV($cliente, $app->request->post('bairro')));
-                $C->setCidade($getValorCSV($cliente, $app->request->post('cidade')));
-                $C->setEstado($getValorCSV($cliente, $app->request->post('estado')));
-                $C->setCep($getValorCSV($cliente, $app->request->post('cep')));
-                $C->setCpf($getValorCSV($cliente, $app->request->post('cpf')));
-                $C->setCnpj($getValorCSV($cliente, $app->request->post('cnpj')));
-                $C->setDataCriacao(new DateTime());
-                $C->setEmail($getValorCSV($cliente, $app->request->post('email')));
-                $C->setLogin($getValorCSV($cliente, $app->request->post('login')));
-                $C->setSenha($getValorCSV($cliente, $app->request->post('senha')));
-
-                $em->persist($C);
+            foreach ($p->data as $k => $pedido) {                
+                
+                $C = $Clientes->getCliente(array(
+                    'usuario'   => $u->getUsuario(),
+                    'cpf'       => preg_replace("/[^0-9]/", "", $getValorCSV($pedido, $app->request->post('cliente')))
+                ));
+                
+                if($C instanceof Cliente){                
+                    $P = new DocumentoCliente();
+                    $P->setEmpresa($u->getUsuario()->getEmpresa());
+                    $P->setTitulo($getValorCSV($pedido, $app->request->post('titulo')));
+                    $P->setCliente($C);                    
+                    $em->persist($P);
+                    $qtdClientesEncontrados++;
+                }                
+                else {
+                    $clientesNaoEncontrados[] = array(
+                        'linha' => $k,
+                        'cliente' => $getValorCSV($pedido, $app->request->post('cliente'))
+                    );
+                }
             }
 
             $em->flush();
 
             @unlink($arquivo);
+            
+            $_SESSION['clientes_nao_encontrados'] = $clientesNaoEncontrados;            
 
             $app->flash('sucesso', 'Pedidos importados com sucesso!');
             $app->redirectTo('sucesso_importacao_pedidos', array('qtd' => count($p->data)));
@@ -1142,9 +1154,11 @@ $app->get('/admin/pedidos/sucesso-importacao/:qtd', function($qtd) use($app) {
             $u = WebUser::getInstance();
 
             $app->render('pedidos/importacao-sucesso.html.twig', array(
-                'menuPrincipal' => 'cadastro_pedido',
-                'qtd' => $qtd,
-                'user' => $u
+                'menuPrincipal'             => 'cadastro_pedido',
+                'qtd'                       => $qtd,
+                'qtd_nao_importada'         => count($_SESSION['clientes_nao_encontrados']),
+                'clientes_nao_encontrados'  => $_SESSION['clientes_nao_encontrados'],
+                'user'                      => $u
             ));
         })
         ->name('sucesso_importacao_pedidos');
@@ -1202,7 +1216,8 @@ $app->get('/admin/pedidos(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina =
                 )
             ));
         })
-        ->name('lista_pedidos');
+        ->name('lista_pedidos')
+        ->conditions(array('pagina' => '[0-9]{1,}', 'qtdPorPagina' => '[0-9]{1,}'));
 
 
 $app->get('/admin/dashboard', function() use($app) {
