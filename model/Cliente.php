@@ -40,8 +40,16 @@ class Cliente implements RoleInterface {
      */
     protected $atendimentos;
     
+    /**
+     *
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="DocumentoCliente", mappedBy="cliente")
+     */
+    protected $documentos;
+    
     function __construct() {
         $this->atendimentos = new ArrayCollection();
+        $this->documentos = new ArrayCollection();
     }
 
     
