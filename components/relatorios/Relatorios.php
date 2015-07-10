@@ -99,7 +99,7 @@ class Relatorios {
                     a.dataAcesso > DATE_SUB(NOW(), INTERVAL 10 DAY)
                 GROUP BY
                     a.tb_empresa_empresa_id, DATE(a.dataAcesso)
-                ORDER BY a.dataAcesso DESC";
+                ORDER BY a.dataAcesso";
 
         $acessos = $em->createNativeQuery($sql, $rsm)
                 ->setParameter(1, $empresa->getId())
