@@ -4,20 +4,20 @@
  * Realiza consultas de clientes
  *
  */
-class Clientes {
+class Pedidos {
 
     /**
      * Retorna o cliente a partir de sua id
      * 
      * @param int $id
-     * @return Cliente | boolean
+     * @return Pedido | boolean
      */
-    public function getCliente($params=array()) {
+    public function getPedido($params=array()) {
         $em = Conexao::getEntityManager();
         
         $u = $params['usuario'];
 
-        $dql = "select a from Cliente a WHERE a.empresa = :empresa AND a.id = :id ";
+        $dql = "select a from DocumentoCliente a WHERE a.empresa = :empresa AND a.id = :id ";
         $query = $em->createQuery($dql);
         $clientes = $query->setParameters(array(
             'empresa' => $u->getEmpresa()->getId(),
@@ -32,7 +32,7 @@ class Clientes {
     }
 
     /**
-     * Retorna a lista de clientes para o usuario logado
+     * Retorna a lista de pedidos para o usuario logado
      * 
      * Parametros:
      * - Usuario $usuario
@@ -42,15 +42,15 @@ class Clientes {
      * 
      * @param array $params
      */
-    public function getListaClientes($params = array()) {
+    public function getListaPedidos($params = array()) {
         $em = Conexao::getEntityManager();
 
-        $dql = "from Cliente c WHERE 1=1 ";
+        $dql = "from DocumentoCliente c WHERE 1=1 ";
 
         $pDql = array();
 
         if (!empty($params['text'])) {
-            $dql .= " AND ( c.nome LIKE :text OR c.cpf LIKE :text ) ";
+            $dql .= " AND ( c.titulo LIKE :text ) ";
             $pDql['text'] = $params['text'];
         }
 
@@ -62,23 +62,23 @@ class Clientes {
         $inicio = ($params['pagina'] - 1) * $params['qtdPorPagina'];
         
         $query = $em->createQuery("select c $dql");
-        $clientes = $query->setParameters($pDql)
-                ->setMaxResults($params['qtdPorPagina'])
-                ->setFirstResult($inicio)
-                ->getResult();
+        $pedidos = $query->setParameters($pDql)
+                            ->setMaxResults($params['qtdPorPagina'])
+                            ->setFirstResult($inicio)
+                            ->getResult();
 
         $fim = $inicio + $params['qtdPorPagina'];
 
-        if (count($clientes) < $params['qtdPorPagina']) {
-            $fim = $inicio + count($clientes);
+        if (count($pedidos) < $params['qtdPorPagina']) {
+            $fim = $inicio + count($pedidos);
         }
         
         $queryTotal = $em->createQuery("select count(c.id) as qtd $dql");
         $qtd = $queryTotal->setParameters($pDql)
-                ->getSingleScalarResult();
+                            ->getSingleScalarResult();
 
         return array(
-            'registros' => $clientes,
+            'registros' => $pedidos,
             'paginacao' => array(
                 'qtdRegistros' => $qtd,
                 'qtdPorPagina' => $params['qtdPorPagina'],
@@ -90,13 +90,13 @@ class Clientes {
         );
     }
 
-    public function salvar(Cliente $cliente) {
+    public function salvar(DocumentoCliente $cliente) {
         $em = Conexao::getEntityManager();
         $em->persist($cliente);
         $em->flush();
     }
 
-    public function excluir(Cliente $cliente) {
+    public function excluir(DocumentoCliente $cliente) {
         $em = Conexao::getEntityManager();
         $em->delete($cliente);
         $em->flush();

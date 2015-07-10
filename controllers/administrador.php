@@ -859,6 +859,49 @@ $app->get('/admin/clientes(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina 
         ->name('lista_clientes');
 
 
+/**
+ * Listagem de áreas
+ */
+$app->get('/admin/pedidos(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina = 1, $qtdPorPagina = 20, $nome = '') use($app) {
+            $u = WebUser::getInstance();
+
+            $A = new Pedidos();
+            $pedidos = $A->getListaPedidos(array(
+                'usuario' => $u->getUsuario(),
+                'text' => (!empty($nome) ? "%$nome%" : ""),
+                'pagina' => $pagina,
+                'qtdPorPagina' => $qtdPorPagina
+            ));
+
+
+            $parametros = array(
+                'pagina' => $pagina,
+                'qtdPorPagina' => $qtdPorPagina
+            );
+
+            if (!empty($nome)) {
+                $parametros['nome'] = $nome;
+            }
+
+            $Paginacao = new Paginacao(array_merge(
+                $pedidos['paginacao'], array(
+                    'parametros'    => $parametros,
+                    'rota'          => 'lista_pedidos'
+                )
+            ));
+
+            $app->render('pedidos/consultar.html.twig', array(
+                'menuPrincipal' => 'cadastro_pedidos',
+                'user'          => $u,
+                'clientes'      => $pedidos['registros'],
+                'paginacao'     => $Paginacao,
+                'filtro'        => array(
+                    'nome' => $nome
+                )
+            ));
+        })
+        ->name('lista_pedidos');
+
 
 $app->get('/admin/dashboard', function() use($app) {
             $u = WebUser::getInstance();
