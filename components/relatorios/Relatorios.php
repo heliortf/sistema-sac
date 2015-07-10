@@ -12,11 +12,14 @@ class Relatorios {
         $em = COnexao::getEntityManager();
 
         $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('media', 'media_criacao')
-                ->addScalarResult('nome_area', 'nome_area');
+        $rsm->addScalarResult('qtd', 'qtd')
+                ->addScalarResult('area_id', 'area_id')
+                ->addScalarResult('nome_area', 'nome_area')
+                ->addScalarResult('nome_status', 'nome_status');
 
         $sql = "select 
                         count(t.atendimento_id) as qtd,
+                    a.area_id,
                     a.area_nome as nome_area,
                     s.nome as nome_status
                 from 
@@ -26,7 +29,7 @@ class Relatorios {
                     INNER JOIN tb_status_tipo s
                     ON s.status_tipo_id = t.tb_status_tipo_status_tipo_id
                 WHERE
-                    t.empresa_id = ?
+                    t.tb_empresa_empresa_id = ?
                 GROUP BY
                         t.tb_empresa_empresa_id, t.tb_area_area_id, t.tb_status_tipo_status_tipo_id
                 ORDER BY 
@@ -36,7 +39,15 @@ class Relatorios {
                 ->setParameter(1, $empresa->getId())
                 ->getResult();
 
-        return $medias;
+        $graf = array();
+        
+        foreach($medias as $m){
+            $graf[$m['area_id']]['nome_area'] = $m['nome_area'];
+            $graf[$m['area_id']]['status'][$m['nome_status']] = $m['qtd'];
+        }
+        
+        
+        return $graf;
     }
 
     function getMediaSemanalCriacaoAtendimentosPorSetor(Empresa $empresa) {
