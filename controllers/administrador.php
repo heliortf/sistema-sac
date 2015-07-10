@@ -1320,6 +1320,8 @@ $app->get('/admin/dashboard', function() use($app) {
                     $qtdAreas = count($areas);
                 }
                 
+                
+                
                 $app->render('admin/dashboard.html.twig', array(
                     'menuPrincipal' => 'dashboard',
                     'user' => $u,
