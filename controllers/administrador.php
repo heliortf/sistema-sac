@@ -1019,6 +1019,148 @@ $app->post('/admin/pedidos/excluir', function() use($app) {
         })
         ->name('excluir_pedido');        
         
+
+$app->get('/admin/pedidos/importar', function() use($app) {
+
+            $u = WebUser::getInstance();
+
+            $app->render('pedidos/importar.html.twig', array(
+                'menuPrincipal' => 'cadastro_pedido',
+                'user' => $u
+            ));
+        })
+        ->name('importar_pedidos');
+
+$app->post('/admin/pedidos/confirmar-importacao', function() use($app) {
+
+            if (!empty($_FILES['files']['name'])) {
+                $arquivo_csv = Config::$uploadCSVPath . 'csv_' . rand(100000, 999999) . '.csv';
+                $moveu = move_uploaded_file($_FILES['files']['tmp_name'], $arquivo_csv);
+
+                $csv = new parseCSV();
+                $csv->delimiter = ",";
+                $csv->input_encoding = "UTF-8";
+                $csv->parse($arquivo_csv);
+
+                $camposCSV = $csv->titles;
+                $camposImportacao = array(
+                    'titulo' => 'Título',
+                    'cliente' => 'CPF'
+                );
+
+                $camposCombinaveis = array(
+                    'nome', 'endereco'
+                );
+
+                $camposObrigatorios = array(
+                    'nome'
+                );
+
+                $camposDigitaveis = array(
+                );
+
+                if ($moveu) {
+                    $u = WebUser::getInstance();
+
+                    $app->render('pedidos/confirmar-importacao.html.twig', array(
+                        'arquivoCSV' => $arquivo_csv,
+                        'camposCSV' => $camposCSV,
+                        'camposImportacao' => $camposImportacao,
+                        'camposCombinaveis' => $camposCombinaveis,
+                        'camposObrigatorios' => $camposObrigatorios,
+                        'camposDigitaveis' => $camposDigitaveis,
+                        'menuPrincipal' => 'cadastro_pedido',
+                        'user' => $u
+                    ));
+                } else {
+                    $app->flash('erro', 'Não foi possível enviar o arquivo CSV');
+                    $app->redirectTo('importar_pedidos');
+                }
+            } else {
+                $app->flash('erro', 'Escolha um arquivo CSV');
+                $app->redirectTo('importar_pedidos');
+            }
+        })
+        ->name('confirmar_importacao_pedidos');
+
+
+$app->post('/admin/pedidos/realizar-importacao', function() use($app) {
+            $u = WebUser::getInstance();
+
+            $arquivo = $app->request->post('arquivo_csv');
+
+            $p = new parseCSV();
+            $p->delimiter = ",";
+            $p->input_encoding = "UTF-8";
+            $p->parse($arquivo);
+
+            $getValorCSV = function($dados, $campos) {
+                $valores = array();
+                foreach ($campos as $campoCSV) {
+                    if (!empty($campoCSV)) {
+                        $valores[] = $dados[$campoCSV];
+                    }
+                }
+
+                return count($valores) > 0 ? implode(" ", $valores) : "";
+            };
+
+            $em = Conexao::getEntityManager();
+
+            foreach ($p->data as $cliente) {
+                $C = new Cliente();
+                $C->setEmpresa($u->getUsuario()->getEmpresa());
+                $C->setNome($getValorCSV($cliente, $app->request->post('nome')));
+                $C->setEndereco($getValorCSV($cliente, $app->request->post('endereco')));
+                $C->setBairro($getValorCSV($cliente, $app->request->post('bairro')));
+                $C->setCidade($getValorCSV($cliente, $app->request->post('cidade')));
+                $C->setEstado($getValorCSV($cliente, $app->request->post('estado')));
+                $C->setCep($getValorCSV($cliente, $app->request->post('cep')));
+                $C->setCpf($getValorCSV($cliente, $app->request->post('cpf')));
+                $C->setCnpj($getValorCSV($cliente, $app->request->post('cnpj')));
+                $C->setDataCriacao(new DateTime());
+                $C->setEmail($getValorCSV($cliente, $app->request->post('email')));
+                $C->setLogin($getValorCSV($cliente, $app->request->post('login')));
+                $C->setSenha($getValorCSV($cliente, $app->request->post('senha')));
+
+                $em->persist($C);
+            }
+
+            $em->flush();
+
+            @unlink($arquivo);
+
+            $app->flash('sucesso', 'Pedidos importados com sucesso!');
+            $app->redirectTo('sucesso_importacao_pedidos', array('qtd' => count($p->data)));
+        })
+        ->name('realizar_importacao_pedidos');
+
+
+
+$app->get('/admin/pedidos/sucesso-importacao/:qtd', function($qtd) use($app) {
+
+            $u = WebUser::getInstance();
+
+            $app->render('pedidos/importacao-sucesso.html.twig', array(
+                'menuPrincipal' => 'cadastro_pedido',
+                'qtd' => $qtd,
+                'user' => $u
+            ));
+        })
+        ->name('sucesso_importacao_pedidos');
+
+
+$app->get('/admin/pedidos/erro-importacao', function() use($app) {
+
+            $u = WebUser::getInstance();
+
+            $app->render('pedidos/importacao-erro.html.twig', array(
+                'menuPrincipal' => 'cadastro_pedido',
+                'user' => $u
+            ));
+        })
+        ->name('erro_importacao_pedidos');        
+        
 /**
  * Listagem de pedidos
  */
