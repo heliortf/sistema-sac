@@ -8,6 +8,33 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class Relatorios {
     
+    function getMediaSemanalCriacaoAtendimentosPorSetor(Empresa $empresa){
+        $em = COnexao::getEntityManager();
+                
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('media', 'media_criacao')
+            ->addScalarResult('nome_area', 'nome_area');            
+        
+        $sql = "select avg(qtd) as media, nome_area FROM (
+                    select 
+                            count(t.atendimento_id) as qtd,
+                        a.area_nome as nome_area
+                    from 
+                            tb_atendimento t
+                            INNER JOIN tb_area a
+                        ON a.area_id = t.tb_area_area_id
+                    GROUP BY
+                            t.tb_empresa_empresa_id, t.tb_area_area_id, WEEK(t.data_criacao)
+                    ) as tabela
+                    ";
+        
+        $medias = $em->createNativeQuery($sql, $rsm)
+                            ->setParameter(1, $empresa->getId())
+                            ->getResult();
+        
+        return $medias;
+    }
+    
     function getAcessoDiarioSite(Empresa $empresa){
         $em = Conexao::getEntityManager();
         
