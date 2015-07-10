@@ -81,7 +81,8 @@ class SacMailer {
         
         $this->enviarEmail(array(
             'subject'   => "[ {$this->empresa->getNomeFantasia()} ] ".$params['subject'],
-            'body'      => $template
+            'body'      => $template,
+            'to'        => $params['to']
         ));
     }
     
@@ -104,10 +105,16 @@ class SacMailer {
         $s .= 'Atenciosamente,<br/>';
         $s .= '<b>SAC - '.$this->empresa->getNomeFantasia().'</b>';
         
+        $to = array();
+        if($c instanceof Cliente && $c->getEmail() != ""){
+            $to[] = $c->getEmail();
+        }
+        
         $this->enviarEmailTemplate(array(
             'subject'       => "Atendimento registrado",
             'mensagem'      => $s,
-            'url_logotipo'  => $params['url_logotipo']
+            'url_logotipo'  => $params['url_logotipo'],
+            'to'            => $to
         ));
     }
 }

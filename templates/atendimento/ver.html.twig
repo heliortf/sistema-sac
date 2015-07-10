@@ -47,6 +47,26 @@
                                     <p class="form-control-static">{{ atendimento.getStatus().getNome() }}</p>
                                 </div>
                             </div>
+                            {% if atendimento.getAvaliacao() != null %}
+                                <div class="form-group">
+                                    <label for="cliente" class="col-sm-2 control-label">Avalia&ccedil;&atilde;o:</label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static">
+                                            {% if atendimento.getAvaliacao() == 0 %}                                            
+                                                P&eacute;ssimo
+                                            {% elseif atendimento.getAvaliacao() == 1 %}
+                                                Ruim
+                                            {% elseif atendimento.getAvaliacao() == 2 %}
+                                                Regular
+                                            {% elseif atendimento.getAvaliacao() == 3 %}
+                                                Bom
+                                            {% elseif atendimento.getAvaliacao() == 4 %}
+                                                &Oacute;timo                                        
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endif %}
                             <div class="form-group">
                                 <label for="cliente" class="col-sm-2 control-label">&Aacute;rea:</label>
                                 <div class="col-sm-2">

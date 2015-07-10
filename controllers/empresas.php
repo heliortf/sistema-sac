@@ -273,3 +273,29 @@ $app->get('/admin/empresas(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina=
     ));
 })
 ->name('lista_empresas');
+
+
+$app->get('/:permalink/logotipo', function($permalink) use($app){    
+
+    $u = WebUser::getInstance();
+    
+    $E = new Empresas();
+    $Empresa = $E->getLista(array(
+        'permalink'     => $permalink,
+        'pagina'        => 1,
+        'qtdPorPagina'  => 1
+    ));        
+    
+    $nomeImagem = $Empresa['registros'][0]->getLogo();
+    
+    if(!empty($nomeImagem)){        
+        $arr = explode(".", $nomeImagem);
+        $extensao = $arr[count($arr) - 1];
+        
+        $imagem = Config::$uploadPath.$nomeImagem;
+    
+        $app->response->headers->set('Content-Type', 'image/'.$extensao);
+        $app->response->setBody(file_get_contents($imagem));
+    }
+})
+->name('ver_logotipo');

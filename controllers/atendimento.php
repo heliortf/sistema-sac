@@ -112,6 +112,13 @@ $app->post('/atendimentos/salvar', function() use($app) {
     
     $a = $Atendimentos->salvar($a);
     
+    $Mailer = new SacMailer($u->getUsuario()->getEmpresa());
+    $Mailer->enviarEmailInicioAtendimento(array(
+        'atendimento'   => $a,
+        'cliente'       => $a->getCliente(),
+        'url_logotipo'  => $app->urlFor('ver_logotipo', array('permalink' => $u->getUsuario()->getEmpresa()->getPermalink()))
+    ));
+    
     $app->redirect($app->urlFor('ver_atendimento', array('id' => $a->getId())));
 })
 ->name('salvar_atendimento');
@@ -345,6 +352,11 @@ function($pagina=1, $qtdPorPagina=20, $numero='', $documento='', $cliente='') us
             'cliente'       => $cliente,
             'numero'        => $numero
         );
+        
+        if($user->getUsuario()->isResponsavelArea()){
+            $status = $A->getStatus(array('usuario' => $user->getUsuario(), 'nome' => StatusAtendimento::STATUS_ABERTO));
+            $pListaAtendimentos['notStatusAtendimento'] = $status->getId();
+        }
     }
     // Se for cliente
     else {
@@ -368,7 +380,7 @@ function($pagina=1, $qtdPorPagina=20, $numero='', $documento='', $cliente='') us
     
     if(!empty($cliente) && $cliente != '-'){
         $parametros['cliente'] = $cliente;
-    }
+    }    
     
     $atendimentos = $A->getListaAtendimentos($pListaAtendimentos);
     

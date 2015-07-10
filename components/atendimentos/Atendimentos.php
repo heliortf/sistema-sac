@@ -128,6 +128,11 @@ class Atendimentos {
             $pDql['statusAtendimento'] = $params['statusAtendimento'];
         }
         
+        if(isset($params['notStatusAtendimento']) && !empty($params['notStatusAtendimento'])){
+            $dql .= " AND a.status <> :notStatusAtendimento ";
+            $pDql['notStatusAtendimento'] = $params['notStatusAtendimento'];            
+        }
+        
         if(isset($params['responsavelAtendimento']) && !empty($params['responsavelAtendimento'])){
             $dql .= " AND a.atendente = :responsavelAtendimento ";
             $pDql['responsavelAtendimento'] = $params['responsavelAtendimento'];
@@ -155,7 +160,7 @@ class Atendimentos {
             $pDql['dataFim'] = $params['dataFim'];
         }
         
-        $inicio = ($params['pagina'] - 1) * $params['qtdPorPagina'];        
+        $inicio = ($params['pagina'] - 1) * $params['qtdPorPagina'];                
         
         $query = $em->createQuery("select a $dql");
         $atendimentos = $query->setParameters($pDql)
@@ -212,15 +217,15 @@ class Atendimentos {
         return $atendimento;
     }
 	
-	/**
-	 * Salva o comentario em um determinado atendimento
-	 * 
-	 * @param ComentarioAtendimento $comentario
-	 */
-	public function salvarComentario(ComentarioAtendimento $comentario){
-		$em = Conexao::getEntityManager();
-		$em->persist($comentario);
-		$em->flush();
-		return $comentario;
-	}
+    /**
+     * Salva o comentario em um determinado atendimento
+     * 
+     * @param ComentarioAtendimento $comentario
+     */
+    public function salvarComentario(ComentarioAtendimento $comentario){
+            $em = Conexao::getEntityManager();
+            $em->persist($comentario);
+            $em->flush();
+            return $comentario;
+    }    
 }
