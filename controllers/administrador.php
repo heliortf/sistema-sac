@@ -1292,10 +1292,41 @@ $app->get('/admin/pedidos(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina =
 $app->get('/admin/dashboard', function() use($app) {
             $u = WebUser::getInstance();
 
-            if($u->getUsuario()->getEmpresa()->isAdmin() == false){            
+            if($u->getUsuario()->getEmpresa()->isAdmin() == false){ 
+                
+                $qtdAtendentes = 0;
+                $qtdResponsaveis = 0;
+                $qtdAreas = 0;
+                $qtdAdministradores = 0;
+                
+                $Empresa = $u->getUsuario()->getEmpresa();
+                if($Empresa instanceof Empresa){
+                    $usuarios = $Empresa->getUsuarios();
+                    foreach($usuarios as $usuario){
+                        if($usuario instanceof Usuario){
+                            if($usuario->isAdministrador()){
+                                $qtdAdministradores++;
+                            }
+                            else if($usuario->isAtendente()){
+                                $qtdAtendentes++;
+                            }
+                            else if($usuario->isResponsavelArea()){
+                                $qtdResponsaveis++;
+                            }
+                        }
+                    }
+                    
+                    $areas = $Empresa->getAreas();
+                    $qtdAreas = count($areas);
+                }
+                
                 $app->render('admin/dashboard.html.twig', array(
                     'menuPrincipal' => 'dashboard',
-                    'user' => $u
+                    'user' => $u,
+                    'qtdAtendentes' => $qtdAtendentes,
+                    'qtdResponsaveis' => $qtdResponsaveis,
+                    'qtdAdministradores' => $qtdAdministradores,
+                    'qtdAreas'            => $qtdAreas
                 ));
             }
             else {
