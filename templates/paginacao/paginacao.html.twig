@@ -1,30 +1,32 @@
-<ul class="pagination pagination-sm no-margin pull-right">                                        
-    {% if paginacao.temAnterior() == false %}
-        <li class="disabled">
-            <a href="javascript:void(0);" title="Primeiro">&laquo;&laquo;</a>
-        </li> 
-        <li class="disabled">
-            <a href="javascript:void(0);" title="Anterior">&laquo;</a>
-        </li> 
-    {% else %}
-        <li class="">
-            <a href="{{ urlFor(paginacao.getRota(), paginacao.getParametros({ 'pagina' : 1 })) }}" title="Primeiro">&laquo;&laquo;</a>
-        </li> 
-        <li class="">
-            <a href="{{ urlFor(paginacao.getRota(), paginacao.getParametros({ 'pagina' : paginacao.getPaginaAnterior() })) }}" title="Anterior">&laquo;</a>
-        </li> 
-    {% endif %}                                    
-    {% for pagina in 1.. paginacao.qtdPaginas %}
-        <li {% if pagina == paginacao.pagina %}class="active"{% endif %}>
-            <a href="{{ urlFor(paginacao.getRota(), paginacao.getParametros({ 'pagina' : pagina })) }}">{{ pagina }}</a>
-        </li>
-    {% endfor %}
-    
-    {% if paginacao.temProximo() == true %}
-        <li><a href="{{ urlFor(paginacao.getRota(), paginacao.getParametros({ 'pagina' : paginacao.getProximaPagina() })) }}" title="Pr&oacute;ximo">&raquo;</a></li>
-        <li><a href="{{ urlFor(paginacao.getRota(), paginacao.getParametros({ 'pagina' : paginacao.getQtdPaginas() })) }}" title="&Uacute;ltimo">&raquo;&raquo;</a></li>
-    {% else %} 
-        <li class="disabled"><a href="javascript:void(0);" title="Pr&oacute;ximo">&raquo;</a></li>
-        <li class="disabled"><a href="javascript:void(0);" title="&Uacute;ltimo">&raquo;&raquo;</a></li>
-    {% endif %}
-</ul>
+{% if paginacao.qtdPaginas > 0 %}
+    <ul class="pagination pagination-sm no-margin pull-right">                                        
+        {% if paginacao.temAnterior() == false %}
+            <li class="disabled">
+                <a href="javascript:void(0);" title="Primeiro">&laquo;&laquo;</a>
+            </li> 
+            <li class="disabled">
+                <a href="javascript:void(0);" title="Anterior">&laquo;</a>
+            </li> 
+        {% else %}
+            <li class="">
+                <a href="{{ urlFor(paginacao.getRota(), paginacao.getParametros({ 'pagina' : 1 })) }}" title="Primeiro">&laquo;&laquo;</a>
+            </li> 
+            <li class="">
+                <a href="{{ urlFor(paginacao.getRota(), paginacao.getParametros({ 'pagina' : paginacao.getPaginaAnterior() })) }}" title="Anterior">&laquo;</a>
+            </li> 
+        {% endif %}                                    
+        {% for pagina in 1.. paginacao.qtdPaginas %}
+            <li {% if pagina == paginacao.pagina %}class="active"{% endif %}>
+                <a href="{{ urlFor(paginacao.getRota(), paginacao.getParametros({ 'pagina' : pagina })) }}">{{ pagina }}</a>
+            </li>
+        {% endfor %}
+
+        {% if paginacao.temProximo() == true %}
+            <li><a href="{{ urlFor(paginacao.getRota(), paginacao.getParametros({ 'pagina' : paginacao.getProximaPagina() })) }}" title="Pr&oacute;ximo">&raquo;</a></li>
+            <li><a href="{{ urlFor(paginacao.getRota(), paginacao.getParametros({ 'pagina' : paginacao.getQtdPaginas() })) }}" title="&Uacute;ltimo">&raquo;&raquo;</a></li>
+        {% else %} 
+            <li class="disabled"><a href="javascript:void(0);" title="Pr&oacute;ximo">&raquo;</a></li>
+            <li class="disabled"><a href="javascript:void(0);" title="&Uacute;ltimo">&raquo;&raquo;</a></li>
+        {% endif %}
+    </ul>
+{% endif %}

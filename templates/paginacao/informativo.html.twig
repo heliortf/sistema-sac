@@ -1,5 +1,7 @@
 <div class="row informacoes-paginacao">
     <div class="col-md-12">
-        Exibindo {{ paginacao.inicio + 1 }} - {{ paginacao.fim }} de {{ paginacao.qtdRegistros }} registro(s)
+        {% if paginacao.qtdRegistros > 0 %}
+            Exibindo {{ paginacao.inicio + 1 }} - {{ paginacao.fim }} de {{ paginacao.qtdRegistros }} registro(s)
+        {% endif %}
     </div>
 </div>
