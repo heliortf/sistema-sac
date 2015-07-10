@@ -57,3 +57,15 @@ $U3->setTelefone(27685432);
 $em->persist($U3);
 $em->flush();
 
+$qtdAcessosDistribuidos = 2000;
+
+for($i=0;$i<$qtdAcessosDistribuidos;$i++){
+    $D = new DateTime("2015-01-01");
+    $D->add(new DateInterval("P".rand(5, 190)."D"));
+    
+    $A = new AcessoEmpresa($E);
+    $A->setDataAcesso($D);
+    
+    $em->persist($A);    
+}
+$em->flush();

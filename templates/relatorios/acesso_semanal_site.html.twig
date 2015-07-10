@@ -1,0 +1,56 @@
+{% extends "layout/sistema.html.twig" %}
+{% block titulo %}Relat&oacute;rios Gerenciais{% endblock %}
+{% block conteudo %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Relat&oacute;rios Gerenciais</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Ver Relat&oacute;rio</a></li>
+        </ol>
+    </section>        
+    <!-- Main content -->
+    <section class="content">
+        <div class="row relatorios-gerenciais">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 class="box-title">Relat&oacute;rio de Acesso Semanal ao Site da Effort</h3>
+                            </div>                                                        
+                        </div>
+                    </div>
+                    <div class="box-body">                        
+                        <div class="row">
+                            <div class="col-md-12 ver-relatorio">                                                                                             
+                                <table class="table table-bordered" style="margin-top: 30px;">
+                                    <thead>
+                                        <tr>
+                                            <th>M&ecirc;s</th>
+                                            <th>Per&iacute;odo</th>
+                                            <th>Qtd Acessos</th>                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for acesso in acessos %}
+                                            <tr>
+                                                <td>{{ meses[acesso.mes] }}</td>
+                                                <td>{{ acesso.inicio_semana|format("d/m/Y") }} &agrave; {{ acesso.fim_semana|format("d/m/Y") }}</td>                                                    
+                                                <td>{{ acesso.qtd_acessos }}</td>                                                
+                                            </tr>                                            
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="9">Nenhum resultado encontrado</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>                                
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->                
+                </div>
+            </div>
+        </div>   <!-- /.row -->
+    </section><!-- /.content -->            
+{% endblock %}

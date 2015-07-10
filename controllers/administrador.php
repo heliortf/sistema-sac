@@ -35,13 +35,82 @@ $app->get('/admin/relatorios', function() use($app) {
             $user = WebUser::getInstance();
 
 //    echo "<pre>"; print_r($atendimentos); echo "</pre>";
-
-            $app->render('relatorios/consultar.html.twig', array(
-                'menuPrincipal' => 'relatorios_gerenciais',
-                'user' => $user
-            ));
+            if($user->getUsuario()->getEmpresa()->isAdmin() == false){
+                $app->render('relatorios/consultar.html.twig', array(
+                    'menuPrincipal' => 'relatorios_gerenciais',
+                    'user' => $user
+                ));
+            }
+            else {
+                $app->render('relatorios/consultar_effort.html.twig', array(
+                    'menuPrincipal' => 'relatorios_gerenciais',
+                    'user' => $user
+                ));
+            }
         })
         ->name('relatorios_gerenciais_admin');
+
+/**
+ * Tela de consulta de atendimentos
+ */
+$app->get('/admin/relatorios/empresas-cadastradas', function() use($app) {
+
+            $user = WebUser::getInstance();
+            $R = new Relatorios();
+            
+            $empresas = $R->getEmpresasCadastradas();
+
+            $app->render('relatorios/empresas_cadastradas.html.twig', array(
+                'menuPrincipal' => 'relatorios_gerenciais',
+                'empresas' => $empresas,
+                'user' => $user,
+                'paginacao' => array(
+                    'inicio' => 0,
+                    'fim' => 3,
+                    'qtdRegistros' => 3
+                )
+            ));
+        })
+        ->name('relatorio_empresas_cadastradas');
+
+/**
+ * relatorio de acesso semanal
+ */
+$app->get('/admin/relatorios/acesso-semanal-site', function() use($app) {
+
+            $user = WebUser::getInstance();
+            $R = new Relatorios();
+            
+            $acessos = $R->getAcessoSemanalSite($user->getUsuario()->getEmpresa());
+
+            $meses = array(
+                1 => 'Janeiro',
+                2 => 'Fevereiro',
+                3 => 'Março',
+                4 => 'Abril',
+                5 => 'Maio',
+                6 => 'Junho',
+                7 => 'Julho',
+                8 => 'Agosto',
+                9 => 'Setembro',
+                10 => 'Outubro',
+                11 => 'Novembro',
+                12 => 'Dezembro'
+            );
+            
+            $app->render('relatorios/acesso_semanal_site.html.twig', array(
+                'menuPrincipal' => 'relatorios_gerenciais',
+                'acessos' => $acessos,
+                'user' => $user,
+                'meses' => $meses,
+                'paginacao' => array(
+                    'inicio' => 0,
+                    'fim' => 3,
+                    'qtdRegistros' => 3
+                )
+            ));
+        })
+        ->name('relatorio_acesso_semanal_site');
 
 /**
  * Tela de consulta de atendimentos
