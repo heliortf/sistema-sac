@@ -55,10 +55,11 @@ class Relatorios {
                             INNER JOIN tb_area a
                         ON a.area_id = t.tb_area_area_id
                     WHERE
-                        t.empresa_id = ?
+                        t.tb_empresa_empresa_id = ?
                     GROUP BY
                             t.tb_empresa_empresa_id, t.tb_area_area_id, WEEK(t.data_criacao)
                     ) as tabela
+                    GROUP BY nome_area
                     ";
 
         $medias = $em->createNativeQuery($sql, $rsm)

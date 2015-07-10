@@ -1320,7 +1320,8 @@ $app->get('/admin/dashboard', function() use($app) {
                     $qtdAreas = count($areas);
                 }
                 
-                
+                $R = new Relatorios();
+                $mediaCriacaoSemana = $R->getMediaSemanalCriacaoAtendimentosPorSetor($Empresa);                
                 
                 $app->render('admin/dashboard.html.twig', array(
                     'menuPrincipal' => 'dashboard',
@@ -1328,7 +1329,8 @@ $app->get('/admin/dashboard', function() use($app) {
                     'qtdAtendentes' => $qtdAtendentes,
                     'qtdResponsaveis' => $qtdResponsaveis,
                     'qtdAdministradores' => $qtdAdministradores,
-                    'qtdAreas'            => $qtdAreas
+                    'qtdAreas'            => $qtdAreas,
+                    'mediaCriacaoSemana'    => $mediaCriacaoSemana
                 ));
             }
             else {
