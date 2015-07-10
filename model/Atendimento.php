@@ -35,14 +35,14 @@ class Atendimento implements ResourceInterface {
      * @JoinColumn(name="tb_cliente_cliente_id", referencedColumnName="cliente_id", nullable=true)
      */
     private $cliente;
-    
+
     /**
      *
      * @var Empresa
      * @ManyToOne(targetEntity="Empresa", inversedBy="solicitacoes")
      * @JoinColumn(name="tb_empresa_cliente_empresarial_id", referencedColumnName="empresa_id", nullable=true)
      * /
-    private $clienteEmpresarial;*/
+      private $clienteEmpresarial; */
 
     /**
      * Area onde o atendimento está
@@ -85,6 +85,14 @@ class Atendimento implements ResourceInterface {
     private $comentarios;
 
     /**
+     *
+     * @var DocumentoCliente
+     * @ManyToOne(targetEntity="DocumentoCliente", inversedBy="atendimentos")
+     * @JoinColumn(name="tb_documento_documento_id", referencedColumnName="documento_id", nullable=true)
+     */
+    private $documento;
+
+    /**
      * Construtor
      */
     function __construct() {
@@ -123,14 +131,14 @@ class Atendimento implements ResourceInterface {
      * @Column(type="text", name="conclusao", nullable=true)
      */
     private $conclusao;
-    
+
     /**
      *
      * @var int
      * @Column(type="integer", name="avaliacao", length=1, nullable=true)
      */
     private $avaliacao;
-    
+
     /**
      * Data de criação do atendimento
      * 
@@ -190,14 +198,14 @@ class Atendimento implements ResourceInterface {
 
     function getComentariosPublicos() {
         $c = new ArrayCollection();
-        foreach($this->comentarios as $cmt){
-            if($cmt->isPublico()){
+        foreach ($this->comentarios as $cmt) {
+            if ($cmt->isPublico()) {
                 $c[] = $cmt;
             }
         }
         return $c;
     }
-    
+
     function getId() {
         return $this->id;
     }
@@ -309,7 +317,7 @@ class Atendimento implements ResourceInterface {
     function setAvaliacao($avaliacao) {
         $this->avaliacao = $avaliacao;
     }
-        
+
     /**
      * Retorna a ID do atendimento como identificação de recurso
      * para o Zend ACL
@@ -325,18 +333,24 @@ class Atendimento implements ResourceInterface {
      * 
      * @return Empresa
      * /
-    function getClienteEmpresarial() {
-        return $this->clienteEmpresarial;
-    }*/
+      function getClienteEmpresarial() {
+      return $this->clienteEmpresarial;
+      } */
 
     /**
      * Define o "Cliente-Empresa". Utilizado somente pela Effort
      * 
      * @param Empresa $clienteEmpresarial
      * /
-    function setClienteEmpresarial(Empresa $clienteEmpresarial) {
-        $this->clienteEmpresarial = $clienteEmpresarial;
-    }*/
+      function setClienteEmpresarial(Empresa $clienteEmpresarial) {
+      $this->clienteEmpresarial = $clienteEmpresarial;
+      } */
+    function getDocumento() {
+        return $this->documento;
+    }
 
-    
+    function setDocumento($documento) {
+        $this->documento = ($documento instanceof DocumentoCliente) ? $documento : null;
+    }
+
 }

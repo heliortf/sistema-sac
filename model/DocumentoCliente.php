@@ -1,5 +1,6 @@
 <?php
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -33,12 +34,18 @@ class DocumentoCliente {
      */
     private $cliente;
 	
+    /**
+     *
+     * @var ArrayCollection
+     * @OneToMany(targetEntity="Atendimento", mappedBy="documento")
+     */
+    private $atendimentos;
     
     /**
      * Construtor
      */
     function __construct() {
-        
+        $this->atendimentos = new ArrayCollection();
     }
     
     /**
@@ -89,5 +96,13 @@ class DocumentoCliente {
 
     function setTitulo($titulo) {
         $this->titulo = $titulo;
+    }
+    
+    function getAtendimentos() {
+        return $this->atendimentos;
+    }
+
+    function setAtendimentos(ArrayCollection $atendimentos) {
+        $this->atendimentos = $atendimentos;
     }
 }

@@ -86,6 +86,15 @@ $app->post('/atendimentos/salvar', function() use($app) {
         'usuario' 	=> $u->getUsuario(),
         'nome'	=> StatusAtendimento::STATUS_ABERTO
     ));
+        
+    $documento = null;
+    if($app->request->post('documento') != ''){
+        $P = new Pedidos();
+        $documento = $P->getPedido(array(
+            'id' => $app->request->post('documento'),
+            'usuario' => $u->getUsuario()
+        ));
+    }
 	
     # Cria o atendimento
     $a = new Atendimento();
@@ -93,6 +102,7 @@ $app->post('/atendimentos/salvar', function() use($app) {
     $a->setEmpresa($u->getUsuario()->getEmpresa());    
     $a->setCliente($cliente);
     $a->setAtendente(null);
+    $a->setDocumento($documento);
     $a->setArea($area);
     $a->setStatus($status);
     $a->setTitulo($app->request->post('titulo'));
