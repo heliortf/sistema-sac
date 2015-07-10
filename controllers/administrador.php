@@ -890,7 +890,7 @@ $app->post('/admin/pedidos/salvar', function() use($app) {
             $C = new Clientes();
             $cliente = $C->getCliente(array(
                 'id'        => $app->request->post('cliente'),
-                'usuario'   => $u
+                'usuario'   => $u->getUsuario()
             ));
             
             $P = new Pedidos();
@@ -923,12 +923,101 @@ $app->get('/admin/pedidos/:id', function($id) use($app) {
 
             $app->render('pedidos/ver.html.twig', array(
                 'menuPrincipal' => 'cadastro_pedido',
-                'pedido' => $pedido,
+                'pedido' => $pedido,                
                 'user' => $u
             ));
         })
-        ->name('ver_cliente')
+        ->name('ver_pedido')
         ->conditions(array('id' => '[0-9]{1,}'));
+        
+
+$app->get('/admin/pedidos/:id/editar', function($id) use($app) {
+
+            $u = WebUser::getInstance();
+
+            $P = new Pedidos();
+            $pedido = $P->getPedido(array(
+                'usuario' => $u->getUsuario(),
+                'id' => $id
+            ));
+            
+            $C = new Clientes();
+            $clientes = $C->getListaClientes(array(
+                'usuario' => $u->getUsuario(),
+                'pagina' => 1,
+                'qtdPorPagina' => 400
+            ));
+
+            $app->render('pedidos/editar.html.twig', array(
+                'menuPrincipal' => 'cadastro_pedido',
+                'pedido' => $pedido,
+                'clientes' => $clientes['registros'],
+                'user' => $u
+            ));
+        })
+        ->name('editar_pedido');
+
+
+
+$app->post('/admin/pedidos/atualizar', function() use($app) {
+
+            $u = WebUser::getInstance();
+
+            // Consulta a cliente
+            $A = new Pedidos();
+            $Pedido = $A->getPedido(array(
+                'usuario' => $u->getUsuario(),
+                'id' => $app->request->post('id')
+            ));
+
+            $C = new Clientes();
+            $Cliente = $C->getCliente(array(
+                'usuario' => $u->getUsuario(),
+                'id' => $app->request->post('cliente')
+            ));
+                        
+            if ($Pedido instanceof DocumentoCliente) {
+                $Pedido->setTitulo($app->request->post('titulo'));
+                $Pedido->setCliente($Cliente);
+                $A->salvar($Pedido);
+
+                $app->flash('sucesso', 'Pedido atualizado com sucesso!');
+                $app->redirectTo('ver_pedido', array(
+                    'id' => $Pedido->getId()
+                ));
+            } else {
+                $app->flash('erro', 'Pedido não encontrado');
+                $app->redirectTo('lista_pedidos');
+            }
+        })
+        ->name('atualizar_pedido');
+        
+$app->post('/admin/pedidos/excluir', function() use($app) {
+
+            $u = WebUser::getInstance();
+
+            // Classe que persiste o usuario
+            $P = new Pedidos();
+
+            // Cliente
+            $Pedido = $P->getPedido(array(
+                'usuario'   => $u->getUsuario(),
+                'id'        => $app->request->post('id')
+            ));
+
+            if ($Pedido instanceof DocumentoCliente) {
+                $P->excluir($Pedido);
+
+                $app->flash('successo', 'Pedido excluído com sucesso!');
+                $app->redirectTo('lista_pedidos');
+            } else {
+                $app->flash('erro', 'Pedido não encontrado!');
+                $app->redirectTo('ver_pedido', array(
+                    'id' => $Pedido->getId()
+                ));
+            }
+        })
+        ->name('excluir_pedido');        
         
 /**
  * Listagem de pedidos

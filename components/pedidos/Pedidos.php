@@ -98,7 +98,7 @@ class Pedidos {
 
     public function excluir(DocumentoCliente $cliente) {
         $em = Conexao::getEntityManager();
-        $em->delete($cliente);
+        $em->remove($cliente);
         $em->flush();
     }	
 }

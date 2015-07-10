@@ -98,7 +98,7 @@ class Clientes {
 
     public function excluir(Cliente $cliente) {
         $em = Conexao::getEntityManager();
-        $em->delete($cliente);
+        $em->remove($cliente);
         $em->flush();
     }	
 }
