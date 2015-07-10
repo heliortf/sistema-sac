@@ -18,7 +18,7 @@ use Symfony\Component\Console\Helper\Table;
 class StatusAtendimento {
     
     const STATUS_ABERTO = 'Em Aberto';
-    const STATUS_ANALISE_AREA = 'Análise Área';
+    const STATUS_ANALISE_AREA = 'Em Análise pela Área Responsável';
     const STATUS_CONCLUIDO_E_AVALIADO = 'Concluído - Avaliado';
     const STATUS_CONCLUIDO_NAO_AVALIADO = 'Concluído - Não Avaliado';
     

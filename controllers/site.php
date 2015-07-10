@@ -25,6 +25,13 @@ $app->get('/', function() use($app) {
         }
     }
     else {    
+        
+        // Cadastra o acesso ao site
+        $em = Conexao::getEntityManager();
+        $E = new Empresas();        
+        $em->persist(new AcessoEmpresa($E->getAdmin()));
+        $em->flush();
+        
         $app->render('home/index.html.twig', array(
             'user' => $user,        
             'flash' => isset($_SESSION['slim.flash']) ? $_SESSION['slim.flash'] : false

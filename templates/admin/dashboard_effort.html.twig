@@ -1,0 +1,171 @@
+{% extends "layout/sistema.html.twig" %}
+{% block titulo %}Dashboard{% endblock %}
+{% block conteudo %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Dashboard</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Dashboard</a></li>
+        </ol>
+    </section>        
+    <!-- Main content -->
+    <section class="content">
+        <div class="row tela-dashboard">
+            <div class="col-md-12">
+                <div class="row quantitativos">
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                <h3>12</h3>
+                                <p>Empresas</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-ios-people"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <div class="box-header with-border">                        
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h3 class="box-title">Acessos por dia ao site</h3>
+                                    </div>                                                        
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <canvas id="graf_media_atend_semana" width="400" height="70"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>               
+            </div>    
+    </section>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="plugins/amcharts/amcharts.js"></script>
+    <script type="text/javascript" src="plugins/amcharts/serial.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var chart;
+
+            var chartData = [
+                {
+                    "country": "USA",
+                    "visits": 4025
+                },
+                {
+                    "country": "China",
+                    "visits": 1882
+                },
+                {
+                    "country": "Japan",
+                    "visits": 1809
+                },
+                {
+                    "country": "Germany",
+                    "visits": 1322
+                },
+                {
+                    "country": "UK",
+                    "visits": 1122
+                },
+                {
+                    "country": "France",
+                    "visits": 1114
+                },
+                {
+                    "country": "India",
+                    "visits": 984
+                },
+                {
+                    "country": "Spain",
+                    "visits": 711
+                },
+                {
+                    "country": "Netherlands",
+                    "visits": 665
+                },
+                {
+                    "country": "Russia",
+                    "visits": 580
+                },
+                {
+                    "country": "South Korea",
+                    "visits": 443
+                },
+                {
+                    "country": "Canada",
+                    "visits": 441
+                },
+                {
+                    "country": "Brazil",
+                    "visits": 395
+                },
+                {
+                    "country": "Italy",
+                    "visits": 386
+                },
+                {
+                    "country": "Australia",
+                    "visits": 384
+                },
+                {
+                    "country": "Taiwan",
+                    "visits": 338
+                },
+                {
+                    "country": "Poland",
+                    "visits": 328
+                }
+            ];
+
+
+            AmCharts.ready(function () {
+                // SERIAL CHART
+                chart = new AmCharts.AmSerialChart();
+                chart.dataProvider = chartData;
+                chart.categoryField = "country";
+                chart.startDuration = 1;
+
+                // AXES
+                // category
+                var categoryAxis = chart.categoryAxis;
+                categoryAxis.labelRotation = 90;
+                categoryAxis.gridPosition = "start";
+
+                // value
+                // in case you don't want to change default settings of value axis,
+                // you don't need to create it, as one value axis is created automatically.
+
+                // GRAPH
+                var graph = new AmCharts.AmGraph();
+                graph.valueField = "visits";
+                graph.balloonText = "[[category]]: <b>[[value]]</b>";
+                graph.type = "column";
+                graph.lineAlpha = 0;
+                graph.fillAlphas = 0.8;
+                chart.addGraph(graph);
+
+                // CURSOR
+                var chartCursor = new AmCharts.ChartCursor();
+                chartCursor.cursorAlpha = 0;
+                chartCursor.zoomable = false;
+                chartCursor.categoryBalloonEnabled = false;
+                chart.addChartCursor(chartCursor);
+
+                chart.creditsPosition = "top-right";
+
+                chart.write("chartdiv");
+            });
+        });
+    </script>
+{% endblock %}

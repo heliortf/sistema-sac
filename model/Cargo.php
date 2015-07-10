@@ -102,5 +102,17 @@ class Cargo {
     function setNome($nome) {
         $this->nome = $nome;
     }
+    
+    function isResponsavelArea(){
+        return $this->nome == self::RESPONSAVEL_AREA ? true : false;
+    }
+    
+    function isAtendente(){
+        return $this->nome == self::ATENDENTE ? true : false;
+    }
+    
+    function isAdministrador(){
+        return $this->nome == self::ADMINISTRADOR ? true : false;
+    }
 }
 

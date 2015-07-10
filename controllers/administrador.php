@@ -863,9 +863,17 @@ $app->get('/admin/clientes(/:pagina(/:qtdPorPagina(/:nome)))', function($pagina 
 $app->get('/admin/dashboard', function() use($app) {
             $u = WebUser::getInstance();
 
-            $app->render('admin/dashboard.html.twig', array(
-                'menuPrincipal' => 'dashboard',
-                'user' => $u
-            ));
+            if($u->getUsuario()->getEmpresa()->isAdmin() == false){            
+                $app->render('admin/dashboard.html.twig', array(
+                    'menuPrincipal' => 'dashboard',
+                    'user' => $u
+                ));
+            }
+            else {
+                $app->render('admin/dashboard_effort.html.twig', array(
+                    'menuPrincipal' => 'dashboard',
+                    'user' => $u
+                ));
+            }
         })
         ->name('dashboard_admin');

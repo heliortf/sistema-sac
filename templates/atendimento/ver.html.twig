@@ -162,9 +162,11 @@
                                                             <span class="caret"></span>
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                                            <li role="presentation" class="dropdown-header">Na minha &aacute;rea</li>
-                                                            <li><a href="javascript:void(0);" data-area_id="responsavel_area">Respons&aacute;vel da minha &Aacute;rea</a></li>
-                                                            <li role="presentation" class="dropdown-header">Outras &aacute;reas</li>
+                                                            {% if user.getUsuario().getCargo().isAtendente() == true %}
+                                                                <li role="presentation" class="dropdown-header">{{ user.getUsuario().getArea().getNome() }}</li>
+                                                                <li><a href="javascript:void(0);" data-area_id="responsavel_area">Respons&aacute;vel do {{ user.getUsuario().getArea().getNome() }}</a></li>                                                            
+                                                                <li role="presentation" class="dropdown-header">Outras &aacute;reas</li>
+                                                            {% endif %}
                                                             {% for a in areas %}
                                                                 <li>
                                                                     {% if a.getId() != atendimento.getArea().getId() %}
