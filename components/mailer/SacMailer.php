@@ -32,11 +32,19 @@ class SacMailer {
         $this->mailer->FromName = $Empresa->getNomeFantasia();
         $this->mailer->CharSet  = 'UTF-8';
         $this->mailer->Host     = 'imap.gmail.com';
-        $this->mailer->Username = 'heliortf@gmail.com';
-        $this->mailer->Password = 'deusesenhor';
-        $this->mailer->Port     = 25;
+        $this->mailer->Username = 'effortsistemas@gmail.com';
+        $this->mailer->Password = 'effortgoogle';
+//        $this->mailer->SMTPSecure = 'ssl';
+        $this->mailer->Port     = 587;
         $this->mailer->SMTPAuth = true;
+        $this->mailer->isSMTP();
     }
+    
+    public function getMailer(){
+        return $this->mailer;
+    }
+    
+    
     
     /**
      * Envia um e-mail
@@ -50,7 +58,8 @@ class SacMailer {
         $this->mailer->Body     = $params['body'];        
         
         foreach($params['to'] as $to){
-            $this->mailer->addAddress($to);
+            var_dump($to);
+            $this->mailer->addAddress($to, "");
         }        
         
         $this->mailer->isHTML(true);
@@ -79,7 +88,7 @@ class SacMailer {
             $template = str_replace($variavel, $valor, $template);
         }
         
-        $this->enviarEmail(array(
+        return $this->enviarEmail(array(
             'subject'   => "[ {$this->empresa->getNomeFantasia()} ] ".$params['subject'],
             'body'      => $template,
             'to'        => $params['to']
@@ -110,7 +119,7 @@ class SacMailer {
             $to[] = $c->getEmail();
         }
         
-        $this->enviarEmailTemplate(array(
+        return $this->enviarEmailTemplate(array(
             'subject'       => "Atendimento registrado",
             'mensagem'      => $s,
             'url_logotipo'  => $params['url_logotipo'],
