@@ -32,8 +32,8 @@ class SacMailer {
         $this->mailer->FromName = $Empresa->getNomeFantasia();
         $this->mailer->CharSet  = 'UTF-8';
         $this->mailer->Host     = 'imap.gmail.com';
-        $this->mailer->Username = 'effortsistemas@gmail.com';
-        $this->mailer->Password = 'effortgoogle';
+        $this->mailer->Username = 'sigac@gmail.com';
+        $this->mailer->Password = 'google';
 //        $this->mailer->SMTPSecure = 'ssl';
         $this->mailer->Port     = 587;
         $this->mailer->SMTPAuth = true;
@@ -67,7 +67,7 @@ class SacMailer {
     }
     
     /**
-     * Envia um e-mail a partir do template original da effort
+     * Envia um e-mail a partir do template original da sigac
      * 
      * @param array $params
      *          string $url_logotipo
@@ -134,7 +134,7 @@ class SacMailer {
         $s .= '</table>';
         $s .= "<br/><br/>";
         $s .= "Voc&ecirc; pode acessar este atendimento através do site abaixo: <br/><br/>";
-        $s .= '<b>Site:</b> <a href="http://effort.helioequipamentos.com.br/'.$this->empresa->getPermalink().'">http://effort.helioequipamentos.com.br/'.$this->empresa->getPermalink().'</a><br/><br/>';
+        $s .= '<b>Site:</b> <a href="http://sigac.helioequipamentos.com.br/'.$this->empresa->getPermalink().'">http://sigac.helioequipamentos.com.br/'.$this->empresa->getPermalink().'</a><br/><br/>';
         $s .= "<b>Login:</b> {$c->getLogin()}<br/>";
         $s .= "<b>Senha:</b> {$c->getSenha()}<br/><br/><br/>";
         $s .= 'Atenciosamente,<br/>';
@@ -192,7 +192,7 @@ class SacMailer {
         $s .= '</table>';
         $s .= "<br/><br/>";
         $s .= "Voc&ecirc; pode acessar este atendimento através do site abaixo: <br/><br/>";
-        $s .= '<b>Site:</b> <a href="http://effort.helioequipamentos.com.br/'.$this->empresa->getPermalink().'">http://effort.helioequipamentos.com.br/'.$this->empresa->getPermalink().'</a><br/><br/>';
+        $s .= '<b>Site:</b> <a href="http://sigac.helioequipamentos.com.br/'.$this->empresa->getPermalink().'">http://sigac.helioequipamentos.com.br/'.$this->empresa->getPermalink().'</a><br/><br/>';
         $s .= "<b>Login:</b> {$c->getLogin()}<br/>";
         $s .= "<b>Senha:</b> {$c->getSenha()}<br/><br/><br/>";
         $s .= 'Atenciosamente,<br/>';
