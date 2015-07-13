@@ -28,5 +28,5 @@ $classes = array(
 $tool->dropSchema($classes);
 $tool->createSchema($classes);
 
-require_once('data/dados_effort.php');
+require_once('data/dados_sigac.php');
 require_once('data/dados_americanas.php');

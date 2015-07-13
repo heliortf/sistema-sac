@@ -1341,7 +1341,7 @@ $app->get('/admin/dashboard', function() use($app) {
                 $R = new Relatorios();
                 $acessos = $R->getAcessoDiarioSite($u->getUsuario()->getEmpresa());
                 
-                $app->render('admin/dashboard_effort.html.twig', array(
+                $app->render('admin/dashboard_sigac.html.twig', array(
                     'menuPrincipal' => 'dashboard',
                     'user' => $u,
                     'acessos' => $acessos

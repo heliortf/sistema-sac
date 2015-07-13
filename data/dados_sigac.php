@@ -4,11 +4,11 @@ global $em;
 
 // Cadastra a empresa
 $E = new Empresa();
-$E->setPermalink("effort");
-$E->setNomeFantasia("Effort");
-$E->setRazaoSocial("Effort Ltda");
-$E->setCnpj(07610883000109);
-$E->setEmail("faleconosco@effort.com.br");
+$E->setPermalink("sigac");
+$E->setNomeFantasia("SIGAC");
+$E->setRazaoSocial("SIGAC");
+$E->setCnpj(07113133000109);
+$E->setEmail("faleconosco@sigac.com.br");
 $E->setTelefone(27687236);
 $E->setDddTelefone(21);
 $E->setEstado("Rio de Janeiro");

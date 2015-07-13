@@ -152,4 +152,62 @@ class SacMailer {
             'to'            => $to
         ));
     }
+    
+    /**
+     * 
+     * @param array $params
+     *          Cliente $cliente
+     *          Atendimento $atendimento
+     *          string $url_logotipo
+     */
+    public function enviarEmailComentarioAtendimento($params=array()){
+        
+        $c = $params['cliente'];
+        $a = $params['atendimento'];
+        
+        $s = 'Ol&aacute;, sr(a). <b>'.$c->getNome().'</b>.<br/><br/>';
+        
+        $s .= 'Foi adicionado um comentario no seu atendimento de <b>n&ordm;'.$a->getId().'</b>.<br/>';
+        $s .= '<br/><br/>';
+        $s .= "Seguem abaixo os dados do seu atendimento.<br/>";
+        $s .= '<table style="width: 80%; margin: 10px auto;">';
+        $s .= '<tbody>';
+        $s .=   '<tr>';
+        $s .=       '<td align="right"  width="25%"><b>Data cria&ccedil;&atilde;o:</b></td>';
+        $s .=       '<td>'.$a->getDataCriacao()->format("d/m/Y H:i").'</td>';
+        $s .=   '</tr>';        
+        $s .=   '<tr>';
+        $s .=       '<td align="right" width="25%"><b>Titulo:</b></td>';
+        $s .=       '<td>'.$a->getTitulo().'</td>';
+        $s .=   '</tr>';
+        $s .=   '<tr>';
+        $s .=       '<td align="right"  width="25%"><b>Tipo:</b></td>';
+        $s .=       '<td>'.$a->getTipo()->getNome().'</td>';
+        $s .=   '</tr>';
+        $s .=   '<tr>';
+        $s .=       '<td align="right"  width="25%"><b>Descri&ccedil;&atilde;o:</b></td>';
+        $s .=       '<td>'.nl2br($a->getDescricao()).'</td>';
+        $s .=   '</tr>';                
+        $s .= '</tbody>';
+        $s .= '</table>';
+        $s .= "<br/><br/>";
+        $s .= "Voc&ecirc; pode acessar este atendimento através do site abaixo: <br/><br/>";
+        $s .= '<b>Site:</b> <a href="http://effort.helioequipamentos.com.br/'.$this->empresa->getPermalink().'">http://effort.helioequipamentos.com.br/'.$this->empresa->getPermalink().'</a><br/><br/>';
+        $s .= "<b>Login:</b> {$c->getLogin()}<br/>";
+        $s .= "<b>Senha:</b> {$c->getSenha()}<br/><br/><br/>";
+        $s .= 'Atenciosamente,<br/>';
+        $s .= '<b>SAC - '.$this->empresa->getNomeFantasia().'</b>';
+        
+        $to = array();
+        if($c instanceof Cliente && $c->getEmail() != ""){
+            $to[] = $c->getEmail();
+        }
+        
+        return $this->enviarEmailTemplate(array(
+            'subject'       => "Atendimento registrado",
+            'mensagem'      => $s,
+            'url_logotipo'  => $params['url_logotipo'],
+            'to'            => $to
+        ));
+    }
 }
